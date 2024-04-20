@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_20_030313) do
+ActiveRecord::Schema.define(version: 2024_04_20_030812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "asset_prices", force: :cascade do |t|
+    t.bigint "asset_id", null: false
+    t.bigint "partner_resource_id", null: false
+    t.string "ticker_symbol", null: false
+    t.bigint "currency_id", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.datetime "last_sync_at", null: false
+    t.datetime "reference_date", null: false
+    t.datetime "scheduled_at"
+    t.string "status", null: false
+    t.string "error_message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["asset_id"], name: "index_asset_prices_on_asset_id"
+    t.index ["currency_id"], name: "index_asset_prices_on_currency_id"
+    t.index ["partner_resource_id"], name: "index_asset_prices_on_partner_resource_id"
+  end
 
   create_table "assets", force: :cascade do |t|
     t.string "ticker_symbol", null: false
@@ -140,6 +158,9 @@ ActiveRecord::Schema.define(version: 2024_04_20_030313) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "asset_prices", "assets"
+  add_foreign_key "asset_prices", "currencies"
+  add_foreign_key "asset_prices", "partner_resources"
   add_foreign_key "assets", "users"
   add_foreign_key "currency_parities", "currencies", column: "currency_from_id"
   add_foreign_key "currency_parities", "currencies", column: "currency_to_id"
