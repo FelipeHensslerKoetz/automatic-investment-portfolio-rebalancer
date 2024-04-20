@@ -11,4 +11,9 @@ class User < ActiveRecord::Base
          :trackable
 
   include DeviseTokenAuth::Concerns::User
+
+  # Associations
+  has_many :assets, dependent: :restrict_with_error
+  has_many :investment_portfolios, dependent: :restrict_with_error
+  has_many :rebalance_orders, dependent: :restrict_with_error
 end
