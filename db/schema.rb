@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_20_031545) do
+ActiveRecord::Schema.define(version: 2024_04_20_031837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,21 @@ ActiveRecord::Schema.define(version: 2024_04_20_031545) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["currency_from_id"], name: "index_currency_parities_on_currency_from_id"
     t.index ["currency_to_id"], name: "index_currency_parities_on_currency_to_id"
+  end
+
+  create_table "currency_parity_exchange_rates", force: :cascade do |t|
+    t.bigint "currency_parity_id", null: false
+    t.decimal "exchange_rate", precision: 10, scale: 2, null: false
+    t.datetime "last_sync_at", null: false
+    t.datetime "reference_date", null: false
+    t.bigint "partner_resource_id", null: false
+    t.string "status", null: false
+    t.datetime "scheduled_at"
+    t.string "error_message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["currency_parity_id"], name: "index_currency_parity_exchange_rates_on_currency_parity_id"
+    t.index ["partner_resource_id"], name: "index_currency_parity_exchange_rates_on_partner_resource_id"
   end
 
   create_table "investment_portfolio_assets", force: :cascade do |t|
@@ -177,6 +192,8 @@ ActiveRecord::Schema.define(version: 2024_04_20_031545) do
   add_foreign_key "assets", "users"
   add_foreign_key "currency_parities", "currencies", column: "currency_from_id"
   add_foreign_key "currency_parities", "currencies", column: "currency_to_id"
+  add_foreign_key "currency_parity_exchange_rates", "currency_parities"
+  add_foreign_key "currency_parity_exchange_rates", "partner_resources"
   add_foreign_key "investment_portfolio_assets", "assets"
   add_foreign_key "investment_portfolio_assets", "investment_portfolios"
   add_foreign_key "investment_portfolios", "currencies"
