@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_20_025550) do
+ActiveRecord::Schema.define(version: 2024_04_20_030313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,20 @@ ActiveRecord::Schema.define(version: 2024_04_20_025550) do
     t.index ["name"], name: "index_partners_on_name", unique: true
   end
 
+  create_table "rebalance_orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "investment_portfolio_id", null: false
+    t.string "status", null: false
+    t.string "type", null: false
+    t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "error_message"
+    t.datetime "scheduled_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["investment_portfolio_id"], name: "index_rebalance_orders_on_investment_portfolio_id"
+    t.index ["user_id"], name: "index_rebalance_orders_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -134,4 +148,6 @@ ActiveRecord::Schema.define(version: 2024_04_20_025550) do
   add_foreign_key "investment_portfolios", "currencies"
   add_foreign_key "investment_portfolios", "users"
   add_foreign_key "partner_resources", "partners"
+  add_foreign_key "rebalance_orders", "investment_portfolios"
+  add_foreign_key "rebalance_orders", "users"
 end
