@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_20_025139) do
+ActiveRecord::Schema.define(version: 2024_04_20_025550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 2024_04_20_025139) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["currency_from_id"], name: "index_currency_parities_on_currency_from_id"
     t.index ["currency_to_id"], name: "index_currency_parities_on_currency_to_id"
+  end
+
+  create_table "investment_portfolio_assets", force: :cascade do |t|
+    t.bigint "asset_id", null: false
+    t.bigint "investment_portfolio_id", null: false
+    t.decimal "allocation_weight", precision: 10, scale: 2, null: false
+    t.decimal "quantity", precision: 10, scale: 2, null: false
+    t.decimal "deviation_percentage", precision: 10, scale: 2, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"
+    t.index ["investment_portfolio_id"], name: "index_investment_portfolio_assets_on_investment_portfolio_id"
   end
 
   create_table "investment_portfolios", force: :cascade do |t|
@@ -117,6 +129,8 @@ ActiveRecord::Schema.define(version: 2024_04_20_025139) do
   add_foreign_key "assets", "users"
   add_foreign_key "currency_parities", "currencies", column: "currency_from_id"
   add_foreign_key "currency_parities", "currencies", column: "currency_to_id"
+  add_foreign_key "investment_portfolio_assets", "assets"
+  add_foreign_key "investment_portfolio_assets", "investment_portfolios"
   add_foreign_key "investment_portfolios", "currencies"
   add_foreign_key "investment_portfolios", "users"
   add_foreign_key "partner_resources", "partners"
