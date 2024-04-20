@@ -8,8 +8,8 @@ class ApiConstraints
   end
 
   def matches?(req)
-    return true if default && !req.headers['Accept'].include?("application/vnd.blog.v")
+    return true if default && !req.headers['Accept'].include?('application/vnd.investment_portfolio_rebalancer.v')
 
-    req.headers['Accept'].include?("application/vnd.blog.v#{version}")
+    req.headers['Accept'].include?("application/vnd.investment_portfolio_rebalancer.v#{version}")
   end
 end

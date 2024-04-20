@@ -21,18 +21,18 @@ default: &default
 
 development:
   <<: *default
-  database: blog_api_development
+  database: investment_portfolio_rebalancer_development
   username: koetz
   password: secretpassword
 
 test:
   <<: *default
-  database: blog_api_test
+  database: investment_portfolio_rebalancer_test
   username: koetz
   password: secretpassword
 
 production:
   <<: *default
-  database: blog_api_production
-  username: blog_api
-  password: <%= ENV['BLOG_API_DATABASE_PASSWORD'] %>
+  database: investment_portfolio_rebalancer_production
+  username: investment_portfolio_rebalancer
+  password: <%= ENV['INVESTMENT_PORTFOLIO_REBALANCER_DATABASE_PASSWORD'] %>
