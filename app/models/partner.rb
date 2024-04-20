@@ -8,5 +8,5 @@ class Partner < ApplicationRecord
 
   # Validations
   validates :name, presence: true, uniqueness: true
-  validates :slug, presence: true
+  validates :slug, presence: true, uniqueness: true
 end

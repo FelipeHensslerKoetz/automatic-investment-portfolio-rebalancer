@@ -21,5 +21,14 @@ RSpec.describe Partner, type: :model do
       expect(partner).to be_invalid
       expect(partner.errors[:name]).to include('has already been taken')
     end
+
+    it 'validates uniqueness of slug' do
+      create(:partner, :hg_brasil, slug: 'hg_brasil')
+      partner = build(:partner, :hg_brasil, slug: 'hg_brasil')
+      partner.valid?
+
+      expect(partner).to be_invalid
+      expect(partner.errors[:slug]).to include('has already been taken')
+    end
   end
 end
