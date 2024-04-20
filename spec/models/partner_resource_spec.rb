@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PartnerResource, type: :model do
   describe 'constants' do
-    it { expect(described_class::INTEGRATED_PARTNER_RESOURCES).to include(:hg_brasil) }
+    it { expect(described_class::INTEGRATED_PARTNER_RESOURCES).to include(:hg_brasil_stock_price) }
   end
 
   describe 'associations' do
