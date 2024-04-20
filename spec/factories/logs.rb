@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :log do
-    type { "" }
-    data { "" }
+    type { Log::LOG_TYPES.sample }
+    data { {} }
   end
 end
