@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
     t.string "name", null: false
     t.string "kind"
     t.boolean "custom", default: false, null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ticker_symbol"], name: "index_assets_on_ticker_symbol", unique: true

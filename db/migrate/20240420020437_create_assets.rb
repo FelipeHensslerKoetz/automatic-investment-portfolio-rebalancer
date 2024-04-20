@@ -5,7 +5,7 @@ class CreateAssets < ActiveRecord::Migration[6.1]
       t.string :name, null: false
       t.string :kind
       t.boolean :custom, default: false, null: false
-      t.references :user, null: false, foreign_key: true
+      t.references :user, null: true, foreign_key: true
 
       t.timestamps
     end
