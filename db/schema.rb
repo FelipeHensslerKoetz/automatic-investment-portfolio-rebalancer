@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_20_023715) do
+ActiveRecord::Schema.define(version: 2024_04_20_024833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 2024_04_20_023715) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_currencies_on_code", unique: true
+  end
+
+  create_table "currency_parities", force: :cascade do |t|
+    t.bigint "currency_from_id", null: false
+    t.bigint "currency_to_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["currency_from_id"], name: "index_currency_parities_on_currency_from_id"
+    t.index ["currency_to_id"], name: "index_currency_parities_on_currency_to_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -95,5 +104,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_023715) do
   end
 
   add_foreign_key "assets", "users"
+  add_foreign_key "currency_parities", "currencies", column: "currency_from_id"
+  add_foreign_key "currency_parities", "currencies", column: "currency_to_id"
   add_foreign_key "partner_resources", "partners"
 end
