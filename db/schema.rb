@@ -80,9 +80,9 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
   create_table "investment_portfolio_assets", force: :cascade do |t|
     t.bigint "asset_id", null: false
     t.bigint "investment_portfolio_id", null: false
-    t.decimal "allocation_weight", precision: 10, scale: 2, null: false
-    t.decimal "quantity", precision: 10, scale: 2, null: false
-    t.decimal "deviation_percentage", precision: 10, scale: 2, null: false
+    t.decimal "allocation_weight", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "quantity", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "deviation_percentage", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"

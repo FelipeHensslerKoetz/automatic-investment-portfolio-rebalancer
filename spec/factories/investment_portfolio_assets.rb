@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :investment_portfolio_asset do
-    asset { nil }
-    investment_portfolio { nil }
-    allocation_weight { "9.99" }
-    quantity { "9.99" }
-    distorcion_percentage { "9.99" }
+    asset { create(:asset) }
+    investment_portfolio { create(:investment_portfolio) }
+    allocation_weight { rand(0.0..100.0) }
+    quantity { rand(0..1000) }
+    deviation_percentage { 0.0 }
   end
 end

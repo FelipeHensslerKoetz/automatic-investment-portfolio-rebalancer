@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :investment_portfolio do
-    user { nil }
+    user { create(:user) }
     name { "MyString" }
     description { "MyString" }
-    currency { nil }
+    currency { create(:currency) }
   end
 end
