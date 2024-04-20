@@ -1,7 +1,7 @@
 class PartnerResource < ApplicationRecord
   # Constants
   INTEGRATED_PARTNER_RESOURCES = [
-    :hg_brasil
+    :hg_brasil_stock_price
   ].freeze
 
   # Associations
