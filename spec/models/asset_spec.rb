@@ -43,36 +43,30 @@ RSpec.describe Asset, type: :model do
   end
 
   describe 'methods' do
-    describe '#updated?' do
-      xit 'returns true if asset prices are updated' do
-        asset = create(:asset)
-        create(:asset_price, asset: asset, updated: true)
+    let(:asset) { create(:asset) }
 
-        expect(asset.updated?).to be_truthy
+    describe '#updated?' do
+      it 'returns true if there are up to date asset prices' do
+        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :updated, asset:)
+        expect(asset.updated?).to eq(true)
       end
 
-      xit 'returns false if asset prices are not updated' do
-        asset = create(:asset)
-        create(:asset_price, asset: asset, updated: false)
-
-        expect(asset.updated?).to be_falsey
+      it 'returns false if there are no up to date asset prices' do
+        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :outdated, asset:)
+        expect(asset.updated?).to eq(false)
       end
     end
 
     describe '#newest_asset_price_by_reference_date' do
-      xit 'returns the newest asset price by reference date' do
-        asset = create(:asset)
-        asset_price = create(:asset_price, asset: asset, reference_date: 1.day.ago)
-        create(:asset_price, asset: asset, reference_date: 2.days.ago)
-
+      it 'returns the latest asset price' do
+        asset_price = create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :updated, asset:, reference_date: Time.zone.today)
+        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :updated, asset:, reference_date: Date.yesterday)
         expect(asset.newest_asset_price_by_reference_date).to eq(asset_price)
       end
 
-      xit 'returns nil if asset prices are not updated' do
-        asset = create(:asset)
-        create(:asset_price, asset: asset, updated: false)
-
-        expect(asset.newest_asset_price_by_reference_date).to be_nil
+      it 'returns nil if there are no up to date asset prices' do
+        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :outdated, asset:)
+        expect(asset.newest_asset_price_by_reference_date).to eq(nil)
       end
     end
   end
