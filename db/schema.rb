@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_20_030812) do
+ActiveRecord::Schema.define(version: 2024_04_20_031545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,19 @@ ActiveRecord::Schema.define(version: 2024_04_20_030812) do
     t.index ["user_id"], name: "index_rebalance_orders_on_user_id"
   end
 
+  create_table "rebalances", force: :cascade do |t|
+    t.bigint "rebalance_order_id", null: false
+    t.jsonb "before_state", null: false
+    t.jsonb "after_state", null: false
+    t.jsonb "details", null: false
+    t.jsonb "recommended_actions", null: false
+    t.string "status", null: false
+    t.string "error_message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rebalance_order_id"], name: "index_rebalances_on_rebalance_order_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -171,4 +184,5 @@ ActiveRecord::Schema.define(version: 2024_04_20_030812) do
   add_foreign_key "partner_resources", "partners"
   add_foreign_key "rebalance_orders", "investment_portfolios"
   add_foreign_key "rebalance_orders", "users"
+  add_foreign_key "rebalances", "rebalance_orders"
 end
