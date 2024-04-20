@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_20_015641) do
+ActiveRecord::Schema.define(version: 2024_04_20_020437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assets", force: :cascade do |t|
+    t.string "ticker_symbol", null: false
+    t.string "name", null: false
+    t.string "kind"
+    t.boolean "custom", default: false, null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ticker_symbol"], name: "index_assets_on_ticker_symbol", unique: true
+    t.index ["user_id"], name: "index_assets_on_user_id"
+  end
 
   create_table "partner_resources", force: :cascade do |t|
     t.string "name", null: false
@@ -67,5 +79,6 @@ ActiveRecord::Schema.define(version: 2024_04_20_015641) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "assets", "users"
   add_foreign_key "partner_resources", "partners"
 end
