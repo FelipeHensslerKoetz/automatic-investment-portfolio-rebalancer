@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'hg_brasil/stocks'
 
@@ -144,7 +146,7 @@ RSpec.describe HgBrasil::Stocks do
                 kind: be_a(String),
                 name: be_a(String),
                 price: be_a(Float),
-                reference_date: be_a(Time),
+                reference_date: be_a(Time)
               )
             end
           end
@@ -167,7 +169,7 @@ RSpec.describe HgBrasil::Stocks do
                 kind: be_a(String),
                 name: be_a(String),
                 price: be_a(Float),
-                reference_date: be_a(Time),
+                reference_date: be_a(Time)
               )
             end
           end

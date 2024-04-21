@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PartnerResource < ApplicationRecord
   # Constants
   INTEGRATED_PARTNER_RESOURCES = [

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Partner < ApplicationRecord
   INTEGRATED_PARTNERS = [
     :hg_brasil

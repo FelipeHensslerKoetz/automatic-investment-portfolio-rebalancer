@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :asset do
     ticker_symbol { 5.times.map { ('A'..'Z').to_a.sample }.join }

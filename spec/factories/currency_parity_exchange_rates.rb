@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :currency_parity_exchange_rate do
     currency_parity { create(:currency_parity) }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ApiConstraints
   attr_reader :version, :default
 
@@ -8,7 +9,7 @@ class ApiConstraints
   end
 
   def matches?(req)
-    return true if default && !req.headers['Accept'].include?('application/vnd.investment_portfolio_rebalancer.v')
+    return true if default && req.headers['Accept'].exclude?('application/vnd.investment_portfolio_rebalancer.v')
 
     req.headers['Accept'].include?("application/vnd.investment_portfolio_rebalancer.v#{version}")
   end

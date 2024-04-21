@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :investment_portfolio_asset do
     asset { create(:asset) }

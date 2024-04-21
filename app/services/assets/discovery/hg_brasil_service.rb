@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'hg_brasil/stocks'
 
 module Assets

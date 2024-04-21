@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :currency do
     name { Faker::Currency.name }
@@ -7,12 +9,12 @@ FactoryBot.define do
       name { 'Brazilian Real' }
       code { 'BRL' }
     end
-  
+
     trait :usd do
       name { 'United States Dollar' }
       code { 'USD' }
     end
-  
+
     trait :btc do
       name { 'Bitcoin' }
       code { 'BTC' }

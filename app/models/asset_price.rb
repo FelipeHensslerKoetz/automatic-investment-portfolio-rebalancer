@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AssetPrice < ApplicationRecord
   # Modules
   include AASM

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Asset < ApplicationRecord
   # Constants
-  ASSET_KINDS = [
-    :stock,
-    :etf,
-    :mutual_fund,
-    :fii,
+  ASSET_KINDS = %i[
+    stock
+    etf
+    mutual_fund
+    fii
   ].freeze
 
   # Associations

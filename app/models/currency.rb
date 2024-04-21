@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Currency < ApplicationRecord
   # Relationships
   has_many :currency_parities_as_from,

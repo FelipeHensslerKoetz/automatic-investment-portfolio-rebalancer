@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InvestmentPortfolioAsset < ApplicationRecord
   # Associations
   belongs_to :asset

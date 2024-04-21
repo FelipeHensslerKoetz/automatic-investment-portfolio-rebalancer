@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :partner_resource do
     trait :hg_brasil_stock_price do

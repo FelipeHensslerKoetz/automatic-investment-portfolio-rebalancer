@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CurrencyParityExchangeRate < ApplicationRecord
   # Modules
   include AASM
