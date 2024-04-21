@@ -84,5 +84,7 @@ group :test do
 
   # Simplecov_json_formatter is a JSON formatter for SimpleCov.
   gem 'simplecov_json_formatter', '~> 0.1.4'
-end
 
+  # VCR is a gem that records your test suite's HTTP interactions and replays them during future test runs for fast, deterministic, accurate tests.
+  gem 'vcr', '~> 6.2'
+end

@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
   end
 
   create_table "logs", force: :cascade do |t|
-    t.string "type", null: false
+    t.string "kind", null: false
     t.jsonb "data", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

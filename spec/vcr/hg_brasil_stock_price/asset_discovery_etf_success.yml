@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=BOVA11
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 20 Apr 2024 21:07:09 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      etag:
+      - W/"19de66db52e805ebc9a699b576de1e9c"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - b760e9ae-e48f-4c61-b4f7-1155ae7e561f
+      x-runtime:
+      - '0.016673'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cf-cache-status:
+      - DYNAMIC
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=QPuDmCElNoSyhhyoQlg7mrUDZO1jAyVT0ddKJr36X73Vep4TMKwPuH6m42SZhCm0tLz%2F4z7fyzpxhBEkBAUTu6upwFsBvu1BK%2BZGYzVPFnsOFTwb4DLUS4vFjGvdwRhAFwCIgpa4wTS21pP%2BbB2v"}],"group":"cf-nel","max_age":604800}'
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      server:
+      - cloudflare
+      cf-ray:
+      - 87781a2edc51a4dd-GRU
+      content-encoding:
+      - gzip
+      alt-svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"by":"symbol","valid_key":true,"results":{"BOVA11":{"kind":"stock","symbol":"BOVA11","name":"iShares
+        Ibovespa Fundo de Índice ETF","company_name":null,"document":null,"description":null,"website":null,"sector":null,"financials":{"quota_count":0,"dividends":{"yield_12m":null,"yield_12m_sum":null}},"region":"Brazil/Sao
+        Paolo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"market_cap":0.0,"price":121.52,"change_percent":0.86,"change_price":1.04,"updated_at":"2024-04-19
+        17:12:01"}},"execution_time":0.0,"from_cache":false}'
+  recorded_at: Sat, 20 Apr 2024 21:07:09 GMT
+recorded_with: VCR 6.2.0

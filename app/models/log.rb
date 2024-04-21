@@ -1,8 +1,8 @@
 class Log < ApplicationRecord
   # Constants
-  LOG_TYPES = %i[error http_request info].freeze
+  LOG_KINDS = %i[error http_request info].freeze
 
   # Validations
-  validates :type, :data, presence: true
-  validates :type, inclusion: { in: LOG_TYPES.map(&:to_s) }
+  validates :kind, :data, presence: true
+  validates :kind, inclusion: { in: LOG_KINDS.map(&:to_s) }
 end

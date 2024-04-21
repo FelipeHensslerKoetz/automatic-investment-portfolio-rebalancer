@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=PETR4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 20 Apr 2024 21:21:44 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      etag:
+      - W/"88a76d5055caf2fc31ba0ee0888239d6"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - 5145db48-d2dc-4dd7-acf3-433627aec269
+      x-runtime:
+      - '0.016624'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cf-cache-status:
+      - DYNAMIC
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=JG%2FewxGmmjVDW%2F5mqm1OX0j9iHLDrWMsJ%2Frak2uJiKDRD%2B8zWPPD3%2F9qRXKjoBniRFkbvJ2ZxNhLE75HgbxYAvvorEdqNFaCf%2Bjj72cNsaCC5eejoaKpDG74SQRPsY8eefxOpv9hQqyL3K8plNG1"}],"group":"cf-nel","max_age":604800}'
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      server:
+      - cloudflare
+      cf-ray:
+      - 87782f89393aa411-GRU
+      content-encoding:
+      - gzip
+      alt-svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"by":"symbol","valid_key":true,"results":{"PETR4":{"kind":"stock","symbol":"PETR4","name":"Petrobras","company_name":"Petroleo
+        Brasileiro S.A. Petrobras","document":"33.000.167/0001-01","description":"Pesquisa.
+        Lavra. Refinação. Processamento. Comércio E Transporte de Petróleo. de Seus
+        Derivados. de Gás Natural E de Outros Hidrocarbonetos Fluidos. Além Das Atividades
+        Vinculadas à Energia.","website":"http://www.petrobras.com.br/","sector":"Petróleo.
+        Gás e Biocombustíveis / Petróleo. Gás e Biocombustíveis / Exploração. Refino
+        e Distribuição","financials":{"quota_count":0,"dividends":{"yield_12m":null,"yield_12m_sum":null}},"region":"Brazil/Sao
+        Paulo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"logo":{"small":"https://assets.hgbrasil.com/finance/companies/small/petrobras.png","big":"https://assets.hgbrasil.com/finance/companies/big/petrobras.png"},"market_cap":537776.0,"price":40.53,"change_percent":1.71,"change_price":0.68,"updated_at":"2024-04-19
+        17:12:01"}},"execution_time":0.01,"from_cache":false}'
+  recorded_at: Sat, 20 Apr 2024 21:21:44 GMT
+recorded_with: VCR 6.2.0

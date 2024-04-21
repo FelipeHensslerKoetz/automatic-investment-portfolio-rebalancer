@@ -3,7 +3,8 @@ class Asset < ApplicationRecord
   ASSET_KINDS = [
     :stock,
     :etf,
-    :mutual_fund
+    :mutual_fund,
+    :fii,
   ].freeze
 
   # Associations

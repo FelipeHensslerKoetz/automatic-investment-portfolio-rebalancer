@@ -271,6 +271,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (0.13.0)
+    vcr (6.2.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     websocket-driver (0.7.6)
@@ -312,6 +313,7 @@ DEPENDENCIES
   simplecov_json_formatter (~> 0.1.4)
   spring
   tzinfo-data
+  vcr (~> 6.2)
 
 RUBY VERSION
    ruby 3.3.0p0

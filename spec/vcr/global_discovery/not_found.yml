@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=NOT_FOUND
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sat, 20 Apr 2024 21:21:51 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      etag:
+      - W/"fcb0b04140f427fa776c60bc01923454"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - 1ac52c4c-4ca8-44e7-86fd-ed20e4d9fc11
+      x-runtime:
+      - '0.009225'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cf-cache-status:
+      - DYNAMIC
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=PLMRUDdf0gzxW32TJNsE8QXG4toUxJvuTz3i%2F0f9ZEphdwqVO%2FLTtc8ZJYhbxhxbEkqb%2BnQbS20foyjPzN2FpMdsUiDohXZQdpxI18rISUi%2Fi%2BTSrwiO7%2F%2BevHvQ0CZOsL1X9BGS%2B4QjWFEIp9uu"}],"group":"cf-nel","max_age":604800}'
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      server:
+      - cloudflare
+      cf-ray:
+      - 87782fb9fee70301-GRU
+      content-encoding:
+      - gzip
+      alt-svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"by":"symbol","valid_key":true,"results":{"NOT_FOUND":{"error":true,"message":"Error
+        to get Stock for #NOT_FOUND: Erro 852 - Símbolo não encontrado, por favor
+        entre em contato conosco em console.hgbrasil.com."}},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Sat, 20 Apr 2024 21:21:51 GMT
+recorded_with: VCR 6.2.0
