@@ -11,6 +11,8 @@ Rails.application.routes.draw do
           get :deep_search, to: 'assets#deep_search'
         end
       end
+
+      resources :currencies, only: %i[index show]
     end
 
     scope module: :v2, constraints: ApiConstraints.new({ version: 2, default: false }) do

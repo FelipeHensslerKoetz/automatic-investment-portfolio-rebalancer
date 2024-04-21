@@ -25,11 +25,6 @@ RSpec.describe Currency, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:code) }
 
-    it 'validates uniqueness of name' do
-      create(:currency, :usd)
-      expect(build(:currency, :brl, name: 'USD')).to validate_uniqueness_of(:name)
-    end
-
     it 'validates uniqueness of code' do
       create(:currency, :usd)
       expect(build(:currency, code: 'USD')).to validate_uniqueness_of(:code)

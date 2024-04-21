@@ -15,5 +15,6 @@ class Currency < ApplicationRecord
            dependent: :restrict_with_error
 
   # Validations
-  validates :name, :code, presence: true, uniqueness: true
+  validates :code, presence: true, uniqueness: true
+  validates :name, presence: true
 end
