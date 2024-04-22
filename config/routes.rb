@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       end
 
       resources :currencies, only: %i[index show]
+
+      resources :investment_portfolios
     end
 
     scope module: :v2, constraints: ApiConstraints.new({ version: 2, default: false }) do

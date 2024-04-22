@@ -5,6 +5,10 @@ class ApplicationController < ActionController::API
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  rescue_from ActionController::ParameterMissing do |exception|
+    render json: { error: exception.message }, status: :bad_request
+  end
+
   protected
 
   def configure_permitted_parameters
