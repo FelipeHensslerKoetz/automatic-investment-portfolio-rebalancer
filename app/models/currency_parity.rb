@@ -9,14 +9,13 @@ class CurrencyParity < ApplicationRecord
 
   has_many :currency_parity_exchange_rates, dependent: :restrict_with_error
 
-  # Methods
-  def updated?
-    currency_parity_exchange_rates.updated.any?
+  def newest_currency_parity_exchange_rate_by_reference_date
+    currency_parity_exchange_rates.updated.order(reference_date: :desc).first
   end
 
-  def latest_currency_parity_exchange_rate
-    return unless updated?
+  def current_exchange_rate
+    return nil if newest_currency_parity_exchange_rate_by_reference_date.blank?
 
-    currency_parity_exchange_rates.updated.order(reference_date: :desc).first
+    newest_currency_parity_exchange_rate_by_reference_date.exchange_rate
   end
 end

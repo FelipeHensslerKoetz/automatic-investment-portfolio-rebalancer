@@ -23,13 +23,15 @@ class Asset < ApplicationRecord
   scope :global, -> { where(custom: false) }
   scope :custom_by_user, ->(user) { where(custom: true, user:) }
 
-  def updated?
-    asset_prices.updated.any?
+  # Methods
+  def newest_asset_price_by_reference_date
+    asset_prices.order(reference_date: :desc).first
   end
 
-  def newest_asset_price_by_reference_date
-    return unless updated?
+  # TODO: amplify this method to consider priority of asset_prices partner_resources
+  def current_price
+    return nil if newest_asset_price_by_reference_date.blank?
 
-    asset_prices.updated.order(reference_date: :desc).first
+    newest_asset_price_by_reference_date.price
   end
 end

@@ -11,7 +11,6 @@ RSpec.describe Asset, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:ticker_symbol) }
-    it { is_expected.to validate_inclusion_of(:custom).in_array([true, false]) }
     it { is_expected.to validate_inclusion_of(:kind).in_array(Asset::ASSET_KINDS.map(&:to_s)) }
 
     it 'validates uniqueness of ticker_symbol' do
@@ -47,28 +46,37 @@ RSpec.describe Asset, type: :model do
   describe 'methods' do
     let(:asset) { create(:asset) }
 
-    describe '#updated?' do
-      it 'returns true if there are up to date asset prices' do
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :updated, asset:)
-        expect(asset.updated?).to eq(true)
+    describe '#newest_asset_price_by_reference_date' do
+      context 'when there are no asset prices' do
+        it 'returns nil' do
+          expect(asset.newest_asset_price_by_reference_date).to be_nil
+        end
       end
 
-      it 'returns false if there are no up to date asset prices' do
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :outdated, asset:)
-        expect(asset.updated?).to eq(false)
+      context 'when there are asset prices' do
+        it 'returns the newest asset price by reference date' do
+          create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset:, reference_date: 1.day.ago)
+          newest_asset_price = create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset:, reference_date: Time.zone.today)
+
+          expect(asset.newest_asset_price_by_reference_date).to eq(newest_asset_price)
+        end
       end
     end
 
-    describe '#newest_asset_price_by_reference_date' do
-      it 'returns the latest asset price' do
-        asset_price = create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :updated, asset:, reference_date: Time.zone.today)
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :updated, asset:, reference_date: Date.yesterday)
-        expect(asset.newest_asset_price_by_reference_date).to eq(asset_price)
+    describe '#current_price' do
+      context 'when there are no asset prices' do
+        it 'returns nil' do
+          expect(asset.current_price).to be_nil
+        end
       end
 
-      it 'returns nil if there are no up to date asset prices' do
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :outdated, asset:)
-        expect(asset.newest_asset_price_by_reference_date).to eq(nil)
+      context 'when there are asset prices' do
+        it 'returns the price of the newest asset price by reference date' do
+          create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset:, reference_date: 1.day.ago)
+          newest_asset_price = create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset:, reference_date: Time.zone.today)
+
+          expect(asset.current_price).to eq(newest_asset_price.price)
+        end
       end
     end
   end
