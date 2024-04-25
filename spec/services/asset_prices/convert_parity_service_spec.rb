@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AssetPrices::ConvertParityService do
-  subject(:price) { described_class.call(asset_price:, output_currency:) }
+  subject(:price) { described_class.call(asset_price_id:, output_currency_id:) }
 
   let(:petr4_asset) do
     create(:asset,
@@ -16,7 +16,8 @@ RSpec.describe AssetPrices::ConvertParityService do
 
   context 'when asset price can be calculated' do
     let(:asset) { petr4_asset }
-    let(:output_currency) { usd_currency }
+    let(:output_currency_id) { usd_currency.id }
+    let(:asset_price_id) { asset_price.id }
     let(:asset_price) do
       create(:asset_price,
              :with_hg_brasil_stock_price_partner_resource,
@@ -47,15 +48,16 @@ RSpec.describe AssetPrices::ConvertParityService do
 
   context 'when asset price cannot be calculated' do
     context 'when asset param is invalid' do
-      let(:asset_price) { nil }
-      let(:output_currency) { usd_currency }
+      let(:asset_price_id) { nil }
+      let(:output_currency_id) { usd_currency.id }
 
       it { expect { price }.to raise_error(ArgumentError) }
     end
 
     context 'when output_currency param is invalid' do
       let(:asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource) }
-      let(:output_currency) { nil }
+      let(:asset_price_id) { asset_price.id }
+      let(:output_currency_id) { nil }
 
       it { expect { price }.to raise_error(ArgumentError) }
     end
@@ -66,7 +68,9 @@ RSpec.describe AssetPrices::ConvertParityService do
                                                                            currency: brl_currency)
       end
 
-      let(:output_currency) { usd_currency }
+      let(:asset_price_id) { asset_price.id }
+
+      let(:output_currency_id) { usd_currency.id }
 
       before do
         currency_parity = create(:currency_parity,
@@ -84,7 +88,8 @@ RSpec.describe AssetPrices::ConvertParityService do
 
     context 'when there are no currency parities' do
       let(:asset) { petr4_asset }
-      let(:output_currency) { btc_currency }
+      let(:output_currency_id) { btc_currency.id }
+      let(:asset_price_id) { asset_price.id }
       let!(:asset_price) do
         create(:asset_price,
                :with_hg_brasil_stock_price_partner_resource,
@@ -98,7 +103,8 @@ RSpec.describe AssetPrices::ConvertParityService do
 
     context 'when there are outdated only currency parities' do
       let(:asset) { petr4_asset }
-      let(:output_currency) { btc_currency }
+      let(:output_currency_id) { btc_currency.id }
+      let(:asset_price_id) { asset_price.id }
       let!(:asset_price) do
         create(:asset_price,
                :with_hg_brasil_stock_price_partner_resource,

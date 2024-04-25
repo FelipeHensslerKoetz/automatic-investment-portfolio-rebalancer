@@ -12,13 +12,4 @@ class InvestmentPortfolio < ApplicationRecord
 
   # Nested Attributes
   accepts_nested_attributes_for :investment_portfolio_assets, allow_destroy: true
-
-  # Methods
-  def total_allocation_weight
-    investment_portfolio_assets.sum { |investment_portfolio_asset| investment_portfolio_asset.allocation_weight.to_d }.to_d
-  end
-
-  def valid_total_allocation_weight?
-    total_allocation_weight == 100.0.to_d
-  end
 end
