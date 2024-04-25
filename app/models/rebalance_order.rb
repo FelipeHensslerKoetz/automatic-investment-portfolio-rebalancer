@@ -5,31 +5,31 @@ class RebalanceOrder < ApplicationRecord
   include AASM
 
   # Constants
-  REBALANCE_ORDER_TYPES = %w[default deposit withdraw].freeze
+  REBALANCE_ORDER_KINDS = %w[default deposit withdraw].freeze
 
   # Associations
   belongs_to :user
   belongs_to :investment_portfolio
 
   # Validations
-  validates :status, :type, :amount, :scheduled_at, presence: true
-  validates :type, inclusion: { in: REBALANCE_ORDER_TYPES }
+  validates :status, :kind, :amount, :scheduled_at, presence: true
+  validates :kind, inclusion: { in: REBALANCE_ORDER_KINDS }
 
   # Scopes
-  scope :scheduled, -> { where(status: :scheduled) }
+  scope :pending, -> { where(status: :pending) }
   scope :processing, -> { where(status: :processing) }
   scope :finished, -> { where(status: :finished) }
   scope :failed, -> { where(status: :failed) }
 
   # AASM
   aasm column: :status do
-    state :scheduled, initial: true
+    state :pending, initial: true
     state :processing
     state :finished
     state :failed
 
     event :process do
-      transitions from: :scheduled, to: :processing
+      transitions from: :pending, to: :processing
     end
 
     event :finish do
@@ -40,8 +40,8 @@ class RebalanceOrder < ApplicationRecord
       transitions from: :processing, to: :failed
     end
 
-    event :schedule do
-      transitions from: %i[failed], to: :scheduled
+    event :reprocess do
+      transitions from: %i[failed], to: :pending
     end
   end
 end

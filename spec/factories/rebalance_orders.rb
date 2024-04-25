@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :rebalance_order do
     user { create(:user) }
     investment_portfolio { create(:investment_portfolio) }
-    type { 'default' }
+    kind { 'default' }
     scheduled_at { Time.zone.now }
 
     trait :scheduled do

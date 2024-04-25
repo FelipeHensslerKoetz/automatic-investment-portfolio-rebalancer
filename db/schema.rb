@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
     t.bigint "user_id", null: false
     t.bigint "investment_portfolio_id", null: false
     t.string "status", null: false
-    t.string "type", null: false
+    t.string "kind", null: false
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
     t.string "error_message"
     t.datetime "scheduled_at", null: false

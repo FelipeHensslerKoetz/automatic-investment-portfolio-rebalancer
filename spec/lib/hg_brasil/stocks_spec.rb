@@ -4,8 +4,8 @@ require 'rails_helper'
 require 'hg_brasil/stocks'
 
 RSpec.describe HgBrasil::Stocks do
-  describe '#asset_details' do
-    subject(:asset_details) { described_class.new.asset_details(symbol:) }
+  describe '.asset_details' do
+    subject(:asset_details) { described_class.asset_details(symbol:) }
 
     context 'when searching for a stock price' do
       context 'wih valid symbol' do
@@ -126,8 +126,8 @@ RSpec.describe HgBrasil::Stocks do
     end
   end
 
-  describe '#asset_details_batch' do
-    subject(:asset_details_batch) { described_class.new.asset_details_batch(symbols:) }
+  describe '.asset_details_batch' do
+    subject(:asset_details_batch) { described_class.asset_details_batch(symbols:) }
 
     context 'when searching for up to 5' do
       context 'when all stocks are valid' do
