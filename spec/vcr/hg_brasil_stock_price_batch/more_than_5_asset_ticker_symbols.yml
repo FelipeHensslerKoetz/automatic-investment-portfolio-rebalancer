@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=EMBR3%2CHGLG11%2CITSA4%2CPETR4%2CVALE3%2CB3SA3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Thu, 25 Apr 2024 02:35:43 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      etag:
+      - W/"f3c8add636eea8e5adeb4ddc1c982bac"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - f28cb42a-5bc6-4dfc-9a8d-f54483a6ee7b
+      x-runtime:
+      - '0.009243'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cf-cache-status:
+      - DYNAMIC
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=gblWYQatJd%2BH2jTtlij7PFuUFJ79POvEuilyU6DVQBuipiI%2BU6gJtb5yo%2FSReSsLD138GAEHDMqw2SAbZ%2Brq3baxv6h8iG4C5H2yPdDRgidka3cE0Y2%2BKd1%2FmaZ7PGuVks9SHB0bEwjyH7kolzAS"}],"group":"cf-nel","max_age":604800}'
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      server:
+      - cloudflare
+      cf-ray:
+      - 879af0fd6c0aa417-GRU
+      content-encoding:
+      - gzip
+      alt-svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"by":"symbol","valid_key":true,"results":{"error":true,"message":"Máximo
+        de 5 símbolos por requisição."},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Thu, 25 Apr 2024 02:35:43 GMT
+recorded_with: VCR 6.2.0

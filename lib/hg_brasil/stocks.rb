@@ -8,8 +8,8 @@ module HgBrasil
       new.asset_details(symbol:)
     end
 
-    def self.asset_details_batch(symbols:)
-      new.asset_details_batch(symbols:)
+    def self.asset_details_batch(asset_ticker_symbols:)
+      new.asset_details_batch(asset_ticker_symbols:)
     end
 
     def asset_details(symbol:)
@@ -27,8 +27,8 @@ module HgBrasil
       }
     end
 
-    def asset_details_batch(symbols:)
-      response ||= get(url: '/stock_price', params: { symbol: symbols })&.dig('results')
+    def asset_details_batch(asset_ticker_symbols:)
+      response ||= get(url: '/stock_price', params: { symbol: asset_ticker_symbols })&.dig('results')
 
       return nil if response.blank? || response['error'] || !response.is_a?(Hash)
 

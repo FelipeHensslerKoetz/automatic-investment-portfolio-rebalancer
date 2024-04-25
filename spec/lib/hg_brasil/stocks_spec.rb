@@ -127,14 +127,14 @@ RSpec.describe HgBrasil::Stocks do
   end
 
   describe '.asset_details_batch' do
-    subject(:asset_details_batch) { described_class.asset_details_batch(symbols:) }
+    subject(:asset_details_batch) { described_class.asset_details_batch(asset_ticker_symbols:) }
 
     context 'when searching for up to 5' do
       context 'when all stocks are valid' do
-        let(:symbols) { 'EMBR3,HGLG11,ITSA4,PETR4,VALE3' }
+        let(:asset_ticker_symbols) { 'EMBR3,HGLG11,ITSA4,PETR4,VALE3' }
 
         it 'returns the stock prices' do
-          VCR.use_cassette('hg_brasil_stock_price_batch/valid_symbols') do
+          VCR.use_cassette('hg_brasil_stock_price_batch/valid_asset_ticker_symbols') do
             result = asset_details_batch
 
             expect(result).to be_an(Array)
@@ -154,10 +154,10 @@ RSpec.describe HgBrasil::Stocks do
       end
 
       context 'when some stocks are invalid' do
-        let(:symbols) { 'FELIPE,HGLG11,INVALID,PETR4,VALE3' }
+        let(:asset_ticker_symbols) { 'FELIPE,HGLG11,INVALID,PETR4,VALE3' }
 
         it 'returns the stock prices' do
-          VCR.use_cassette('hg_brasil_stock_price_batch/partial_invalid_symbols') do
+          VCR.use_cassette('hg_brasil_stock_price_batch/partial_invalid_asset_ticker_symbols') do
             result = asset_details_batch
 
             expect(result).to be_an(Array)
@@ -177,10 +177,10 @@ RSpec.describe HgBrasil::Stocks do
       end
 
       context 'when all stocks are invalid' do
-        let(:symbols) { 'INVALID,INVALID2,INVALID3,INVALID4' }
+        let(:asset_ticker_symbols) { 'INVALID,INVALID2,INVALID3,INVALID4' }
 
         it 'returns an empty array' do
-          VCR.use_cassette('hg_brasil_stock_price_batch/all_invalid_symbols') do
+          VCR.use_cassette('hg_brasil_stock_price_batch/all_invalid_asset_ticker_symbols') do
             result = asset_details_batch
 
             expect(result).to eq([])
@@ -190,10 +190,10 @@ RSpec.describe HgBrasil::Stocks do
     end
 
     context 'when searching for more than 5 stocks' do
-      let(:symbols) { 'EMBR3,HGLG11,ITSA4,PETR4,VALE3,B3SA3' }
+      let(:asset_ticker_symbols) { 'EMBR3,HGLG11,ITSA4,PETR4,VALE3,B3SA3' }
 
       it 'returns an empty array' do
-        VCR.use_cassette('hg_brasil_stock_price_batch/more_than_5_symbols') do
+        VCR.use_cassette('hg_brasil_stock_price_batch/more_than_5_asset_ticker_symbols') do
           result = asset_details_batch
 
           expect(result).to be_nil

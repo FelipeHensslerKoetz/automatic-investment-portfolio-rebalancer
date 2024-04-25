@@ -1,7 +1,7 @@
 ---
 :queues:
   - critical
-  - price_sync_hg_brasil_batch
+  - assets_hg_brasil_sync
   - asset_discovery
   - default
   - low
