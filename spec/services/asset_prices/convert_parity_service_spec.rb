@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AssetPrices::ConvertParityService do
-  subject(:price) { described_class.new(asset_price:, output_currency:) }
+  subject(:price) { described_class.call(asset_price:, output_currency:) }
 
   let(:petr4_asset) do
     create(:asset,
@@ -38,7 +38,7 @@ RSpec.describe AssetPrices::ConvertParityService do
     end
 
     it 'returns the asset price in the target currency' do
-      response = price.call
+      response = price
       expect(response).to be_a(BigDecimal)
       expect(response.truncate(2)).to eq(7.6.to_d)
       expect(response * 5.12.to_d).to eq(38.94.to_d)
@@ -50,14 +50,14 @@ RSpec.describe AssetPrices::ConvertParityService do
       let(:asset_price) { nil }
       let(:output_currency) { usd_currency }
 
-      it { expect { price.call }.to raise_error(ArgumentError) }
+      it { expect { price }.to raise_error(ArgumentError) }
     end
 
     context 'when output_currency param is invalid' do
       let(:asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource) }
       let(:output_currency) { nil }
 
-      it { expect { price.call }.to raise_error(ArgumentError) }
+      it { expect { price }.to raise_error(ArgumentError) }
     end
 
     context 'when all asset prices are outdated' do
@@ -79,7 +79,7 @@ RSpec.describe AssetPrices::ConvertParityService do
                exchange_rate: 5.12)
       end
 
-      it { expect { price.call }.to raise_error(AssetPriceOutdatedError) }
+      it { expect { price }.to raise_error(AssetPriceOutdatedError) }
     end
 
     context 'when there are no currency parities' do
@@ -93,7 +93,7 @@ RSpec.describe AssetPrices::ConvertParityService do
                status: :updated)
       end
 
-      it { expect { price.call }.to raise_error(CurrencyParityMissingError) }
+      it { expect { price }.to raise_error(CurrencyParityMissingError) }
     end
 
     context 'when there are outdated only currency parities' do
@@ -117,7 +117,7 @@ RSpec.describe AssetPrices::ConvertParityService do
         create(:currency_parity_exchange_rate, :with_hg_brasil_stock_price_partner_resource, :outdated, currency_parity:)
       end
 
-      it { expect { price.call }.to raise_error(CurrencyParityOutdatedError) }
+      it { expect { price }.to raise_error(CurrencyParityOutdatedError) }
     end
   end
 end
