@@ -53,25 +53,25 @@ module HttpRequest
     end
 
     def create_http_request_log(faraday_response)
-      Log.create(kind: :http_request, data: {
-                   request_url: faraday_response.env.url.to_s,
-                   request_method: faraday_response.env.method.to_s.upcase,
-                   request_headers: faraday_response.env.request_headers,
-                   request_query_params: faraday_response.env.params,
-                   response_body: JSON.parse(faraday_response.body),
-                   response_status_code: faraday_response.status,
-                   response_headers: faraday_response.headers
-                 })
+      LogService.create_log(kind: :info, data: {
+                              request_url: faraday_response.env.url.to_s,
+                              request_method: faraday_response.env.method.to_s.upcase,
+                              request_headers: faraday_response.env.request_headers,
+                              request_query_params: faraday_response.env.params,
+                              response_body: JSON.parse(faraday_response.body),
+                              response_status_code: faraday_response.status,
+                              response_headers: faraday_response.headers
+                            })
     end
 
     def create_http_request_error_log(url, params, headers, error)
-      Log.create(kind: :http_request, data: {
-                   request_url: url,
-                   request_method: 'GET',
-                   request_headers: headers,
-                   request_query_params: params,
-                   response_errors: error
-                 })
+      LogService.create_log(kind: :error, data: {
+                              request_url: url,
+                              request_method: 'GET',
+                              request_headers: headers,
+                              request_query_params: params,
+                              response_errors: error
+                            })
     end
   end
 end

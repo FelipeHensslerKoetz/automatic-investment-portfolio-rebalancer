@@ -2,7 +2,7 @@
 
 class Log < ApplicationRecord
   # Constants
-  LOG_KINDS = %i[error http_request info].freeze
+  LOG_KINDS = %i[error info].freeze
 
   # Validations
   validates :kind, :data, presence: true
