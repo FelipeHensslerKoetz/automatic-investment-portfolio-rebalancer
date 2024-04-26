@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require './lib/hg_brasil/stocks'
+
 module Assets
   module Discovery
     class HgBrasilService

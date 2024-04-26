@@ -16,7 +16,6 @@ class AssetPrice < ApplicationRecord
   scope :updated, -> { where(status: :updated) }
   scope :scheduled, -> { where(status: :scheduled) }
   scope :processing, -> { where(status: :processing) }
-  scope :outdated, -> { where(status: :outdated) }
   scope :failed, -> { where(status: :failed) }
 
   # AASM
@@ -28,7 +27,7 @@ class AssetPrice < ApplicationRecord
     state :failed
 
     event :schedule do
-      transitions from: %i[outdated failed], to: :scheduled
+      transitions from: %i[failed updated], to: :scheduled
     end
 
     event :process do
@@ -41,10 +40,6 @@ class AssetPrice < ApplicationRecord
 
     event :up_to_date do
       transitions from: :processing, to: :updated
-    end
-
-    event :out_of_date do
-      transitions from: :updated, to: :outdated
     end
   end
 end

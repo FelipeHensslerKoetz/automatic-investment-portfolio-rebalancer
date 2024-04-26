@@ -55,11 +55,10 @@ RSpec.describe AssetPrice, type: :model do
 
   describe 'aasm' do
     it { should have_state(:updated) }
-    it { should transition_from(:outdated).to(:scheduled).on_event(:schedule) }
+    it { should transition_from(:updated).to(:scheduled).on_event(:schedule) }
     it { should transition_from(:failed).to(:scheduled).on_event(:schedule) }
     it { should transition_from(:scheduled).to(:processing).on_event(:process) }
     it { should transition_from(:processing).to(:failed).on_event(:fail) }
     it { should transition_from(:processing).to(:updated).on_event(:up_to_date) }
-    it { should transition_from(:updated).to(:outdated).on_event(:out_of_date) }
   end
 end
