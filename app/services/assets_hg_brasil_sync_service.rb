@@ -22,7 +22,7 @@ class AssetsHgBrasilSyncService
 
       asset_price.process!
       asset_price.up_to_date! if asset_price.update!(asset_details(asset_price.ticker_symbol))
-    rescue StandardError => e
+    rescue StandardError
       # TODO: saver error message
       asset_price.fail!
       next

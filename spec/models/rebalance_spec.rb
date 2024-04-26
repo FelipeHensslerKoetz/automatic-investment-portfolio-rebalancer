@@ -34,12 +34,12 @@ RSpec.describe Rebalance, type: :model do
       end
     end
 
-    describe '.finished' do
-      let!(:rebalance) { create(:rebalance, :finished) }
+    describe '.succeed' do
+      let!(:rebalance) { create(:rebalance, :succeed) }
       let!(:rebalance_pending) { create(:rebalance, :pending) }
 
-      it 'returns rebalances with status finished' do
-        expect(described_class.finished).to eq([rebalance])
+      it 'returns rebalances with status succeed' do
+        expect(described_class.succeed).to eq([rebalance])
       end
     end
 
@@ -56,7 +56,7 @@ RSpec.describe Rebalance, type: :model do
   describe 'aasm' do
     it { is_expected.to have_state(:pending) }
     it { is_expected.to transition_from(:pending).to(:processing).on_event(:process) }
-    it { is_expected.to transition_from(:processing).to(:finished).on_event(:finish) }
+    it { is_expected.to transition_from(:processing).to(:succeed).on_event(:success) }
     it { is_expected.to transition_from(:processing).to(:failed).on_event(:fail) }
     it { is_expected.to transition_from(:failed).to(:processing).on_event(:process) }
   end

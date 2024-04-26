@@ -35,12 +35,12 @@ RSpec.describe RebalanceOrder, type: :model do
       end
     end
 
-    describe '.finished' do
-      it 'returns finished rebalance orders' do
-        finished_rebalance_order = create(:rebalance_order, status: 'finished')
+    describe '.succeed' do
+      it 'returns succeed rebalance orders' do
+        succeed_rebalance_order = create(:rebalance_order, status: 'succeed')
         create(:rebalance_order, status: 'pending')
-        expect(RebalanceOrder.finished.count).to eq(1)
-        expect(RebalanceOrder.finished).to include(finished_rebalance_order)
+        expect(RebalanceOrder.succeed.count).to eq(1)
+        expect(RebalanceOrder.succeed).to include(succeed_rebalance_order)
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe RebalanceOrder, type: :model do
   describe 'aasm' do
     it { is_expected.to have_state(:pending) }
     it { is_expected.to transition_from(:pending).to(:processing).on_event(:process) }
-    it { is_expected.to transition_from(:processing).to(:finished).on_event(:finish) }
+    it { is_expected.to transition_from(:processing).to(:succeed).on_event(:success) }
     it { is_expected.to transition_from(:processing).to(:failed).on_event(:fail) }
     it { is_expected.to transition_from(:failed).to(:pending).on_event(:reprocess) }
   end

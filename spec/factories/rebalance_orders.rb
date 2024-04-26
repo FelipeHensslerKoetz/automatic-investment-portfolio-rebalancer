@@ -15,8 +15,8 @@ FactoryBot.define do
       status { 'processing' }
     end
 
-    trait :finished do
-      status { 'finished' }
+    trait :succeed do
+      status { 'succeed' }
     end
 
     trait :failed do

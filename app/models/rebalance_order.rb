@@ -18,22 +18,22 @@ class RebalanceOrder < ApplicationRecord
   # Scopes
   scope :pending, -> { where(status: :pending) }
   scope :processing, -> { where(status: :processing) }
-  scope :finished, -> { where(status: :finished) }
+  scope :succeed, -> { where(status: :succeed) }
   scope :failed, -> { where(status: :failed) }
 
   # AASM
   aasm column: :status do
     state :pending, initial: true
     state :processing
-    state :finished
+    state :succeed
     state :failed
 
     event :process do
       transitions from: :pending, to: :processing
     end
 
-    event :finish do
-      transitions from: :processing, to: :finished
+    event :success do
+      transitions from: :processing, to: :succeed
     end
 
     event :fail do
