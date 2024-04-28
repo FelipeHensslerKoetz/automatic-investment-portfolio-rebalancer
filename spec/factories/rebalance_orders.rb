@@ -7,6 +7,10 @@ FactoryBot.define do
     kind { 'default' }
     scheduled_at { Time.zone.now }
 
+    trait :pending do
+      status { 'pending' }
+    end
+
     trait :scheduled do
       status { 'scheduled' }
     end

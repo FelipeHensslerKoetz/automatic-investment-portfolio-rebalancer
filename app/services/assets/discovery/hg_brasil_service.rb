@@ -21,12 +21,17 @@ module Assets
       def call
         return if skip_discovery?
 
-        return create_asset if existing_asset.blank?
-
-        create_asset_price(existing_asset)
+        discover_asset
+      rescue StandardError => e
+        LogService.create_log(kind: :error, data: error_message(e))
+        nil
       end
 
       private
+
+      def discover_asset
+        existing_asset.blank? ? create_asset : create_asset_price(existing_asset)
+      end
 
       def skip_discovery?
         asset_already_discovered? || asset_details.blank?
@@ -46,28 +51,41 @@ module Assets
         ActiveRecord::Base.transaction do
           @new_asset = Asset.create!(asset_details.except(:price, :reference_date, :currency).merge(custom: false))
           create_asset_price(@new_asset)
+          @new_asset
         end
-
-        @new_asset
-      rescue ActiveRecord::RecordInvalid => e
-        Rails.logger.error("Error creating asset: #{e.message}")
-        nil
       end
 
       def create_asset_price(target_asset)
-        AssetPrice.create!(asset: target_asset,
-                           partner_resource:,
-                           price: asset_details[:price],
-                           last_sync_at: Time.zone.now,
-                           ticker_symbol: asset_details[:ticker_symbol],
-                           currency:,
-                           reference_date: asset_details[:reference_date])
+        asset_price = AssetPrice.create!(asset: target_asset,
+                                         partner_resource:,
+                                         price: asset_details[:price],
+                                         last_sync_at: Time.zone.now,
+                                         ticker_symbol: asset_details[:ticker_symbol],
+                                         currency:,
+                                         reference_date: asset_details[:reference_date])
+
+        LogService.create_log(kind: :info, data: new_asset_price_message(asset_price))
+
         nil
       end
 
-      # TODO: treat exception
       def asset_details
         @asset_details ||= HgBrasil::Stocks.asset_details(symbol:)
+      end
+
+      def error_message(error)
+        {
+          context: "#{self.class} - symbol=#{symbol}",
+          error: error.message,
+          backtrace: error.backtrace
+        }
+      end
+
+      def new_asset_price_message(asset_price)
+        {
+          context: "#{self.class} - symbol=#{symbol}",
+          message: "New AssetPrice created id=#{asset_price.id} symbol=#{asset_price.ticker_symbol}"
+        }
       end
     end
   end

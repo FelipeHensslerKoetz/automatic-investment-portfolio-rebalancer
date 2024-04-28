@@ -17,10 +17,14 @@ RSpec.describe RebalanceOrder, type: :model do
   end
 
   describe 'scopes' do
+    let!(:pending_rebalance_order) { create(:rebalance_order, status: 'pending') }
+    let!(:scheduled_rebalance_order) { create(:rebalance_order, status: 'scheduled') }
+    let!(:processing_rebalance_order) { create(:rebalance_order, status: 'processing') }
+    let!(:succeed_rebalance_order) { create(:rebalance_order, status: 'succeed') }
+    let!(:failed_rebalance_order) { create(:rebalance_order, status: 'failed') }
+
     describe '.pending' do
       it 'returns pending rebalance orders' do
-        pending_rebalance_order = create(:rebalance_order, status: 'pending')
-        create(:rebalance_order, status: 'processing')
         expect(RebalanceOrder.pending.count).to eq(1)
         expect(RebalanceOrder.pending).to include(pending_rebalance_order)
       end
@@ -28,8 +32,6 @@ RSpec.describe RebalanceOrder, type: :model do
 
     describe '.processing' do
       it 'returns processing rebalance orders' do
-        processing_rebalance_order = create(:rebalance_order, status: 'processing')
-        create(:rebalance_order, status: 'pending')
         expect(RebalanceOrder.processing.count).to eq(1)
         expect(RebalanceOrder.processing).to include(processing_rebalance_order)
       end
@@ -37,8 +39,6 @@ RSpec.describe RebalanceOrder, type: :model do
 
     describe '.succeed' do
       it 'returns succeed rebalance orders' do
-        succeed_rebalance_order = create(:rebalance_order, status: 'succeed')
-        create(:rebalance_order, status: 'pending')
         expect(RebalanceOrder.succeed.count).to eq(1)
         expect(RebalanceOrder.succeed).to include(succeed_rebalance_order)
       end
@@ -46,19 +46,25 @@ RSpec.describe RebalanceOrder, type: :model do
 
     describe '.failed' do
       it 'returns failed rebalance orders' do
-        failed_rebalance_order = create(:rebalance_order, status: 'failed')
-        create(:rebalance_order, status: 'pending')
         expect(RebalanceOrder.failed.count).to eq(1)
         expect(RebalanceOrder.failed).to include(failed_rebalance_order)
+      end
+    end
+
+    describe '.scheduled' do
+      it 'returns scheduled rebalance orders' do
+        expect(RebalanceOrder.scheduled.count).to eq(1)
+        expect(RebalanceOrder.scheduled).to include(scheduled_rebalance_order)
       end
     end
   end
 
   describe 'aasm' do
     it { is_expected.to have_state(:pending) }
-    it { is_expected.to transition_from(:pending).to(:processing).on_event(:process) }
+    it { is_expected.to transition_from(:pending).to(:scheduled).on_event(:schedule) }
+    it { is_expected.to transition_from(:scheduled).to(:processing).on_event(:process) }
     it { is_expected.to transition_from(:processing).to(:succeed).on_event(:success) }
     it { is_expected.to transition_from(:processing).to(:failed).on_event(:fail) }
-    it { is_expected.to transition_from(:failed).to(:pending).on_event(:reprocess) }
+    it { is_expected.to transition_from(:failed).to(:pending).on_event(:retry) }
   end
 end

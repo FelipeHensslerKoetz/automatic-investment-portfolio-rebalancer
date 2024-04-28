@@ -20,6 +20,13 @@ partner_resources_attributes = [
     description: 'API that retrieves brazilian asset prices with a delay between 15 minutes up to 1 hour. The endpoint example is: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=embr3',
     url: 'https://console.hgbrasil.com/documentation/finance',
     partner: Partner.find_by(slug: 'hg_brasil')
+  },
+  {
+    slug: 'hg_brasil_quotation',
+    name: 'HG Brasil - Quotation',
+    description: 'API that retrieves the quotation of currencies and cryptocurrencies. The endpoint example is: https://api.hgbrasil.com/finance/quotations',
+    url: 'https://console.hgbrasil.com/documentation/finance',
+    partner: Partner.find_by(slug: 'hg_brasil')
   }
 ]
 
@@ -41,5 +48,16 @@ parsed_currencies_csv.each do |row|
   if !Currency.exists?(code: code, name: name)
     Currency.create!(name: name, code: code)
     puts "#{name}(#{code}) currency created!"
+  end
+end
+
+brl_currency = Currency.find_by(code: 'BRL')
+
+Currency.all.each do |currency|
+  next if currency.code == 'BRL'
+
+  if !CurrencyParity.exists?(currency_from: currency, currency_to: brl_currency)
+    CurrencyParity.create!(currency_from: currency, currency_to: brl_currency)
+    puts "#{currency.code} to BRL currency_parity created!"
   end
 end

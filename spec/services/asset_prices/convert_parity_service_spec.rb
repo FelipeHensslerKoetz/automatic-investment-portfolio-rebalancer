@@ -62,9 +62,9 @@ RSpec.describe AssetPrices::ConvertParityService do
       it { expect { price }.to raise_error(ArgumentError) }
     end
 
-    context 'when all asset prices are outdated' do
+    context 'when there is no updated asset' do
       let(:asset_price) do
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, status: :outdated, asset: petr4_asset,
+        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, status: :scheduled, asset: petr4_asset,
                                                                            currency: brl_currency)
       end
 
@@ -101,7 +101,7 @@ RSpec.describe AssetPrices::ConvertParityService do
       it { expect { price }.to raise_error(CurrencyParityMissingError) }
     end
 
-    context 'when there are outdated only currency parities' do
+    context 'when there are no updated only currency parities' do
       let(:asset) { petr4_asset }
       let(:output_currency_id) { btc_currency.id }
       let(:asset_price_id) { asset_price.id }
@@ -120,7 +120,7 @@ RSpec.describe AssetPrices::ConvertParityService do
       end
 
       let!(:currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, :with_hg_brasil_stock_price_partner_resource, :outdated, currency_parity:)
+        create(:currency_parity_exchange_rate, :with_hg_brasil_stock_price_partner_resource, :scheduled, currency_parity:)
       end
 
       it { expect { price }.to raise_error(CurrencyParityOutdatedError) }

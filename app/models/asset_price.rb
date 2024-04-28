@@ -20,10 +20,9 @@ class AssetPrice < ApplicationRecord
 
   # AASM
   aasm column: :status do
-    state :updated, initial: true
     state :scheduled
     state :processing
-    state :outdated
+    state :updated, initial: true
     state :failed
 
     event :schedule do

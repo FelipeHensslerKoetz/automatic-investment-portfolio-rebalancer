@@ -21,10 +21,6 @@ FactoryBot.define do
       status { 'processing' }
     end
 
-    trait :outdated do
-      status { 'outdated' }
-    end
-
     trait :failed do
       status { 'failed' }
     end
