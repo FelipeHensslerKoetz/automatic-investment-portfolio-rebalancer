@@ -35,6 +35,7 @@ RSpec.describe Assets::Discovery::HgBrasilService do
           expect(asset_price.created_at).to be_a(Time)
           expect(asset_price.updated_at).to be_a(Time)
           expect(asset_price.reference_date).to be_a(Time)
+          expect(Log.info.count).to eq(2)
         end
       end
     end
@@ -63,6 +64,7 @@ RSpec.describe Assets::Discovery::HgBrasilService do
           expect(asset_price.created_at).to be_a(Time)
           expect(asset_price.updated_at).to be_a(Time)
           expect(asset_price.reference_date).to be_a(Time)
+          expect(Log.info.count).to eq(2)
         end
       end
     end
@@ -91,6 +93,7 @@ RSpec.describe Assets::Discovery::HgBrasilService do
           expect(asset_price.created_at).to be_a(Time)
           expect(asset_price.updated_at).to be_a(Time)
           expect(asset_price.reference_date).to be_a(Time)
+          expect(Log.info.count).to eq(2)
         end
       end
     end
@@ -99,9 +102,10 @@ RSpec.describe Assets::Discovery::HgBrasilService do
   context 'when symbols does not exists' do
     let(:symbol) { 'INVALID' }
 
-    it 'returns empty array' do
+    it 'returns nil' do
       VCR.use_cassette('hg_brasil_stock_price/asset_discovery_not_found') do
         expect(hg_brasil_asset_discovery).to be_nil
+        expect(Log.error.count).to eq(0)
       end
     end
   end
@@ -113,9 +117,11 @@ RSpec.describe Assets::Discovery::HgBrasilService do
       allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::TimeoutError)
     end
 
-    it 'returns empty array' do
+    it 'returns nil' do
       VCR.use_cassette('hg_brasil_stock_price/asset_discovery_error') do
-        expect(hg_brasil_asset_discovery).to be_nil
+        response = hg_brasil_asset_discovery
+        expect(response).to be_nil
+        expect(Log.error.count).to eq(1)
       end
     end
   end

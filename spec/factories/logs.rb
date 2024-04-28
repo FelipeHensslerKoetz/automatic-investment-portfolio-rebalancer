@@ -2,7 +2,14 @@
 
 FactoryBot.define do
   factory :log do
-    type { Log::LOG_KINDS.sample }
-    data { {} }
+    data { { 'some' => 'data' } }
+
+    trait :error do
+      kind { :error }
+    end
+
+    trait :info do
+      kind { :info }
+    end
   end
 end

@@ -66,6 +66,7 @@ RSpec.describe AssetsHgBrasilSyncService, type: :service do
         expect(wizc3_price.reload.price).to eq(hg_brasil_response[1][:price])
         expect(wizc3_price.reference_date).to eq(hg_brasil_response[1][:reference_date])
         expect(HgBrasil::Stocks).to have_received(:asset_details_batch).with(asset_ticker_symbols:).once
+        expect(Log.info.count).to eq(2)
       end
     end
 
@@ -78,6 +79,8 @@ RSpec.describe AssetsHgBrasilSyncService, type: :service do
       it 'update assets to failed status' do
         expect(petr4_price.reload.status).to eq('failed')
         expect(wizc3_price.reload.status).to eq('failed')
+        expect(HgBrasil::Stocks).to have_received(:asset_details_batch).with(asset_ticker_symbols:).twice
+        expect(Log.error.count).to eq(2)
       end
     end
   end
