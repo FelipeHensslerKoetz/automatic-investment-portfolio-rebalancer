@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
     t.bigint "partner_resource_id", null: false
     t.string "ticker_symbol", null: false
     t.bigint "currency_id", null: false
-    t.decimal "price", precision: 10, scale: 2, null: false
+    t.decimal "price", null: false
     t.datetime "last_sync_at", null: false
     t.datetime "reference_date", null: false
     t.datetime "scheduled_at"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
 
   create_table "currency_parity_exchange_rates", force: :cascade do |t|
     t.bigint "currency_parity_id", null: false
-    t.decimal "exchange_rate", precision: 10, scale: 2, null: false
+    t.decimal "exchange_rate", null: false
     t.datetime "last_sync_at", null: false
     t.datetime "reference_date", null: false
     t.bigint "partner_resource_id", null: false
@@ -80,9 +80,9 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
   create_table "investment_portfolio_assets", force: :cascade do |t|
     t.bigint "asset_id", null: false
     t.bigint "investment_portfolio_id", null: false
-    t.decimal "allocation_weight", precision: 10, scale: 2, default: "0.0", null: false
-    t.decimal "quantity", precision: 10, scale: 2, default: "0.0", null: false
-    t.decimal "deviation_percentage", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "allocation_weight", default: "0.0", null: false
+    t.decimal "quantity", default: "0.0", null: false
+    t.decimal "deviation_percentage", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
     t.bigint "investment_portfolio_id", null: false
     t.string "status", null: false
     t.string "kind", null: false
-    t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "amount", default: "0.0", null: false
     t.string "error_message"
     t.datetime "scheduled_at", null: false
     t.datetime "created_at", precision: 6, null: false

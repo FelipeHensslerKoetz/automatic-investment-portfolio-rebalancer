@@ -5,7 +5,7 @@ class CreateAssetPrices < ActiveRecord::Migration[6.1]
       t.references :partner_resource, null: false, foreign_key: true
       t.string :ticker_symbol, null: false
       t.references :currency, null: false, foreign_key: true
-      t.decimal :price, precision: 10, scale: 2, null: false
+      t.decimal :price, null: false
       t.datetime :last_sync_at, null: false
       t.datetime :reference_date, null: false
       t.datetime :scheduled_at

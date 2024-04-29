@@ -51,6 +51,7 @@ parsed_currencies_csv.each do |row|
   end
 end
 
+# Generate currency parities
 brl_currency = Currency.find_by(code: 'BRL')
 
 Currency.all.each do |currency|
@@ -59,5 +60,24 @@ Currency.all.each do |currency|
   if !CurrencyParity.exists?(currency_from: currency, currency_to: brl_currency)
     CurrencyParity.create!(currency_from: currency, currency_to: brl_currency)
     puts "#{currency.code} to BRL currency_parity created!"
+  end
+end
+
+# Generate HG Brasil currency parity exchange rates
+['USD','EUR', 'GBP', 'ARS', 'CAD', 'AUD', 'JPY', 'CNY', 'BTC'].each do |currency_code|
+  currency = Currency.find_by(code: currency_code)
+  currency_parity = CurrencyParity.find_by(currency_from: currency, currency_to: brl_currency)
+  partner_resource = PartnerResource.find_by(slug: 'hg_brasil_quotation')
+
+  if !CurrencyParityExchangeRate.exists?(currency_parity: currency_parity, partner_resource: partner_resource)
+    CurrencyParityExchangeRate.create!(
+      currency_parity: currency_parity,
+      partner_resource: partner_resource,
+      exchange_rate: 0.0,
+      reference_date: Date.today,
+      last_sync_at: Time.zone.now,
+      status: 'scheduled'
+    )
+    puts "#{currency_code} to BRL currency_parity_exchange_rate created!"
   end
 end

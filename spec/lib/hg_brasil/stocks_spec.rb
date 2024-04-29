@@ -85,9 +85,9 @@ RSpec.describe HgBrasil::Stocks do
           allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::TimeoutError)
         end
 
-        it 'raises an AlphaVantage::TimeoutError' do
+        it 'creates an erro log' do
           expect(asset_details).to be_nil
-          expect(Log.count).to eq(1)
+          expect(Log.error.count).to eq(1)
         end
       end
 
@@ -96,9 +96,9 @@ RSpec.describe HgBrasil::Stocks do
           allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::ConnectionFailed)
         end
 
-        it 'raises an AlphaVantage::ConnectionFailedError' do
+        it 'creates an error log' do
           expect(asset_details).to be_nil
-          expect(Log.count).to eq(1)
+          expect(Log.error.count).to eq(1)
         end
       end
 
@@ -107,7 +107,7 @@ RSpec.describe HgBrasil::Stocks do
           allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::ClientError)
         end
 
-        it 'raises an AlphaVantage::ClientError' do
+        it 'creates an error log' do
           expect(asset_details).to be_nil
           expect(Log.count).to eq(1)
         end
@@ -118,9 +118,9 @@ RSpec.describe HgBrasil::Stocks do
           allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::ServerError)
         end
 
-        it 'raises an AlphaVantage::ServerError' do
+        it 'creates an error log' do
           expect(asset_details).to be_nil
-          expect(Log.count).to eq(1)
+          expect(Log.error.count).to eq(1)
         end
       end
     end

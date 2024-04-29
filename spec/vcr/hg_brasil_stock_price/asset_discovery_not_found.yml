@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=INVALID
+    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=INVALID
     body:
       encoding: US-ASCII
       string: ''
@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 20 Apr 2024 21:07:10 GMT
+      - Mon, 29 Apr 2024 01:18:24 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -35,21 +35,21 @@ http_interactions:
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - a33bee1e-4102-4ef5-9972-9df0c66feff9
+      - db3db717-59bd-4bc9-bcf2-85213d85e55d
       x-runtime:
-      - '0.010281'
+      - '0.017474'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=MlUiYOZ%2BsOta9jkwlrQz73L1rx2AxPGCaPATehcHcRWyeJX5cCla9shT4HJ3kVUifzuwontw01wxUPA%2FReP9sC9ebXBeDm8A3RpuEtGLYSvrDAuJIIBY2iqRU6kZGlTeOU5eoRbQBdelkBI%2FhuLK"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=QgBIMrxBvrHv6iEBpEUZ2HnoNhG8E%2BfLDsPZkhD03L8LkDo9HSmvEfkmfvkYbOv6T0di9lpbinkSva6BrJXyzQzdVxtzMPbTFiWFEm0P24oIYJAWDn%2B6ZB91RhugJZiKuC%2FCfUdjwWkOYx4QmGXv"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 87781a33de2b4b28-GRU
+      - 87bb75395fcaa499-GRU
       content-encoding:
       - gzip
       alt-svc:
@@ -59,5 +59,5 @@ http_interactions:
       string: '{"by":"symbol","valid_key":true,"results":{"INVALID":{"error":true,"message":"Error
         to get Stock for #INVALID: Erro 852 - Símbolo não encontrado, por favor entre
         em contato conosco em console.hgbrasil.com."}},"execution_time":0.0,"from_cache":true}'
-  recorded_at: Sat, 20 Apr 2024 21:07:10 GMT
+  recorded_at: Mon, 29 Apr 2024 01:18:24 GMT
 recorded_with: VCR 6.2.0

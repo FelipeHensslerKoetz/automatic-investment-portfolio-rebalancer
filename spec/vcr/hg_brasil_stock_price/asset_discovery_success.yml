@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=PETR4
+    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=PETR4
     body:
       encoding: US-ASCII
       string: ''
@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Sat, 20 Apr 2024 21:07:06 GMT
+      - Mon, 29 Apr 2024 01:18:23 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -31,25 +31,25 @@ http_interactions:
       x-content-type-options:
       - nosniff
       etag:
-      - W/"f3cb9dff5dce9904baa943241bc09225"
+      - W/"e2bd10b9b2cee76caca674bde6eda845"
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - d54e47a4-2a5d-41ce-b80d-18be34a48602
+      - c00ff404-28a2-4880-8ca0-fdbe9ea4abb7
       x-runtime:
-      - '0.029525'
+      - '0.020394'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=mkJxQb%2F5ZHL%2Fw%2FzpDh54VB2jekbaTH7YSunKcbuiu2ucbUwvUyd%2BkgWmUKL%2FyH2gkefV3Gqqui0HbEh9luNSq646uhvJg3QLVR5aD3SR4E%2Fr9uWEtddoZ0o3d6BoHxoPacUwR%2BxQsFOYD6SP1PgF"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=edHzewjZpjWPrE95MUJT55qlCFaAShzmAbS%2Bh2Y2obsfXGzQVihShtHogR51GL%2F426GAmFzosW8BNKM63MIhF8BMAv78GNQWCSS95wxbzPlJNkEHG2d2qMZplHRbRnxc9pf70eVLAwSZGzZkefRJ"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 87781a1f7cff0131-GRU
+      - 87bb753339f901a9-GRU
       content-encoding:
       - gzip
       alt-svc:
@@ -63,7 +63,7 @@ http_interactions:
         Vinculadas à Energia.","website":"http://www.petrobras.com.br/","sector":"Petróleo.
         Gás e Biocombustíveis / Petróleo. Gás e Biocombustíveis / Exploração. Refino
         e Distribuição","financials":{"quota_count":0,"dividends":{"yield_12m":null,"yield_12m_sum":null}},"region":"Brazil/Sao
-        Paulo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"logo":{"small":"https://assets.hgbrasil.com/finance/companies/small/petrobras.png","big":"https://assets.hgbrasil.com/finance/companies/big/petrobras.png"},"market_cap":537776.0,"price":40.53,"change_percent":1.71,"change_price":0.68,"updated_at":"2024-04-19
-        17:12:01"}},"execution_time":0.0,"from_cache":true}'
-  recorded_at: Sat, 20 Apr 2024 21:07:07 GMT
+        Paulo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"logo":{"small":"https://assets.hgbrasil.com/finance/companies/small/petrobras.png","big":"https://assets.hgbrasil.com/finance/companies/big/petrobras.png"},"market_cap":556555.0,"price":41.41,"change_percent":2.19,"change_price":0.89,"updated_at":"2024-04-28
+        20:45:59"}},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Mon, 29 Apr 2024 01:18:23 GMT
 recorded_with: VCR 6.2.0

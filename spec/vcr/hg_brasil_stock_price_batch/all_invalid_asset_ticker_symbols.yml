@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=INVALID%2CINVALID2%2CINVALID3%2CINVALID4
+    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=INVALID%2CINVALID2%2CINVALID3%2CINVALID4
     body:
       encoding: US-ASCII
       string: ''
@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Thu, 25 Apr 2024 02:35:43 GMT
+      - Mon, 29 Apr 2024 01:18:20 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -35,21 +35,21 @@ http_interactions:
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - '019ef29e-5083-49c3-a9e4-ab041eb2343b'
+      - e9a670a2-9eef-4190-8355-eee73de41357
       x-runtime:
-      - '0.020542'
+      - '0.019608'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=GRu1vq2Qhr65khfUX6vsm4%2B45DeQWFIfTWYgo5dn2ckgxOXdt4zcpm7kf7yVSm8DdFi%2BoOyo3dEg43GjnXrLaqB88bDqAu5NHwYfCTtksgxwkp8XfdtCbbMiNOBi4chsMqYp8Xs2Uw5%2FQh%2Fi4RSG"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=mlg%2Bs%2FfW5rtq4Yr1Iwzx5S%2B1T%2FImDIYFLPfL7FC17jvBre996FTHLThLgumOYknmkZo4707vQt5VCNqFusmLbvG38nhHQARodlDPk%2FQQ57Au5bZR0NEhn3oLlkp3S4gn2I%2FRPN7UrzyylPv%2BKTpp"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 879af0fbb815a4ea-GRU
+      - 87bb751f89ed1a89-GRU
       content-encoding:
       - gzip
       alt-svc:
@@ -65,5 +65,5 @@ http_interactions:
         em contato conosco em console.hgbrasil.com."},"INVALID4":{"error":true,"message":"Error
         to get Stock for #INVALID4: Erro 852 - Símbolo não encontrado, por favor entre
         em contato conosco em console.hgbrasil.com."}},"execution_time":0.01,"from_cache":true}'
-  recorded_at: Thu, 25 Apr 2024 02:35:43 GMT
+  recorded_at: Mon, 29 Apr 2024 01:18:20 GMT
 recorded_with: VCR 6.2.0
