@@ -26,7 +26,8 @@ module AssetPrices
     end
 
     def currency_parity
-      @currency_parity ||= CurrencyParity.find_by(currency_from: output_currency, currency_to: input_currency)
+      @currency_parity ||= CurrencyParity.find_by(currency_from: output_currency,
+                                                  currency_to: input_currency)
     end
 
     def exchange_rate
