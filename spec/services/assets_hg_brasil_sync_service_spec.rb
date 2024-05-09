@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AssetsHgBrasilSyncService, type: :service do
-  subject(:sync_service) { described_class.new(asset_ticker_symbols:) }
+  subject(:sync_service) { described_class.new(ticker_symbols:) }
 
   let!(:petr4) { create(:asset, ticker_symbol: 'PETR4') }
   let!(:wizc3) { create(:asset, ticker_symbol: 'WIZC3') }
@@ -24,7 +24,7 @@ RSpec.describe AssetsHgBrasilSyncService, type: :service do
            partner_resource:)
   end
 
-  let(:asset_ticker_symbols) { "#{petr4.ticker_symbol},#{wizc3.ticker_symbol}" }
+  let(:ticker_symbols) { "#{petr4.ticker_symbol},#{wizc3.ticker_symbol}" }
 
   describe '#call' do
     context 'when batch update is successful' do
@@ -54,7 +54,7 @@ RSpec.describe AssetsHgBrasilSyncService, type: :service do
       end
 
       before do
-        allow(HgBrasil::Stocks).to receive(:asset_details_batch).with(asset_ticker_symbols:).and_return(hg_brasil_response)
+        allow(HgBrasil::Stocks).to receive(:asset_details).with(ticker_symbols:).and_return(hg_brasil_response)
         sync_service.call
       end
 
@@ -65,21 +65,21 @@ RSpec.describe AssetsHgBrasilSyncService, type: :service do
         expect(wizc3_price.reload.status).to eq('updated')
         expect(wizc3_price.reload.price).to eq(hg_brasil_response[1][:price])
         expect(wizc3_price.reference_date).to eq(hg_brasil_response[1][:reference_date])
-        expect(HgBrasil::Stocks).to have_received(:asset_details_batch).with(asset_ticker_symbols:).once
+        expect(HgBrasil::Stocks).to have_received(:asset_details).with(ticker_symbols:).once
         expect(Log.info.count).to eq(2)
       end
     end
 
     context 'when batch update fails' do
       before do
-        allow(HgBrasil::Stocks).to receive(:asset_details_batch).with(asset_ticker_symbols:).and_raise(StandardError)
+        allow(HgBrasil::Stocks).to receive(:asset_details).with(ticker_symbols:).and_raise(StandardError)
         sync_service.call
       end
 
       it 'update assets to failed status' do
         expect(petr4_price.reload.status).to eq('failed')
         expect(wizc3_price.reload.status).to eq('failed')
-        expect(HgBrasil::Stocks).to have_received(:asset_details_batch).with(asset_ticker_symbols:).twice
+        expect(HgBrasil::Stocks).to have_received(:asset_details).with(ticker_symbols:).twice
         expect(Log.error.count).to eq(2)
       end
     end

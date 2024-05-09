@@ -3,16 +3,16 @@
 require './lib/hg_brasil/stocks'
 
 class AssetsHgBrasilSyncService
-  attr_reader :partner_resource, :asset_prices, :asset_ticker_symbols
+  attr_reader :partner_resource, :asset_prices, :ticker_symbols
 
-  def self.call(asset_ticker_symbols:)
-    new(asset_ticker_symbols:).call
+  def self.call(ticker_symbols:)
+    new(ticker_symbols:).call
   end
 
-  def initialize(asset_ticker_symbols:)
-    @asset_ticker_symbols = asset_ticker_symbols
+  def initialize(ticker_symbols:)
+    @ticker_symbols = ticker_symbols
     @partner_resource = PartnerResource.find_by!(slug: :hg_brasil_stock_price)
-    @asset_prices = AssetPrice.where(ticker_symbol: asset_ticker_symbols.split(','),
+    @asset_prices = AssetPrice.where(ticker_symbol: ticker_symbols.split(','),
                                      partner_resource:)
   end
 
@@ -27,12 +27,12 @@ class AssetsHgBrasilSyncService
 
   private
 
-  def fetch_asset_details_by_batch
-    @fetch_asset_details_by_batch ||= ::HgBrasil::Stocks.asset_details_batch(asset_ticker_symbols:)
+  def fetch_asset_details
+    @fetch_asset_details ||= ::HgBrasil::Stocks.asset_details(ticker_symbols:)
   end
 
   def asset_details(ticker_symbol)
-    asset_detail = fetch_asset_details_by_batch.detect { |asset| asset[:ticker_symbol] == ticker_symbol }
+    asset_detail = fetch_asset_details.detect { |asset| asset[:ticker_symbol] == ticker_symbol }
 
     {
       price: asset_detail.fetch(:price),
@@ -56,7 +56,7 @@ class AssetsHgBrasilSyncService
 
   def error_message(error)
     {
-      context: "#{self.class} - asset_ticker_symbols=#{asset_ticker_symbols}",
+      context: "#{self.class} - ticker_symbols=#{ticker_symbols}",
       message: error.message,
       backtrace: error.backtrace
     }
@@ -64,7 +64,7 @@ class AssetsHgBrasilSyncService
 
   def info_message(asset_price)
     {
-      context: "#{self.class} - asset_ticker_symbols=#{asset_ticker_symbols}",
+      context: "#{self.class} - ticker_symbols=#{ticker_symbols}",
       message: "Asset price updated successfully: id=#{asset_price.id} ticker_symbol=#{asset_price.ticker_symbol}"
     }
   end

@@ -3,16 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe Assets::Discovery::HgBrasilService do
-  subject(:hg_brasil_asset_discovery) { described_class.call(symbol:) }
+  subject(:hg_brasil_asset_discovery) { described_class.call(ticker_symbol:) }
 
   before do
     create(:partner_resource, :hg_brasil_stock_price)
     create(:currency, :brl)
   end
 
-  context 'when symbols exists' do
-    context 'when symbol is a stock' do
-      let(:symbol) { 'PETR4' }
+  context 'when ticker_symbol exists' do
+    context 'when ticker_symbol is a stock' do
+      let(:ticker_symbol) { 'PETR4' }
 
       it 'creates a new Asset and AssetPrice' do
         VCR.use_cassette('hg_brasil_stock_price/asset_discovery_success') do
@@ -40,8 +40,8 @@ RSpec.describe Assets::Discovery::HgBrasilService do
       end
     end
 
-    context 'when symbol is a fii' do
-      let(:symbol) { 'HGLG11' }
+    context 'when ticker_symbol is a fii' do
+      let(:ticker_symbol) { 'HGLG11' }
 
       it 'creates a new Asset and AssetPrice' do
         VCR.use_cassette('hg_brasil_stock_price/asset_discovery_fii_success') do
@@ -69,8 +69,8 @@ RSpec.describe Assets::Discovery::HgBrasilService do
       end
     end
 
-    context 'when symbol is an ETF' do
-      let(:symbol) { 'BOVA11' }
+    context 'when ticker_symbol is an ETF' do
+      let(:ticker_symbol) { 'BOVA11' }
 
       it 'creates a new Asset and AssetPrice' do
         VCR.use_cassette('hg_brasil_stock_price/asset_discovery_etf_success') do
@@ -99,8 +99,8 @@ RSpec.describe Assets::Discovery::HgBrasilService do
     end
   end
 
-  context 'when symbols does not exists' do
-    let(:symbol) { 'INVALID' }
+  context 'when ticker_symbol does not exists' do
+    let(:ticker_symbol) { 'INVALID' }
 
     it 'returns nil' do
       VCR.use_cassette('hg_brasil_stock_price/asset_discovery_not_found') do
@@ -111,7 +111,7 @@ RSpec.describe Assets::Discovery::HgBrasilService do
   end
 
   context 'when request fails' do
-    let(:symbol) { 'PETR4' }
+    let(:ticker_symbol) { 'PETR4' }
 
     before do
       allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::TimeoutError)

@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Mon, 29 Apr 2024 01:18:22 GMT
+      - Wed, 08 May 2024 23:09:37 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -31,25 +31,25 @@ http_interactions:
       x-content-type-options:
       - nosniff
       etag:
-      - W/"e2bd10b9b2cee76caca674bde6eda845"
+      - W/"c0d9b3d27cc3003b4ba9b03105fcdf87"
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - 5fcc729e-ba31-406d-85d4-1e36fc20047d
+      - 3e5bf126-e876-4093-be4a-6ebff7cc4ccd
       x-runtime:
-      - '0.008633'
+      - '0.013241'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=8bsV0X5zOZlfobzJ6DSccow9aHcYwBz9faU%2Fa8pd%2FKtnY%2FIN6G%2BQnDMzo%2BQOfYZ0y5x%2BLPIlhZ5X6i9YPNQyOvwx264US43fU%2BFz2ffgW76eudxNpIOx1zIyDTU98YSE%2BUozH1TCc4P5li9hWXRn"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=8F6rEkroMrnTEWpILlvqEPzMV%2BZzXdSnyR1MMgLJcZlgV%2F0TJgu0oMUQpAY0Z%2BbDkv%2Bk0dlKP%2BvzZUwNVW9zC6wt12reheezl9wUfsgbP28VJzMHqcKEiBgcBaU6jc9oA3tr4zycjsOUUWiBM4DK"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 87bb752fbbb9a170-GRU
+      - 880d1e51f9091ac3-GRU
       content-encoding:
       - gzip
       alt-svc:
@@ -63,7 +63,7 @@ http_interactions:
         Vinculadas à Energia.","website":"http://www.petrobras.com.br/","sector":"Petróleo.
         Gás e Biocombustíveis / Petróleo. Gás e Biocombustíveis / Exploração. Refino
         e Distribuição","financials":{"quota_count":0,"dividends":{"yield_12m":null,"yield_12m_sum":null}},"region":"Brazil/Sao
-        Paulo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"logo":{"small":"https://assets.hgbrasil.com/finance/companies/small/petrobras.png","big":"https://assets.hgbrasil.com/finance/companies/big/petrobras.png"},"market_cap":556555.0,"price":41.41,"change_percent":2.19,"change_price":0.89,"updated_at":"2024-04-28
-        20:45:59"}},"execution_time":0.0,"from_cache":true}'
-  recorded_at: Mon, 29 Apr 2024 01:18:22 GMT
+        Paulo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"logo":{"small":"https://assets.hgbrasil.com/finance/companies/small/petrobras.png","big":"https://assets.hgbrasil.com/finance/companies/big/petrobras.png"},"market_cap":557916.0,"price":41.27,"change_percent":1.53,"change_price":0.62,"updated_at":"2024-05-08
+        17:07:49"}},"execution_time":0.01,"from_cache":false}'
+  recorded_at: Wed, 08 May 2024 23:09:37 GMT
 recorded_with: VCR 6.2.0

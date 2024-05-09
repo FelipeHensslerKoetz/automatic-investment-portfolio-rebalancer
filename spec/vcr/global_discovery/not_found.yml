@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Mon, 29 Apr 2024 01:18:23 GMT
+      - Wed, 08 May 2024 23:09:37 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -31,25 +31,25 @@ http_interactions:
       x-content-type-options:
       - nosniff
       etag:
-      - W/"f0320a80189d8e76dcab196a3e22e8a1"
+      - W/"fcb0b04140f427fa776c60bc01923454"
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - 0c2b2a8e-8695-4de6-b7df-fb29b5a81480
+      - 3af1a36b-0ee7-4f7b-94a2-6aaf4e7ae372
       x-runtime:
-      - '0.022626'
+      - '0.014815'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=a2pLeTDtAW3HNHIpFeK6hqPIX7ATxlpP9Tzbbm8sKgqSrZ5EMOOsoe5Ij7gbqPW1WIwWxFXXhUllljEbTj7sd3YweYLz%2FswJOVO6n2T2XtU1ZItwzshoEnRPEJeLuDQHP5Rzq3LnmGt1%2FnPc13Sa"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=YPC03VKOI0y82gs26N%2BNHjDi0Xoc6ogF7tKQp8nnc5JQIqijbhVOVBD%2FqJLl7NqtooQMPMlVG37pF1wPq6wSzWcznVK7z%2F6A21o7T6GIl3inXawDXOrflt0XsHi2bxd9LbXk9zUeFKWFJIFQf%2FBS"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 87bb7531a81f0139-GRU
+      - 880d1e54ad4fa435-GRU
       content-encoding:
       - gzip
       alt-svc:
@@ -58,6 +58,6 @@ http_interactions:
       encoding: UTF-8
       string: '{"by":"symbol","valid_key":true,"results":{"NOT_FOUND":{"error":true,"message":"Error
         to get Stock for #NOT_FOUND: Erro 852 - Símbolo não encontrado, por favor
-        entre em contato conosco em console.hgbrasil.com."}},"execution_time":0.01,"from_cache":true}'
-  recorded_at: Mon, 29 Apr 2024 01:18:23 GMT
+        entre em contato conosco em console.hgbrasil.com."}},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Wed, 08 May 2024 23:09:37 GMT
 recorded_with: VCR 6.2.0

@@ -95,31 +95,31 @@ RSpec.describe CurrencyParityExchangeRatesHgBrasilSyncService do
         VCR.use_cassette('currency_parity_exchange_rates_hg_brasil_sync_service/success') do
           currency_parity_exchange_rates_hg_brasil_sync_service
 
-          expect(usd_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(5.1163.to_d)
+          expect(usd_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(5.0889.to_d)
           expect(usd_to_brl_currency_parity_exchange_rate).to be_updated
 
-          expect(eur_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(5.4747.to_d)
+          expect(eur_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(5.4704.to_d)
           expect(eur_to_brl_currency_parity_exchange_rate).to be_updated
 
-          expect(gbp_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(6.3892.to_d)
+          expect(gbp_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(6.3599.to_d)
           expect(gbp_to_brl_currency_parity_exchange_rate).to be_updated
 
           expect(ars_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(0.0058.to_d)
           expect(ars_to_brl_currency_parity_exchange_rate).to be_updated
 
-          expect(cad_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(3.7396.to_d)
+          expect(cad_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(3.7078.to_d)
           expect(cad_to_brl_currency_parity_exchange_rate).to be_updated
 
-          expect(aud_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(3.343.to_d)
+          expect(aud_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(3.3484.to_d)
           expect(aud_to_brl_currency_parity_exchange_rate).to be_updated
 
-          expect(jpy_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(0.0323.to_d)
+          expect(jpy_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(0.0327.to_d)
           expect(jpy_to_brl_currency_parity_exchange_rate).to be_updated
 
-          expect(cny_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(0.7209.to_d)
+          expect(cny_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(0.7044.to_d)
           expect(cny_to_brl_currency_parity_exchange_rate).to be_updated
 
-          expect(btc_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(342_643.897.to_d)
+          expect(btc_to_brl_currency_parity_exchange_rate.reload.exchange_rate).to eq(329_770.184.to_d)
           expect(btc_to_brl_currency_parity_exchange_rate).to be_updated
         end
       end

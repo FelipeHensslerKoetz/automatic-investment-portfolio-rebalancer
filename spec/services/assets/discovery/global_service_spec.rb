@@ -11,7 +11,7 @@ RSpec.describe Assets::Discovery::GlobalService do
     create(:currency, code: 'USD', name: 'United States Dollar')
   end
 
-  context 'when assetS were found in one partner resource' do
+  context 'when assets were found in one partner resource' do
     let(:keywords) { 'PETR4' }
 
     it 'creates a the asset with one asset price' do

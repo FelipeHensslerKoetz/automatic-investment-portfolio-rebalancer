@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=INVALID
+    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=EMBR3%2CHGLG11%2CITSA4%2CPETR4%2CVALE3%2CB3SA3
     body:
       encoding: US-ASCII
       string: ''
@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Mon, 29 Apr 2024 01:18:18 GMT
+      - Wed, 08 May 2024 22:21:33 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -31,33 +31,32 @@ http_interactions:
       x-content-type-options:
       - nosniff
       etag:
-      - W/"55daffa73ecf4336d2abff1190c25c31"
+      - W/"f3c8add636eea8e5adeb4ddc1c982bac"
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - c0858768-6046-48f6-a348-bbb6f3523520
+      - d37abdfb-189e-487a-bfb2-16c082ef5ffb
       x-runtime:
-      - '0.014046'
+      - '0.008528'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=a9Wkzs21dqwmj76FKuoPey02w8ba7gI0Y0RPH40OelWxsdCOsmKhMFDb%2FYamLtaU0TYPKwV8OFMmVK3wWf4yfougMx3CHEBPzrRZVXnyoHyF%2FWdNPT6g4pVP1j2SFCYKpFO3zzaxchj6zzkuP587"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=jgh0q0h1%2BgG6SsUFcwxSCmdpNOVDAFHGcVJas3wE2DtlZvHCrUos2nv9j7NADVP89GKdffg2YgbvY0Fu45jtiF30%2B6sbsKRId%2FsKMeR1f2JG22WnT8gcrWWB8lpd%2FETfuRfnKWNv6pn2prUSlDI6"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 87bb75160e821aa3-GRU
+      - 880cd7e9181a1a9e-GRU
       content-encoding:
       - gzip
       alt-svc:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
-      string: '{"by":"symbol","valid_key":true,"results":{"INVALID":{"error":true,"message":"Error
-        to get Stock for #INVALID: Erro 852 - Símbolo não encontrado, por favor entre
-        em contato conosco em console.hgbrasil.com."}},"execution_time":0.0,"from_cache":true}'
-  recorded_at: Mon, 29 Apr 2024 01:18:18 GMT
+      string: '{"by":"symbol","valid_key":true,"results":{"error":true,"message":"Máximo
+        de 5 símbolos por requisição."},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Wed, 08 May 2024 22:21:33 GMT
 recorded_with: VCR 6.2.0

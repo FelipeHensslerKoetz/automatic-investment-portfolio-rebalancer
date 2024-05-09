@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Mon, 29 Apr 2024 01:18:24 GMT
+      - Wed, 08 May 2024 22:21:35 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -31,43 +31,43 @@ http_interactions:
       x-content-type-options:
       - nosniff
       etag:
-      - W/"da9b9bbbfb7d13dc9f18a3a65622cd3e"
+      - W/"23cf685b2c8a2fa28e1d8ebac84084c4"
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - 8a3b4778-38d3-4483-a129-d8a411293f32
+      - ce3c594d-f300-4d4c-ae08-3fc813e45e87
       x-runtime:
-      - '0.011750'
+      - '0.015341'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=rWzTCCWhDINXldNvpA5CuVI2YliVijkK%2FYvmOswAh8cYL80f4Ix%2BCMzaynW4S0gx%2Fl9hW5B%2FJS%2BRNoP3N5EmABwy7ZgXn21e0MxQ0BKsL6PGvjYJIbvHrVI93DMIXeWi5WJtc17kh3tfISTK1CaO"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=W2bG9RMXTInusYrzSJcaXhEvyO3n61JXDGKBBsfgEQMvlh8t7pufJirehejqNZ0vF%2B7SZiYFSoSYRlZWGQXoLggxfAzrIfTteOyJjWB1mqgGTQYNtb4teoIWrxD%2BvZQy1rqq9l68pIjprWIcxeAX"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 87bb753c4b5b4cf1-GRU
+      - 880cd7fae8856262-GRU
       content-encoding:
       - gzip
       alt-svc:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
-      string: '{"by":"default","valid_key":true,"results":{"currencies":{"source":"BRL","USD":{"name":"Dollar","buy":5.1163,"sell":5.1163,"variation":0.0},"EUR":{"name":"Euro","buy":5.4747,"sell":5.4758,"variation":-0.009},"GBP":{"name":"Pound
-        Sterling","buy":6.3892,"sell":null,"variation":0.001},"ARS":{"name":"Argentine
-        Peso","buy":0.0058,"sell":null,"variation":-0.997},"CAD":{"name":"Canadian
-        Dollar","buy":3.7396,"sell":null,"variation":-0.001},"AUD":{"name":"Australian
-        Dollar","buy":3.343,"sell":null,"variation":0.015},"JPY":{"name":"Japanese
-        Yen","buy":0.0323,"sell":null,"variation":0.034},"CNY":{"name":"Renminbi","buy":0.7209,"sell":null,"variation":2.089},"BTC":{"name":"Bitcoin","buy":342643.897,"sell":342643.897,"variation":-1.048}},"stocks":{"IBOVESPA":{"name":"BM\u0026F
-        BOVESPA","location":"Sao Paulo, Brazil","points":126526.27,"variation":1.51},"IFIX":{"name":"Índice
-        de Fundos de Investimentos Imobiliários B3","location":"Sao Paulo, Brazil","points":3366.74,"variation":0.17},"NASDAQ":{"name":"NASDAQ
-        Stock Market","location":"New York City, United States","points":15927.9,"variation":2.03},"DOWJONES":{"name":"Dow
-        Jones Industrial Average","location":"New York City, United States","points":38239.66,"variation":0.4},"CAC":{"name":"CAC
-        40","location":"Paris, French","points":8088.24,"variation":0.89},"NIKKEI":{"name":"Nikkei
-        225","location":"Tokyo, Japan","points":37934.76,"variation":0.81}},"available_sources":["BRL"],"bitcoin":{"blockchain_info":{"name":"Blockchain.info","format":["USD","en_US"],"last":63139.73,"buy":63139.73,"sell":63139.73,"variation":-1.111},"coinbase":{"name":"Coinbase","format":["USD","en_US"],"last":63149.83,"variation":-1.1},"bitstamp":{"name":"BitStamp","format":["USD","en_US"],"last":63152.0,"buy":63152.0,"sell":63146.0,"variation":-1.058},"foxbit":{"name":"FoxBit","format":["BRL","pt_BR"],"last":326041.8343,"variation":-0.682},"mercadobitcoin":{"name":"Mercado
-        Bitcoin","format":["BRL","pt_BR"],"last":325625.00004999,"buy":325625.00004999,"sell":326160.84981234,"variation":-1.06}}},"execution_time":0.0,"from_cache":true}'
-  recorded_at: Mon, 29 Apr 2024 01:18:24 GMT
+      string: '{"by":"default","valid_key":true,"results":{"currencies":{"source":"BRL","USD":{"name":"Dollar","buy":5.0889,"sell":5.0889,"variation":0.266},"EUR":{"name":"Euro","buy":5.4704,"sell":5.4703,"variation":0.212},"GBP":{"name":"Pound
+        Sterling","buy":6.3599,"sell":null,"variation":0.163},"ARS":{"name":"Argentine
+        Peso","buy":0.0058,"sell":null,"variation":-0.514},"CAD":{"name":"Canadian
+        Dollar","buy":3.7078,"sell":null,"variation":0.292},"AUD":{"name":"Australian
+        Dollar","buy":3.3484,"sell":null,"variation":0.001},"JPY":{"name":"Japanese
+        Yen","buy":0.0327,"sell":null,"variation":-0.252},"CNY":{"name":"Renminbi","buy":0.7044,"sell":null,"variation":-1.431},"BTC":{"name":"Bitcoin","buy":329770.184,"sell":329770.184,"variation":-3.15}},"stocks":{"IBOVESPA":{"name":"BM\u0026F
+        BOVESPA","location":"Sao Paulo, Brazil","points":129480.89,"variation":0.21},"IFIX":{"name":"Índice
+        de Fundos de Investimentos Imobiliários B3","location":"Sao Paulo, Brazil","points":3398.1,"variation":0.11},"NASDAQ":{"name":"NASDAQ
+        Stock Market","location":"New York City, United States","points":16302.76,"variation":-0.18},"DOWJONES":{"name":"Dow
+        Jones Industrial Average","location":"New York City, United States","points":39056.39,"variation":0.44},"CAC":{"name":"CAC
+        40","location":"Paris, French","points":8131.41,"variation":0.69},"NIKKEI":{"name":"Nikkei
+        225","location":"Tokyo, Japan","points":38202.37,"variation":-1.63}},"available_sources":["BRL"],"bitcoin":{"blockchain_info":{"name":"Blockchain.info","format":["USD","en_US"],"last":61133.83,"buy":61133.83,"sell":61133.83,"variation":-3.15},"coinbase":{"name":"Coinbase","format":["USD","en_US"],"last":61234.125,"variation":-2.989},"bitstamp":{"name":"BitStamp","format":["USD","en_US"],"last":61228.0,"buy":61241.0,"sell":61238.0,"variation":-3.016},"foxbit":{"name":"FoxBit","format":["BRL","pt_BR"],"last":313767.0106,"variation":-2.638},"mercadobitcoin":{"name":"Mercado
+        Bitcoin","format":["BRL","pt_BR"],"last":314215.27,"buy":314000.0,"sell":314215.27,"variation":-2.563}}},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Wed, 08 May 2024 22:21:36 GMT
 recorded_with: VCR 6.2.0

@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Mon, 29 Apr 2024 01:18:19 GMT
+      - Thu, 09 May 2024 01:09:00 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -35,21 +35,21 @@ http_interactions:
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - f26e66c1-ddff-4851-8176-9eefc246b9d7
+      - 5f4f46e8-fe1b-483d-97db-8450e293de06
       x-runtime:
-      - '0.012433'
+      - '0.010172'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=yngEF6vNrKTxbRP%2FeaKeRuz6DDGQb7sj3tOruM2CwqT4cZoAyNNKpTXYyjIZqI%2B4280KaNbdWV5EbzXROFdEK6hYNJXDLm8%2F1NpZ6kx9b2Yb%2FFLR6y74xxKJJjg94tR9bOHnOTkG3GgblPe1TPJc"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=i%2BBgUGmb3q3JhbNaaQzb3%2BdI7lUjao2ERsz37NlWAaFeci03Jzftuxi%2BuAjcVFitihxJ9SBrLuZn9H7gBw8hSECwn%2FYRukT35bxQVQ5vmvLnPV7A9OsCIPtWEdD21mc35WQNUeDJu3i5WyQG2S4z"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 87bb7519dc426267-GRU
+      - 880dcd3739ce77ca-GRU
       content-encoding:
       - gzip
       alt-svc:
@@ -59,5 +59,5 @@ http_interactions:
       string: '{"by":"symbol","valid_key":true,"results":{"INVALID":{"error":true,"message":"Error
         to get Stock for #INVALID: Erro 852 - Símbolo não encontrado, por favor entre
         em contato conosco em console.hgbrasil.com."}},"execution_time":0.0,"from_cache":true}'
-  recorded_at: Mon, 29 Apr 2024 01:18:19 GMT
+  recorded_at: Thu, 09 May 2024 01:09:00 GMT
 recorded_with: VCR 6.2.0

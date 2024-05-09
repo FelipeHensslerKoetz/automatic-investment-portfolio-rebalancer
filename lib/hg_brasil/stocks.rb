@@ -4,50 +4,37 @@ require 'hg_brasil/base'
 
 module HgBrasil
   class Stocks < HgBrasil::Base
-    def self.asset_details(symbol:)
-      new.asset_details(symbol:)
+    def self.asset_details(ticker_symbols:)
+      new.asset_details(ticker_symbols:)
     end
 
-    def self.asset_details_batch(asset_ticker_symbols:)
-      new.asset_details_batch(asset_ticker_symbols:)
+    def asset_details(ticker_symbols:)
+      response ||= get(url: '/stock_price', params: { symbol: ticker_symbols })&.dig('results')
+
+      return if request_error?(response)
+
+      response.each_value.map do |asset|
+        next if asset['error']
+
+        formatted_asset_details(asset)
+      end.compact
     end
 
-    def asset_details(symbol:)
-      response ||= get(url: '/stock_price', params: { 'symbol' => symbol })&.dig('results', symbol.upcase)
+    private
 
-      return nil if response.blank? || response['error']
+    def request_error?(response)
+      response.blank? || response['error'] || !response.is_a?(Hash)
+    end
 
+    def formatted_asset_details(asset)
       {
-        ticker_symbol: response['symbol'].upcase,
-        kind: response['kind'],
-        name: response['company_name'] || response['name'],
-        price: response['price'],
-        reference_date: Time.zone.parse(response['updated_at']),
-        currency: response['currency']
+        ticker_symbol: asset['symbol'].upcase,
+        kind: asset['kind'],
+        name: asset['company_name'] || asset['name'],
+        price: asset['price'],
+        reference_date: Time.zone.parse(asset['updated_at']),
+        currency: asset['currency']
       }
-    end
-
-    def asset_details_batch(asset_ticker_symbols:)
-      response ||= get(url: '/stock_price', params: { symbol: asset_ticker_symbols })&.dig('results')
-
-      return nil if response.blank? || response['error'] || !response.is_a?(Hash)
-
-      formatted_response = []
-
-      response.each_value do |value|
-        next if value['error']
-
-        formatted_response << {
-          ticker_symbol: value['symbol'].upcase,
-          kind: value['kind'],
-          name: value['company_name'] || value['name'],
-          price: value['price'],
-          reference_date: Time.zone.parse(value['updated_at']),
-          currency: value['currency']
-        }
-      end
-
-      formatted_response
     end
   end
 end

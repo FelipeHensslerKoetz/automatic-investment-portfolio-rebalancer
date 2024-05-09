@@ -5,7 +5,7 @@ class AssetsHgBrasilSyncJob
 
   sidekiq_options queue: 'assets_hg_brasil_sync', retry: false
 
-  def perform(asset_ticker_symbols)
-    AssetsHgBrasilSyncService.new(asset_ticker_symbols:).call
+  def perform(ticker_symbols)
+    AssetsHgBrasilSyncService.new(ticker_symbols:).call
   end
 end

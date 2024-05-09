@@ -20,7 +20,7 @@ module Assets
       end
 
       def hg_brasil_asset
-        @hg_brasil_asset ||= Assets::Discovery::HgBrasilService.call(symbol: keywords)
+        @hg_brasil_asset ||= Assets::Discovery::HgBrasilService.call(ticker_symbol: keywords)
       end
     end
   end

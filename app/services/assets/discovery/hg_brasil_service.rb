@@ -5,17 +5,17 @@ require './lib/hg_brasil/stocks'
 module Assets
   module Discovery
     class HgBrasilService
-      attr_reader :symbol, :partner_resource, :existing_asset
+      attr_reader :ticker_symbol, :partner_resource, :existing_asset
 
-      def self.call(symbol:)
-        new(symbol:).call
+      def self.call(ticker_symbol:)
+        new(ticker_symbol:).call
       end
 
-      def initialize(symbol:)
-        @symbol = symbol&.upcase
+      def initialize(ticker_symbol:)
+        @ticker_symbol = ticker_symbol&.upcase
         @partner_resource = PartnerResource.find_by!(slug: :hg_brasil_stock_price)
         @existing_asset = Asset.global.find_by('ticker_symbol LIKE :asset',
-                                               asset: "%#{symbol}%")
+                                               asset: "%#{ticker_symbol}%")
       end
 
       def call
@@ -70,12 +70,14 @@ module Assets
       end
 
       def asset_details
-        @asset_details ||= HgBrasil::Stocks.asset_details(symbol:)
+        @asset_details ||= HgBrasil::Stocks.asset_details(ticker_symbols: ticker_symbol)&.find do |asset| 
+          asset[:ticker_symbol] == ticker_symbol
+        end
       end
 
       def error_message(error)
         {
-          context: "#{self.class} - symbol=#{symbol}",
+          context: "#{self.class} - ticker_symbol=#{ticker_symbol}",
           error: error.message,
           backtrace: error.backtrace
         }
@@ -83,8 +85,8 @@ module Assets
 
       def new_asset_price_message(asset_price)
         {
-          context: "#{self.class} - symbol=#{symbol}",
-          message: "New AssetPrice created id=#{asset_price.id} symbol=#{asset_price.ticker_symbol}"
+          context: "#{self.class} - ticker_symbol=#{ticker_symbol}",
+          message: "New AssetPrice created id=#{asset_price.id} ticker_symbol=#{asset_price.ticker_symbol}"
         }
       end
     end
