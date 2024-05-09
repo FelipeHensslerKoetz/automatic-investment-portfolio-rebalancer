@@ -17,4 +17,16 @@ class Currency < ApplicationRecord
   # Validations
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true
+
+  def self.find(search_term)
+    record = if search_term.to_i.to_s == search_term.to_s
+               find_by(id: search_term)
+             else
+               find_by(code: search_term.upcase)
+             end
+
+    raise ActiveRecord::RecordNotFound, "Couldn't find #{name} with '#{search_term}'" if record.nil?
+
+    record
+  end
 end

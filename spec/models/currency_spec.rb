@@ -30,4 +30,22 @@ RSpec.describe Currency, type: :model do
       expect(build(:currency, code: 'USD')).to validate_uniqueness_of(:code)
     end
   end
+
+  describe 'class methods' do
+    describe '.find' do
+      it 'finds by id' do
+        currency = create(:currency, :usd)
+        expect(described_class.find(currency.id)).to eq(currency)
+      end
+
+      it 'finds by code' do
+        currency = create(:currency, :usd)
+        expect(described_class.find(currency.code)).to eq(currency)
+      end
+
+      it 'raises an error if not found' do
+        expect { described_class.find('USD') }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
 end
