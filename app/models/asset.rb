@@ -22,4 +22,16 @@ class Asset < ApplicationRecord
   # Scopes
   scope :global, -> { where(custom: false) }
   scope :custom_by_user, ->(user) { where(custom: true, user:) }
+
+  def self.find(search_term)
+    record = if search_term.to_i.to_s == search_term.to_s
+               find_by(id: search_term)
+             else
+               find_by(ticker_symbol: search_term.upcase)
+             end
+
+    raise ActiveRecord::RecordNotFound, "Couldn't find #{name} with '#{search_term}'" if record.nil?
+
+    record
+  end
 end
