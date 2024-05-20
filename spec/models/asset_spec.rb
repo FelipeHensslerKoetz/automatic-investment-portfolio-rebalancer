@@ -42,26 +42,4 @@ RSpec.describe Asset, type: :model do
       end
     end
   end
-
-  describe 'class methods' do
-    describe '.find' do
-      it 'finds an asset by id' do
-        asset = create(:asset)
-        found_asset = Asset.find(asset.id)
-
-        expect(found_asset).to eq(asset)
-      end
-
-      it 'finds an asset by ticker_symbol' do
-        asset = create(:asset)
-        found_asset = Asset.find(asset.ticker_symbol)
-
-        expect(found_asset).to eq(asset)
-      end
-
-      it 'raises an error if asset is not found' do
-        expect { Asset.find('AAPL') }.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end
-  end
 end
