@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'hg_brasil/base'
-
 module HgBrasil
   class Stocks < HgBrasil::Base
     def self.asset_details(ticker_symbols:)

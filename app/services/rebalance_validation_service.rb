@@ -55,14 +55,14 @@ class RebalanceValidationService
   def validate_investment_portfolio_total_allocation_weight
     return unless invalid_investment_portfolio_total_allocation_weight?
 
-    raise InvestmentPortfolioInvalidTotalAllocationWeightError.new(investment_portfolio:,
-                                                                   current_allocation_weight: investment_portfolio_total_allocation_weight)
+    raise InvestmentPortfolios::InvalidTotalAllocationWeightError.new(investment_portfolio:,
+                                                                      current_allocation_weight: investment_portfolio_total_allocation_weight)
   end
 
   def validate_investment_portfolio_assets_count
     return unless invalid_investment_portfolio_assets_count?
 
-    raise InvestmentPortfolioInvalidAssetsCountError.new(investment_portfolio:)
+    raise InvestmentPortfolios::InvalidAssetsCountError.new(investment_portfolio:)
   end
 
   def invalid_investment_portfolio_total_allocation_weight?
@@ -76,7 +76,7 @@ class RebalanceValidationService
   def validate_rebalance_order_status
     return if rebalance_order.scheduled?
 
-    raise RebalanceOrderInvalidStatusError.new(rebalance_order:)
+    raise RebalanceOrders::InvalidStatusError.new(rebalance_order:)
   end
 
   def validate_all_asset_prices_up_to_date

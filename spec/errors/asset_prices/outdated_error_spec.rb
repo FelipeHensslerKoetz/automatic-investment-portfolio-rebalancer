@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AssetPriceOutdatedError do
+RSpec.describe AssetPrices::OutdatedError do
   subject(:error) { described_class.new(asset_price:) }
 
   let(:asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource) }

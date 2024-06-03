@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe CurrencyParityMissingError do
+RSpec.describe CurrencyParities::MissingError do
   subject(:error) { described_class.new(message) }
 
   let(:currency_from) { create(:currency, :usd) }
   let(:currency_to) { create(:currency, :brl) }
-  let(:message) { "Missing CurrencyParity from #{currency_from.code} to #{currency_to.code}." } 
+  let(:message) { "Missing CurrencyParity from #{currency_from.code} to #{currency_to.code}." }
 
   it 'inherits from StandardError' do
     expect(error).to be_a(StandardError)

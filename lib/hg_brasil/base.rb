@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'http_request/base'
-
 module HgBrasil
   class Base < HttpRequest::Base
     private

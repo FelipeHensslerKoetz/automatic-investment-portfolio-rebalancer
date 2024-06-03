@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'hg_brasil/stocks'
 
 RSpec.describe HgBrasil::Stocks do
   describe '.asset_details' do

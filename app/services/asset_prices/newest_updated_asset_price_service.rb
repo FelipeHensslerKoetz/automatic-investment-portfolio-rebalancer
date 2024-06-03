@@ -36,7 +36,7 @@ module AssetPrices
     end
 
     def fetch_newest_updated_asset_price
-      raise AssetOutdatedError.new(asset:) if updated_asset_prices.blank?
+      raise Assets::OutdatedError.new(asset:) if updated_asset_prices.blank?
 
       updated_asset_prices.max_by(&:reference_date)
     end

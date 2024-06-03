@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe RebalanceOrderInvalidStatusError do
+RSpec.describe RebalanceOrders::InvalidStatusError do
   let(:rebalance_order) { create(:rebalance_order, status: 'succeed') }
 
   subject { described_class.new(rebalance_order:) }

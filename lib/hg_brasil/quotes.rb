@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'hg_brasil/base'
-
 module HgBrasil
   class Quotes < HgBrasil::Base
     def self.quote_details

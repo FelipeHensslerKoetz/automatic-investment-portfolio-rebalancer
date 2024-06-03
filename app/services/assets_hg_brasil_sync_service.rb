@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './lib/hg_brasil/stocks'
-
 class AssetsHgBrasilSyncService
   attr_reader :partner_resource, :asset_prices, :ticker_symbols
 
@@ -28,7 +26,7 @@ class AssetsHgBrasilSyncService
   private
 
   def fetch_asset_details
-    @fetch_asset_details ||= ::HgBrasil::Stocks.asset_details(ticker_symbols:)
+    @fetch_asset_details ||= HgBrasil::Stocks.asset_details(ticker_symbols:)
   end
 
   def asset_details(ticker_symbol)

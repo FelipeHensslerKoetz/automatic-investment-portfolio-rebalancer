@@ -52,7 +52,11 @@ RSpec.describe AssetPrices::NewestUpdatedAssetPriceService do
           create(:asset_price, :scheduled, :with_hg_brasil_stock_price_partner_resource, asset:, currency:)
         end
 
-        it { expect { newest_updated_asset_price_service }.to raise_error(AssetOutdatedError, "Asset with id: #{asset.id} is outdated.") }
+        it {
+          expect do
+            newest_updated_asset_price_service
+          end.to raise_error(Assets::OutdatedError, "Asset with id: #{asset.id} is outdated.")
+        }
       end
 
       context 'when currency parity does not exist' do
@@ -64,7 +68,11 @@ RSpec.describe AssetPrices::NewestUpdatedAssetPriceService do
           create(:asset_price, :updated, :with_hg_brasil_stock_price_partner_resource, asset:, currency: another_currency)
         end
 
-        it { expect { newest_updated_asset_price_service }.to raise_error(AssetOutdatedError, "Asset with id: #{asset.id} is outdated.") }
+        it {
+          expect do
+            newest_updated_asset_price_service
+          end.to raise_error(Assets::OutdatedError, "Asset with id: #{asset.id} is outdated.")
+        }
       end
 
       context 'when currency parity exists but there is no updated currency parity exchange rate' do
@@ -79,7 +87,11 @@ RSpec.describe AssetPrices::NewestUpdatedAssetPriceService do
                  currency_parity: second_currency_parity)
         end
 
-        it { expect { newest_updated_asset_price_service }.to raise_error(AssetOutdatedError, "Asset with id: #{asset.id} is outdated.") }
+        it {
+          expect do
+            newest_updated_asset_price_service
+          end.to raise_error(Assets::OutdatedError, "Asset with id: #{asset.id} is outdated.")
+        }
       end
     end
   end

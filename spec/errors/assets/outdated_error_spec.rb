@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AssetOutdatedError do
+RSpec.describe Assets::OutdatedError do
   subject { described_class.new(asset:) }
 
   let(:asset) { create(:asset) }

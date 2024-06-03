@@ -39,5 +39,8 @@ module InvestmentPortfolioRebalancer
 
     # Set the default queue adapter for Active Job to Sidekiq
     config.active_job.queue_adapter = :sidekiq
+
+    config.autoload_paths << "#{Rails.root}/lib"
+    config.eager_load_paths << "#{Rails.root}/lib"
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CurrencyParityOutdatedError do
+RSpec.describe CurrencyParities::OutdatedError do
   subject(:error) { described_class.new(message) }
 
   let(:currency_parity) { create(:currency_parity) }

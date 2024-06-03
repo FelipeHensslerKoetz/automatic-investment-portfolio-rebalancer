@@ -28,19 +28,19 @@ RSpec.describe AssetPrices::ConvertParityService do
 
     context 'when only input to output currency parity is available' do
       before do
-        currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency) 
+        currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
 
         create(:currency_parity_exchange_rate,
-          :with_hg_brasil_stock_price_partner_resource,
-          currency_parity:,
-          exchange_rate: 5.0)
+               :with_hg_brasil_stock_price_partner_resource,
+               currency_parity:,
+               exchange_rate: 5.0)
 
         another_currency_parity = create(:currency_parity, currency_from: brl_currency, currency_to: usd_currency)
 
         create(:currency_parity_exchange_rate,
-          :with_hg_brasil_stock_price_partner_resource,
-          currency_parity: another_currency_parity,
-          exchange_rate: 0.2)
+               :with_hg_brasil_stock_price_partner_resource,
+               currency_parity: another_currency_parity,
+               exchange_rate: 0.2)
       end
 
       it 'returns the asset price in the target currency' do
@@ -146,7 +146,7 @@ RSpec.describe AssetPrices::ConvertParityService do
                exchange_rate: 5.12)
       end
 
-      it { expect { price }.to raise_error(AssetPriceOutdatedError) }
+      it { expect { price }.to raise_error(AssetPrices::OutdatedError) }
     end
 
     context 'when there are no currency parities' do
@@ -160,7 +160,7 @@ RSpec.describe AssetPrices::ConvertParityService do
                status: :updated)
       end
 
-      it { expect { price }.to raise_error(CurrencyParityMissingError) }
+      it { expect { price }.to raise_error(CurrencyParities::MissingError) }
     end
 
     context 'when there are no updated currency parities' do
@@ -184,7 +184,7 @@ RSpec.describe AssetPrices::ConvertParityService do
         create(:currency_parity_exchange_rate, :with_hg_brasil_stock_price_partner_resource, :scheduled, currency_parity:)
       end
 
-      it { expect { price }.to raise_error(CurrencyParityOutdatedError) }
+      it { expect { price }.to raise_error(CurrencyParities::OutdatedError) }
     end
   end
 end

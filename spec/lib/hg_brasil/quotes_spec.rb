@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'hg_brasil/quotes'
 
 RSpec.describe HgBrasil::Quotes do
   subject(:quotes) { described_class.quote_details }
