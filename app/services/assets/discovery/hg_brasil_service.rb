@@ -68,7 +68,7 @@ module Assets
       end
 
       def asset_details
-        @asset_details ||= HgBrasil::Stocks.asset_details(ticker_symbols: ticker_symbol)&.find do |asset|
+        @asset_details ||= ::HgBrasil::Stocks.asset_details(ticker_symbols: ticker_symbol)&.find do |asset|
           asset[:ticker_symbol] == ticker_symbol
         end
       end

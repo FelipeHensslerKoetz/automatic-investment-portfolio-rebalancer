@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CurrencyParityExchangeRatesHgBrasilSyncJob, type: :job do
+RSpec.describe CurrencyParityExchangeRates::HgBrasil::SyncJob, type: :job do
   describe 'sidekiq_options' do
     it 'sets the queue to currency_parity_exchange_rates_hg_brasil_sync' do
       expect(described_class.get_sidekiq_options['queue']).to eq('currency_parity_exchange_rates_hg_brasil_sync')

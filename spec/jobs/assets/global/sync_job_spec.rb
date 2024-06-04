@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AssetsGlobalSyncJob, type: :job do
+RSpec.describe Assets::Global::SyncJob, type: :job do
   describe 'sidekiq_options' do
     it 'sets the queue to assets_global_sync' do
       expect(described_class.get_sidekiq_options['queue']).to eq('assets_global_sync')
@@ -147,13 +147,13 @@ RSpec.describe AssetsGlobalSyncJob, type: :job do
       end
 
       before do
-        allow(AssetsHgBrasilSyncJob).to receive(:perform_in).with(0.seconds, 'MGLU3,VALE3,HAPV3,PETR4,B3SA3').and_return(true)
-        allow(AssetsHgBrasilSyncJob).to receive(:perform_in).with(4.seconds, 'BBDC4,SEQL3,ITSA4,ABEV3,PETZ3').and_return(true)
+        allow(Assets::HgBrasil::SyncJob).to receive(:perform_in).with(0.seconds, 'MGLU3,VALE3,HAPV3,PETR4,B3SA3').and_return(true)
+        allow(Assets::HgBrasil::SyncJob).to receive(:perform_in).with(4.seconds, 'BBDC4,SEQL3,ITSA4,ABEV3,PETZ3').and_return(true)
         assets_global_sync_job
       end
 
       it 'updates the asset prices' do
-        expect(AssetsHgBrasilSyncJob).to have_received(:perform_in).twice
+        expect(Assets::HgBrasil::SyncJob).to have_received(:perform_in).twice
 
         expect(tasa4_asset_price.reload).to be_failed
         expect(tasa4_asset_price.scheduled_at).to be_nil
@@ -180,7 +180,7 @@ RSpec.describe AssetsGlobalSyncJob, type: :job do
 
     context 'when there are rebalance orders being processed' do
       before do
-        allow(AssetsHgBrasilSyncJob).to receive(:perform_async).and_call_original
+        allow(Assets::HgBrasil::SyncJob).to receive(:perform_async).and_call_original
         create(:rebalance_order, :processing)
       end
 
@@ -188,7 +188,7 @@ RSpec.describe AssetsGlobalSyncJob, type: :job do
         response = assets_global_sync_job
 
         expect(response).to be_nil
-        expect(AssetsHgBrasilSyncJob).not_to have_received(:perform_async)
+        expect(Assets::HgBrasil::SyncJob).not_to have_received(:perform_async)
       end
     end
   end

@@ -124,7 +124,7 @@ RSpec.describe 'Assets', type: :request do
       it 'schedules an asset discovery job' do
         expect do
           get '/api/assets/deep_search?asset=Bitcoin', headers: valid_headers, as: :json
-        end.to change(AssetDiscoveryJob.jobs, :size).by(1)
+        end.to change(Assets::DiscoveryJob.jobs, :size).by(1)
       end
 
       it 'returns a success message' do

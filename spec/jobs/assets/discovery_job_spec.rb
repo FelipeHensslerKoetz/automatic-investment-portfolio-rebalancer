@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AssetDiscoveryJob, type: :job do
+RSpec.describe Assets::DiscoveryJob, type: :job do
   describe 'sidekiq_options' do
     it 'sets the queue to asset_discovery' do
       expect(described_class.get_sidekiq_options['queue']).to eq('asset_discovery')

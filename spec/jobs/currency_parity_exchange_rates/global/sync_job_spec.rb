@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CurrencyParityExchangeRatesGlobalSyncJob, type: :job do
+RSpec.describe CurrencyParityExchangeRates::Global::SyncJob, type: :job do
   describe 'sidekiq_options' do
     it 'sets the queue to currency_parity_exchange_rates_global_sync' do
       expect(described_class.get_sidekiq_options['queue']).to eq('currency_parity_exchange_rates_global_sync')
@@ -30,12 +30,12 @@ RSpec.describe CurrencyParityExchangeRatesGlobalSyncJob, type: :job do
       let(:partner_resource) { create(:partner_resource, :hg_brasil_quotation) }
 
       before do
-        allow(CurrencyParityExchangeRatesHgBrasilSyncJob).to receive(:perform_async)
+        allow(CurrencyParityExchangeRates::HgBrasil::SyncJob).to receive(:perform_async)
         global_sync_job.perform
       end
 
-      it 'calls CurrencyParityExchangeRatesHgBrasilSyncJob.perform_async' do
-        expect(CurrencyParityExchangeRatesHgBrasilSyncJob).to have_received(:perform_async).once
+      it 'calls CurrencyParityExchangeRates::HgBrasil::SyncJob.perform_async' do
+        expect(CurrencyParityExchangeRates::HgBrasil::SyncJob).to have_received(:perform_async).once
         expect(updated_currency_parity_exchange_rate.reload).to be_scheduled
         expect(failed_currency_parity_exchange_rate.reload).to be_failed
         expect(processing_currency_parity_exchange_rate.reload).to be_processing

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AssetsHgBrasilSyncJob, type: :job do
+RSpec.describe Assets::HgBrasil::SyncJob, type: :job do
   describe 'sidekiq_options' do
     it 'sets the queue to price_sync_hg_brasil_batch' do
       expect(described_class.get_sidekiq_options['queue']).to eq('assets_hg_brasil_sync')
