@@ -20,7 +20,7 @@ module Rebalances
     private
 
     def investment_portfolio_total_allocation_weight
-      @investment_portfolio_total_allocation_weight ||= investment_portfolio_assets.sum(:target_allocation_weight)
+      @investment_portfolio_total_allocation_weight ||= investment_portfolio_assets.sum(:target_allocation_weight_percentage)
     end
 
     def investment_portfolio_assets_count

@@ -6,6 +6,7 @@ RSpec.describe RebalanceOrder, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:investment_portfolio) }
+    it { is_expected.to have_one(:rebalance).dependent(:restrict_with_error) }
   end
 
   describe 'validations' do

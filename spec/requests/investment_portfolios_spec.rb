@@ -107,7 +107,7 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
                 {
                   asset_id: asset.id,
                   quantity: 100,
-                  target_allocation_weight: 100
+                  target_allocation_weight_percentage: 100
                 }
               ]
             }
@@ -127,7 +127,7 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
           expect(new_investment_portfolio.currency).to eq(currency)
           expect(investment_portfolio_asset.asset).to eq(asset)
           expect(investment_portfolio_asset.quantity).to eq(100)
-          expect(investment_portfolio_asset.target_allocation_weight).to eq(100)
+          expect(investment_portfolio_asset.target_allocation_weight_percentage).to eq(100)
           expect(InvestmentPortfolio.count).to eq(1)
           expect(InvestmentPortfolioAsset.count).to eq(1)
         end
@@ -165,7 +165,7 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
                   {
                     asset_id: asset.id,
                     quantity: 250,
-                    target_allocation_weight: 50
+                    target_allocation_weight_percentage: 50
                   }
                 ]
               }
@@ -183,7 +183,7 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
               expect(investment_portfolio_asset.attributes).to include(
                 'asset_id' => asset.id,
                 'quantity' => 250,
-                'target_allocation_weight' => 50,
+                'target_allocation_weight_percentage' => 50,
                 'investment_portfolio_id' => investment_portfolio.id
               )
 
@@ -203,7 +203,7 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
                     id: investment_portfolio_asset.id,
                     asset_id: asset.id,
                     quantity: 1000,
-                    target_allocation_weight: 100
+                    target_allocation_weight_percentage: 100
                   }
                 ]
               }
@@ -221,7 +221,7 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
               expect(investment_portfolio_asset.attributes).to include(
                 'asset_id' => asset.id,
                 'quantity' => 1000,
-                'target_allocation_weight' => 100,
+                'target_allocation_weight_percentage' => 100,
                 'investment_portfolio_id' => investment_portfolio.id
               )
               expect(response.parsed_body).to eq(investment_portfolio.as_json)

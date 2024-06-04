@@ -10,6 +10,7 @@ class RebalanceOrder < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :investment_portfolio
+  has_one :rebalance, dependent: :restrict_with_error
 
   # Validations
   validates :status, :kind, :amount, :scheduled_at, presence: true

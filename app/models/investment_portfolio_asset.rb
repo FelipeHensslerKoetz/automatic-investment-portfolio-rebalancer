@@ -6,7 +6,7 @@ class InvestmentPortfolioAsset < ApplicationRecord
   belongs_to :investment_portfolio
 
   # Validations
-  validates :target_allocation_weight,
+  validates :target_allocation_weight_percentage,
             :target_deviation_percentage,
             presence: true,
             numericality: { greater_than_or_equal: 0, less_than_or_equal_to: 100 }

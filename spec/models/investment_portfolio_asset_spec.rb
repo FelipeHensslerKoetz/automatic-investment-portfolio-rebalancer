@@ -9,15 +9,15 @@ RSpec.describe InvestmentPortfolioAsset, type: :model do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:target_allocation_weight) }
+    it { is_expected.to validate_presence_of(:target_allocation_weight_percentage) }
     it { is_expected.to validate_presence_of(:target_deviation_percentage) }
     it { is_expected.to validate_presence_of(:quantity) }
 
-    it 'validates target_allocation_weight is greater than or equal to 0 and less than or equal to 100' do
-      investment_portfolio_asset = build(:investment_portfolio_asset, target_allocation_weight: 101)
+    it 'validates target_allocation_weight_percentage is greater than or equal to 0 and less than or equal to 100' do
+      investment_portfolio_asset = build(:investment_portfolio_asset, target_allocation_weight_percentage: 101)
       investment_portfolio_asset.valid?
 
-      expect(investment_portfolio_asset.errors[:target_allocation_weight]).to include('must be less than or equal to 100')
+      expect(investment_portfolio_asset.errors[:target_allocation_weight_percentage]).to include('must be less than or equal to 100')
       expect(investment_portfolio_asset).to be_invalid
     end
 
