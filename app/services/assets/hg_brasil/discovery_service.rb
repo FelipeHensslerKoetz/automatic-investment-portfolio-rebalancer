@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Assets
-  module Discovery
-    class HgBrasilService
+  module HgBrasil
+    class DiscoveryService
       attr_reader :ticker_symbol, :partner_resource, :existing_asset
 
       def self.call(ticker_symbol:)
@@ -21,7 +21,7 @@ module Assets
 
         discover_asset
       rescue StandardError => e
-        LogService.create_log(kind: :error, data: error_message(e))
+        Logs::CreatorService.create_log(kind: :error, data: error_message(e))
         nil
       end
 
@@ -62,7 +62,7 @@ module Assets
                                          currency:,
                                          reference_date: asset_details[:reference_date])
 
-        LogService.create_log(kind: :info, data: new_asset_price_message(asset_price))
+        Logs::CreatorService.create_log(kind: :info, data: new_asset_price_message(asset_price))
 
         nil
       end

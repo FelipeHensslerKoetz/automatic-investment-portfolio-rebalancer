@@ -8,7 +8,7 @@ module Assets
       sidekiq_options queue: 'assets_hg_brasil_sync', retry: false
 
       def perform(ticker_symbols)
-        AssetsHgBrasilSyncService.new(ticker_symbols:).call
+        Assets::HgBrasil::SyncService.new(ticker_symbols:).call
       end
     end
   end

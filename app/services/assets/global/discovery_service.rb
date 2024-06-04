@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Assets
-  module Discovery
-    class GlobalService
+  module Global
+    class DiscoveryService
       attr_reader :keywords
 
       def initialize(keywords:)
@@ -20,7 +20,7 @@ module Assets
       end
 
       def hg_brasil_asset
-        @hg_brasil_asset ||= Assets::Discovery::HgBrasilService.call(ticker_symbol: keywords)
+        @hg_brasil_asset ||= Assets::HgBrasil::DiscoveryService.call(ticker_symbol: keywords)
       end
     end
   end

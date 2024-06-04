@@ -23,15 +23,15 @@ RSpec.describe Assets::HgBrasil::SyncJob, type: :job do
     subject(:batch_job) { described_class.new }
 
     let(:ticker_symbols) { 'symbol1,symbol2,symbol3,symbol4,symbol5' }
-    let(:sync_service_instance) { instance_double(AssetsHgBrasilSyncService, call: true) }
+    let(:sync_service_instance) { instance_double(Assets::HgBrasil::SyncService, call: true) }
 
     before do
-      allow(AssetsHgBrasilSyncService).to receive(:new).and_return(sync_service_instance)
+      allow(Assets::HgBrasil::SyncService).to receive(:new).and_return(sync_service_instance)
       batch_job.perform(ticker_symbols)
     end
 
-    it 'calls AssetsHgBrasilSyncService.new with the ticker_symbols' do
-      expect(AssetsHgBrasilSyncService).to have_received(:new).with(ticker_symbols:).once
+    it 'calls Assets::HgBrasil::SyncService.new with the ticker_symbols' do
+      expect(Assets::HgBrasil::SyncService).to have_received(:new).with(ticker_symbols:).once
       expect(sync_service_instance).to have_received(:call).once
     end
   end

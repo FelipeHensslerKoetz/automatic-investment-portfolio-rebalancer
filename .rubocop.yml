@@ -29,6 +29,8 @@ Style/FrozenStringLiteralComment:
 # código, então é importante poder ter esses arquivos do tamanho necessário
 Metrics/BlockLength:
  AllowedMethods: ['describe', 'context', 'feature', 'scenario', 'let', 'it']
+ Exclude:
+    - 'spec/factories/**/*.rb'
 
 # Costumamos usar o padrão do RuboCop, mas caso queira alterar o tamanho de
 # caracteres de uma linha, você pode fazê-lo aqui

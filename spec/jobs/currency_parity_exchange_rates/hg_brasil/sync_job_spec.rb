@@ -23,12 +23,12 @@ RSpec.describe CurrencyParityExchangeRates::HgBrasil::SyncJob, type: :job do
     subject(:hg_brasil_sync_job) { described_class.new }
 
     before do
-      allow(CurrencyParityExchangeRatesHgBrasilSyncService).to receive(:call).and_return(true)
+      allow(CurrencyParityExchangeRates::HgBrasil::SyncService).to receive(:call).and_return(true)
       hg_brasil_sync_job.perform
     end
 
-    it 'calls CurrencyParityExchangeRatesHgBrasilSyncService.new' do
-      expect(CurrencyParityExchangeRatesHgBrasilSyncService).to have_received(:call).once
+    it 'calls CurrencyParityExchangeRates::HgBrasil::SyncService.new' do
+      expect(CurrencyParityExchangeRates::HgBrasil::SyncService).to have_received(:call).once
     end
   end
 end

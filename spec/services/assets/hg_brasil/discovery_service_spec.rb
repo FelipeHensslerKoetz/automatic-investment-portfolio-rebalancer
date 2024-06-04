@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Assets::Discovery::HgBrasilService do
+RSpec.describe Assets::HgBrasil::DiscoveryService do
   subject(:hg_brasil_asset_discovery) { described_class.call(ticker_symbol:) }
 
   before do

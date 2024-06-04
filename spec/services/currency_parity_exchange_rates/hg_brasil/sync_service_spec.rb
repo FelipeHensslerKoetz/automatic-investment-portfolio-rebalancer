@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CurrencyParityExchangeRatesHgBrasilSyncService do
+RSpec.describe CurrencyParityExchangeRates::HgBrasil::SyncService do
   subject(:currency_parity_exchange_rates_hg_brasil_sync_service) { described_class.call }
 
   describe '.call' do

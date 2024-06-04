@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_20_035117) do
+ActiveRecord::Schema.define(version: 2024_06_04_020325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
     t.bigint "partner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_partner_resources_on_name", unique: true
     t.index ["partner_id"], name: "index_partner_resources_on_partner_id"
     t.index ["slug"], name: "index_partner_resources_on_slug", unique: true
   end
@@ -127,6 +128,7 @@ ActiveRecord::Schema.define(version: 2024_04_20_035117) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug", null: false
     t.index ["name"], name: "index_partners_on_name", unique: true
+    t.index ["slug"], name: "index_partners_on_slug", unique: true
   end
 
   create_table "rebalance_orders", force: :cascade do |t|

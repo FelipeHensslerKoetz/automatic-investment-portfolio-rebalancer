@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe RebalanceValidationService do
+RSpec.describe Rebalances::ValidationService do
   subject(:rebalance_validation_service) { described_class.new(rebalance_order_id:) }
 
   describe 'when the rebalance order is valid' do

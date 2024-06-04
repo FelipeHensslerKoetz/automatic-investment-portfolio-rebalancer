@@ -7,7 +7,7 @@ module Assets
     sidekiq_options queue: 'asset_discovery', retry: false
 
     def perform(keywords)
-      Assets::Discovery::GlobalService.new(keywords:).call
+      Assets::Global::DiscoveryService.new(keywords:).call
     end
   end
 end

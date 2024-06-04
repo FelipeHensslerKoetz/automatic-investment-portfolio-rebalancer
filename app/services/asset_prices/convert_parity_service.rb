@@ -63,16 +63,20 @@ module AssetPrices
       end
 
       raise CurrencyParities::MissingError,
-            "Missing currency parities for conversion: #{input_currency.code} to #{output_currency.code} or #{output_currency.code} to #{input_currency.code}"
+            "Missing currency parities for conversion: #{input_currency.code} to #{output_currency.code} or
+             #{output_currency.code} to #{input_currency.code}"
     end
 
     def validate_currency_parities_exchange_rate_up_to_date
-      if asset_price_already_in_output_currency? || output_to_input_currency_parity_exchange_rate.present? || input_to_output_currency_parity_exchange_rate.present?
+      if asset_price_already_in_output_currency? ||
+         output_to_input_currency_parity_exchange_rate.present? ||
+         input_to_output_currency_parity_exchange_rate.present?
         return
       end
 
       raise CurrencyParities::OutdatedError,
-            "Missing updated currency parities exchange rates for conversion: #{input_currency.code} to #{output_currency.code} or #{output_currency.code} to #{input_currency.code}"
+            "Missing updated currency parities exchange rates for conversion: #{input_currency.code} to
+             #{output_currency.code} or #{output_currency.code} to #{input_currency.code}"
     end
 
     def fetch_updated_currency_parity_exchange_rate(currency_parity)

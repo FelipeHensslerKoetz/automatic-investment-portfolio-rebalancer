@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Assets::Discovery::GlobalService do
+RSpec.describe Assets::Global::DiscoveryService do
   subject(:global_discovery) { described_class.new(keywords:) }
 
   before do

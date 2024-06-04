@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LogService do
+RSpec.describe Logs::CreatorService do
   subject(:log_service) { described_class.create_log(kind:, data:) }
 
   describe '.create_log' do

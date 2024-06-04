@@ -8,7 +8,7 @@ module CurrencyParityExchangeRates
       sidekiq_options queue: 'currency_parity_exchange_rates_hg_brasil_sync', retry: false
 
       def perform
-        CurrencyParityExchangeRatesHgBrasilSyncService.call
+        CurrencyParityExchangeRates::HgBrasil::SyncService.call
       end
     end
   end

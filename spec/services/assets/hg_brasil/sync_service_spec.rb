@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AssetsHgBrasilSyncService, type: :service do
+RSpec.describe Assets::HgBrasil::SyncService, type: :service do
   subject(:sync_service) { described_class.new(ticker_symbols:) }
 
   let!(:petr4) { create(:asset, ticker_symbol: 'PETR4') }

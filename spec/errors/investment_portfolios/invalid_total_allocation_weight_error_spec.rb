@@ -10,7 +10,8 @@ RSpec.describe InvestmentPortfolios::InvalidTotalAllocationWeightError do
 
   describe '#message' do
     it 'returns the correct error message' do
-      expect(subject.message).to eq("Investment Portfolio id: #{investment_portfolio.id} has an invalid total allocation weight: #{current_allocation_weight}")
+      expect(subject.message).to eq("Investment Portfolio id: #{investment_portfolio.id} has an invalid total allocation " \
+                                    "weight: #{current_allocation_weight}")
     end
   end
 end

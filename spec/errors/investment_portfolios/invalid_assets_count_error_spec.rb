@@ -8,7 +8,8 @@ RSpec.describe InvestmentPortfolios::InvalidAssetsCountError do
     let(:error) { described_class.new(investment_portfolio:) }
 
     it 'returns the error message' do
-      expect(error.message).to eq("Investment Portfolio #{investment_portfolio.id} has an invalid number of assets: #{investment_portfolio.assets.count}")
+      expect(error.message).to eq("Investment Portfolio #{investment_portfolio.id} has an invalid number of " \
+                                  "assets: #{investment_portfolio.assets.count}")
     end
   end
 end

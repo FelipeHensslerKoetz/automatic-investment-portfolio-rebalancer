@@ -15,7 +15,8 @@ RSpec.describe RebalanceOrders::InvalidStatusError do
 
   describe '#message' do
     it 'returns the error message' do
-      expect(subject.message).to eq("Expecting pending status for RebalanceOrder with id #{rebalance_order.id}, got #{rebalance_order.status} status.")
+      expect(subject.message).to eq("Expecting pending status for RebalanceOrder with id #{rebalance_order.id}, " \
+                                    "got #{rebalance_order.status} status.")
     end
   end
 end
