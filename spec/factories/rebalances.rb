@@ -6,22 +6,6 @@ FactoryBot.define do
     before_state { { 'data' => [] } }
     after_state { { 'data' => [] } }
     details { { 'data' => [] } }
-    recommended_actions { { 'data' => [] } }
-
-    trait :pending do
-      status { 'pending' }
-    end
-
-    trait :processing do
-      status { 'processing' }
-    end
-
-    trait :succeed do
-      status { 'succeed' }
-    end
-
-    trait :failed do
-      status { 'failed' }
-    end
+    recommended_actions { { buy: [], sell: [] } }
   end
 end
