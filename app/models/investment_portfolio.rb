@@ -9,7 +9,4 @@ class InvestmentPortfolio < ApplicationRecord
 
   # Validations
   validates :name, presence: true
-
-  # Nested Attributes
-  accepts_nested_attributes_for :investment_portfolio_assets, allow_destroy: true
 end

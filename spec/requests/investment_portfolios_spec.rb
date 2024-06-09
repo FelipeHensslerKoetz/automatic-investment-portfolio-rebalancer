@@ -102,34 +102,22 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
             investment_portfolio: {
               name: 'My Investment Portfolio',
               description: 'My first investment portfolio',
-              currency_id: currency.id,
-              investment_portfolio_assets_attributes: [
-                {
-                  asset_id: asset.id,
-                  quantity: 100,
-                  target_allocation_weight_percentage: 100
-                }
-              ]
+              currency_id: currency.id
             }
           }
         end
 
         before { post '/api/investment_portfolios', headers: valid_headers, params: investment_portfolio_params, as: :json }
 
-        it 'creates an investment portfolio and investment_portfolio_assets' do
+        it 'creates an investment portfolio' do
           new_investment_portfolio = InvestmentPortfolio.last
-          investment_portfolio_asset = new_investment_portfolio.investment_portfolio_assets.first
 
           expect(response).to have_http_status(:created)
           expect(response.body).to eq(new_investment_portfolio.to_json)
           expect(new_investment_portfolio.name).to eq('My Investment Portfolio')
           expect(new_investment_portfolio.description).to eq('My first investment portfolio')
           expect(new_investment_portfolio.currency).to eq(currency)
-          expect(investment_portfolio_asset.asset).to eq(asset)
-          expect(investment_portfolio_asset.quantity).to eq(100)
-          expect(investment_portfolio_asset.target_allocation_weight_percentage).to eq(100)
           expect(InvestmentPortfolio.count).to eq(1)
-          expect(InvestmentPortfolioAsset.count).to eq(1)
         end
       end
 
@@ -158,105 +146,6 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
         let(:investment_portfolio) { create(:investment_portfolio, user:) }
 
         context 'when params are valid' do
-          context 'when creating a new investment portfolio asset' do
-            let(:investment_portfolio_params) do
-              {
-                investment_portfolio_assets_attributes: [
-                  {
-                    asset_id: asset.id,
-                    quantity: 250,
-                    target_allocation_weight_percentage: 50
-                  }
-                ]
-              }
-            end
-
-            before do
-              patch "/api/investment_portfolios/#{investment_portfolio.id}", headers: valid_headers,
-                                                                             params: investment_portfolio_params, as: :json
-            end
-
-            it 'creates a new investment_portfolio_asset' do
-              investment_portfolio_asset = investment_portfolio.investment_portfolio_assets.first
-              expect(response).to have_http_status(:ok)
-              expect(investment_portfolio.reload.investment_portfolio_assets.count).to eq(1)
-              expect(investment_portfolio_asset.attributes).to include(
-                'asset_id' => asset.id,
-                'quantity' => 250,
-                'target_allocation_weight_percentage' => 50,
-                'investment_portfolio_id' => investment_portfolio.id
-              )
-
-              expect(response.parsed_body).to eq(investment_portfolio.as_json)
-            end
-          end
-
-          context 'when updating an existing investment portfolio asset' do
-            let!(:investment_portfolio_asset) do
-              create(:investment_portfolio_asset, investment_portfolio:, asset:)
-            end
-
-            let(:investment_portfolio_params) do
-              {
-                investment_portfolio_assets_attributes: [
-                  {
-                    id: investment_portfolio_asset.id,
-                    asset_id: asset.id,
-                    quantity: 1000,
-                    target_allocation_weight_percentage: 100
-                  }
-                ]
-              }
-            end
-
-            before do
-              patch "/api/investment_portfolios/#{investment_portfolio.id}", headers: valid_headers,
-                                                                             params: investment_portfolio_params, as: :json
-            end
-
-            it 'updates the investment_portfolio_asset' do
-              investment_portfolio_asset.reload
-              expect(response).to have_http_status(:ok)
-              expect(investment_portfolio.reload.investment_portfolio_assets.count).to eq(1)
-              expect(investment_portfolio_asset.attributes).to include(
-                'asset_id' => asset.id,
-                'quantity' => 1000,
-                'target_allocation_weight_percentage' => 100,
-                'investment_portfolio_id' => investment_portfolio.id
-              )
-              expect(response.parsed_body).to eq(investment_portfolio.as_json)
-            end
-          end
-
-          context 'when removing an existing investment portfolio asset' do
-            let!(:investment_portfolio_asset) do
-              create(:investment_portfolio_asset, investment_portfolio:, asset:)
-            end
-
-            let(:investment_portfolio_params) do
-              {
-                investment_portfolio_assets_attributes: [
-                  {
-                    id: investment_portfolio_asset.id,
-                    _destroy: true
-                  }
-                ]
-              }
-            end
-
-            before do
-              patch "/api/investment_portfolios/#{investment_portfolio.id}", headers: valid_headers,
-                                                                             params: investment_portfolio_params, as: :json
-            end
-
-            it 'removes the investment_portfolio_asset' do
-              expect(response).to have_http_status(:ok)
-              expect(investment_portfolio.reload.investment_portfolio_assets.count).to eq(0)
-              expect(InvestmentPortfolioAsset.find_by(id: investment_portfolio_asset.id)).to be_nil
-              expect(response.parsed_body).to eq(investment_portfolio.as_json)
-            end
-          end
-
           context 'when updating the investment portfolio' do
             let(:investment_portfolio_params) do
               {
