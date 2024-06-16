@@ -118,29 +118,4 @@ RSpec.describe 'Assets', type: :request do
       end
     end
   end
-
-  describe 'GET /deep_search' do
-    context 'when user is authenticated' do
-      it 'schedules an asset discovery job' do
-        expect do
-          get '/api/assets/deep_search?asset=Bitcoin', headers: valid_headers, as: :json
-        end.to change(Assets::DiscoveryJob.jobs, :size).by(1)
-      end
-
-      it 'returns a success message' do
-        get '/api/assets/deep_search?asset=Bitcoin', headers: valid_headers, as: :json
-
-        expect(response).to be_successful
-        expect(response.parsed_body['message']).to eq('Asset discovery job has been scheduled')
-      end
-    end
-
-    context 'when user is not authenticated' do
-      it 'returns an unauthorized status' do
-        get '/api/assets/deep_search', headers: invalid_headers, as: :json
-
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-  end
 end

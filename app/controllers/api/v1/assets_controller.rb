@@ -28,12 +28,6 @@ module Api
 
         render json: @assets, status: :ok
       end
-
-      def deep_search
-        Assets::DiscoveryJob.perform_async(params[:asset])
-
-        render json: { message: 'Asset discovery job has been scheduled' }, status: :ok
-      end
     end
   end
 end
