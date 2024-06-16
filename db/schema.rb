@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_09_181432) do
+ActiveRecord::Schema.define(version: 2024_06_16_221121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 2024_06_09_181432) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ticker_symbol"], name: "index_assets_on_ticker_symbol", unique: true
     t.index ["user_id"], name: "index_assets_on_user_id"
+  end
+
+  create_table "automatic_rebalance_options", force: :cascade do |t|
+    t.bigint "investment_portfolio_id", null: false
+    t.string "kind", null: false
+    t.integer "recurrence_days"
+    t.date "start_date", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["investment_portfolio_id"], name: "index_automatic_rebalance_options_on_investment_portfolio_id"
   end
 
   create_table "currencies", force: :cascade do |t|
@@ -80,11 +90,11 @@ ActiveRecord::Schema.define(version: 2024_06_09_181432) do
   create_table "investment_portfolio_assets", force: :cascade do |t|
     t.bigint "asset_id", null: false
     t.bigint "investment_portfolio_id", null: false
-    t.decimal "target_allocation_weight_percentage", default: "0.0", null: false
+    t.decimal "target_allocation_weight_percentage", null: false
     t.decimal "quantity", default: "0.0", null: false
-    t.decimal "target_deviation_percentage", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "target_variation_limit_percentage"
     t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"
     t.index ["investment_portfolio_id"], name: "index_investment_portfolio_assets_on_investment_portfolio_id"
   end
@@ -138,9 +148,10 @@ ActiveRecord::Schema.define(version: 2024_06_09_181432) do
     t.string "kind", null: false
     t.decimal "amount", default: "0.0", null: false
     t.string "error_message"
-    t.datetime "scheduled_at", null: false
+    t.date "scheduled_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "created_by_system", default: false
     t.index ["investment_portfolio_id"], name: "index_rebalance_orders_on_investment_portfolio_id"
     t.index ["user_id"], name: "index_rebalance_orders_on_user_id"
   end
@@ -191,6 +202,7 @@ ActiveRecord::Schema.define(version: 2024_06_09_181432) do
   add_foreign_key "asset_prices", "currencies"
   add_foreign_key "asset_prices", "partner_resources"
   add_foreign_key "assets", "users"
+  add_foreign_key "automatic_rebalance_options", "investment_portfolios"
   add_foreign_key "currency_parities", "currencies", column: "currency_from_id"
   add_foreign_key "currency_parities", "currencies", column: "currency_to_id"
   add_foreign_key "currency_parity_exchange_rates", "currency_parities"

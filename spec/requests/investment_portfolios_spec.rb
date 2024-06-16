@@ -24,12 +24,19 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
         let!(:investment_portfolio) { create(:investment_portfolio, user:) }
         let!(:another_investment_portfolio) { create(:investment_portfolio, user:) }
 
+        let(:investment_portfolio_serialized) do
+          InvestmentPortfolioSerializer.new(investment_portfolio).to_json
+        end
+
+        let(:another_investment_portfolio_serialized) do
+          InvestmentPortfolioSerializer.new(another_investment_portfolio).to_json
+        end
+
         before { get '/api/investment_portfolios', headers: valid_headers, as: :json }
 
         it 'returns a list of investment portfolios' do
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include(investment_portfolio.to_json,
-                                           another_investment_portfolio.to_json)
+          expect(response.body).to include(investment_portfolio_serialized, another_investment_portfolio_serialized)
         end
       end
 
@@ -56,12 +63,13 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
     context 'when the user is authenticated' do
       context 'when the investment portfolio belongs to the user' do
         let(:investment_portfolio) { create(:investment_portfolio, user:) }
+        let(:investment_portfolio_serialized) { InvestmentPortfolioSerializer.new(investment_portfolio).to_json }
 
         before { get "/api/investment_portfolios/#{investment_portfolio.id}", headers: valid_headers, as: :json }
 
         it 'returns the investment portfolio' do
           expect(response).to have_http_status(:ok)
-          expect(response.body).to eq(investment_portfolio.to_json)
+          expect(response.body).to eq(investment_portfolio_serialized)
         end
       end
 
@@ -111,9 +119,10 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
 
         it 'creates an investment portfolio' do
           new_investment_portfolio = InvestmentPortfolio.last
+          serialized_new_investment_portfolio = InvestmentPortfolioSerializer.new(new_investment_portfolio).to_json
 
           expect(response).to have_http_status(:created)
-          expect(response.body).to eq(new_investment_portfolio.to_json)
+          expect(response.body).to eq(serialized_new_investment_portfolio)
           expect(new_investment_portfolio.name).to eq('My Investment Portfolio')
           expect(new_investment_portfolio.description).to eq('My first investment portfolio')
           expect(new_investment_portfolio.currency).to eq(currency)
@@ -167,7 +176,7 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
                 'description' => 'My updated description',
                 'currency_id' => another_currency.id
               )
-              expect(response.parsed_body).to eq(investment_portfolio.as_json)
+              expect(response.body).to eq(InvestmentPortfolioSerializer.new(investment_portfolio).to_json)
             end
           end
         end
@@ -268,6 +277,68 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
     context 'when the user is not authenticated' do
       it 'returns an unauthorized status' do
         delete '/api/investment_portfolios/1', headers: invalid_headers, as: :json
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
+
+  describe 'POST /:id/investment_portfolio_assets' do
+    context 'when the user is authenticated' do
+      context 'when the investment portfolio belongs to the user' do
+        let(:investment_portfolio) { create(:investment_portfolio, user:) }
+
+        context 'when params are valid' do
+        end
+
+        context 'when params are invalid' do
+          let(:investment_portfolio_assets_params) do
+            {
+              investment_portfolio_assets_attributes: [
+                {
+                  asset_id: asset.id,
+                  quantity: 10,
+                  target_allocation_weight_percentage: 100,
+                  target_deviation_percentage: 5
+                },
+                {
+                  asset_id: asset.id,
+                  quantity: 10,
+                  target_allocation_weight_percentage: 100,
+                  target_deviation_percentage: 5
+                }
+              ]
+            }
+          end
+
+          before do
+            allow(InvestmentPortfolioAssets::CreatorService).to receive(:call).and_raise(StandardError)
+            post "/api/investment_portfolios/#{investment_portfolio.id}/investment_portfolio_assets",
+                 params: investment_portfolio_assets_params, headers: valid_headers, as: :json
+          end
+
+          it 'returns an unprocessable entity status' do
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
+      end
+
+      context 'when the investment portfolio does not belong to the user' do
+        let(:another_user) { create(:user) }
+        let(:investment_portfolio) { create(:investment_portfolio, user: another_user) }
+
+        it 'returns a not found status' do
+          post "/api/investment_portfolios/#{investment_portfolio.id}/investment_portfolio_assets",
+               headers: valid_headers, as: :json
+
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
+
+    context 'when the user is not authenticated' do
+      it 'returns an unauthorized status' do
+        post '/api/investment_portfolios/1/investment_portfolio_assets', headers: invalid_headers, as: :json
 
         expect(response).to have_http_status(:unauthorized)
       end

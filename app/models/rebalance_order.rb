@@ -13,8 +13,9 @@ class RebalanceOrder < ApplicationRecord
   has_one :rebalance, dependent: :restrict_with_error
 
   # Validations
-  validates :status, :kind, :amount, :scheduled_at, presence: true
+  validates :status, :kind, presence: true
   validates :kind, inclusion: { in: REBALANCE_ORDER_KINDS }
+  validates :amount, numericality: { greater_than: 0 }, if: -> { kind == 'deposit' || kind == 'withdraw' }
 
   # Scopes
   scope :pending, -> { where(status: :pending) }
