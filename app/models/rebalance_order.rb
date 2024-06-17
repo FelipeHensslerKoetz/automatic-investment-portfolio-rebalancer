@@ -16,6 +16,7 @@ class RebalanceOrder < ApplicationRecord
   validates :status, :kind, presence: true
   validates :kind, inclusion: { in: REBALANCE_ORDER_KINDS }
   validates :amount, numericality: { greater_than: 0 }, if: -> { kind == 'deposit' || kind == 'withdraw' }
+  validates :amount, numericality: { equal_to: 0 }, if: -> { kind == 'default' && amount.present? }
 
   # Scopes
   scope :pending, -> { where(status: :pending) }
