@@ -6,6 +6,7 @@ FactoryBot.define do
     investment_portfolio { create(:investment_portfolio) }
     kind { 'default' }
     scheduled_at { nil }
+    amount { 0 }
 
     trait :pending do
       status { 'pending' }

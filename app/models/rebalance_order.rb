@@ -13,10 +13,10 @@ class RebalanceOrder < ApplicationRecord
   has_one :rebalance, dependent: :restrict_with_error
 
   # Validations
-  validates :status, :kind, presence: true
+  validates :status, :kind, :amount, presence: true
   validates :kind, inclusion: { in: REBALANCE_ORDER_KINDS }
   validates :amount, numericality: { greater_than: 0 }, if: -> { kind == 'deposit' || kind == 'withdraw' }
-  validates :amount, numericality: { equal_to: 0 }, if: -> { kind == 'default' && amount.present? }
+  before_validation :set_default_amount, if: -> { kind == 'default' }
 
   # Scopes
   scope :pending, -> { where(status: :pending) }
@@ -52,5 +52,11 @@ class RebalanceOrder < ApplicationRecord
     event :retry do
       transitions from: :failed, to: :pending
     end
+  end
+
+  private
+
+  def set_default_amount
+    self.amount = 0
   end
 end

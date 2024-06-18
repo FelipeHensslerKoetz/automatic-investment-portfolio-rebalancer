@@ -105,7 +105,8 @@ RSpec.describe 'RebalanceOrders', type: :request do
             {
               rebalance_order: {
                 investment_portfolio_id: investment_portfolio.id,
-                kind: 'default'
+                kind: 'default',
+                amount: 0
               }
             }
           end
@@ -402,6 +403,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
           let(:rebalance_order_params) do
             {
               rebalance_order: {
+                kind: 'deposit',
                 amount: -100.0
               }
             }

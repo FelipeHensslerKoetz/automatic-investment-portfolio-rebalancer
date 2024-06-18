@@ -12,9 +12,15 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :rebalance_orders
+
       resources :currencies, only: %i[index show]
 
-      resources :investment_portfolios
+      resources :investment_portfolios, only: %i[index show create update destroy] do 
+        collection do 
+          post ':id/investment_portfolio_assets', to: 'investment_portfolios#investment_portfolio_assets', as: :investment_portfolio_assets
+        end
+      end
     end
 
     scope module: :v2, constraints: ApiConstraints.new({ version: 2, default: false }) do

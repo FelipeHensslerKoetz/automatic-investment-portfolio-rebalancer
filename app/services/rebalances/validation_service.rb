@@ -71,7 +71,7 @@ module Rebalances
     end
 
     def invalid_investment_portfolio_assets_count?
-      investment_portfolio_assets_count < 2
+      investment_portfolio_assets_count.zero?
     end
 
     def validate_rebalance_order_status

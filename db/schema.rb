@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_17_105428) do
+ActiveRecord::Schema.define(version: 2024_06_17_221559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 2024_06_17_105428) do
     t.decimal "quantity", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "target_variation_limit_percentage"
+    t.decimal "target_variation_limit_percentage", null: false
     t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"
     t.index ["investment_portfolio_id"], name: "index_investment_portfolio_assets_on_investment_portfolio_id"
   end
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 2024_06_17_105428) do
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.string "description"
-    t.bigint "currency_id", null: false
+    t.bigint "currency_id", null: false # não atrelar uma moeda por padrão
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["currency_id"], name: "index_investment_portfolios_on_currency_id"
