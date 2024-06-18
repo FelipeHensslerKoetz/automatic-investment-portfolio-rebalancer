@@ -9,7 +9,7 @@ RSpec.describe Rebalances::ValidationService do
     let(:brl_currency) { create(:currency, :brl) }
     let(:rebalance_order_id) { rebalance_order.id }
     let(:rebalance_order) { create(:rebalance_order, status: :scheduled, investment_portfolio:) }
-    let(:investment_portfolio) { create(:investment_portfolio, currency: brl_currency) }
+    let(:investment_portfolio) { create(:investment_portfolio) }
 
     before do
       first_asset = create(:asset)
@@ -49,7 +49,7 @@ RSpec.describe Rebalances::ValidationService do
       let(:brl_currency) { create(:currency, :brl) }
       let(:rebalance_order_id) { rebalance_order.id }
       let(:rebalance_order) { create(:rebalance_order, status: :scheduled, investment_portfolio:) }
-      let(:investment_portfolio) { create(:investment_portfolio, currency: brl_currency) }
+      let(:investment_portfolio) { create(:investment_portfolio) }
 
       before do
         first_asset = create(:asset)
@@ -68,7 +68,7 @@ RSpec.describe Rebalances::ValidationService do
       let(:brl_currency) { create(:currency, :brl) }
       let(:rebalance_order_id) { rebalance_order.id }
       let(:rebalance_order) { create(:rebalance_order, status: :scheduled, investment_portfolio:) }
-      let(:investment_portfolio) { create(:investment_portfolio, currency: brl_currency) }
+      let(:investment_portfolio) { create(:investment_portfolio) }
 
       before do
         first_asset = create(:asset)

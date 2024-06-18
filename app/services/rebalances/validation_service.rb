@@ -82,7 +82,7 @@ module Rebalances
 
     def validate_all_asset_prices_up_to_date
       investment_portfolio_assets.each do |investment_portfolio_asset|
-        AssetPrices::NewestUpdatedAssetPriceService.call(asset: investment_portfolio_asset.asset, currency: investment_portfolio.currency)
+        AssetPrices::NewestUpdatedAssetPriceService.call(asset: investment_portfolio_asset.asset)
       end
     end
   end

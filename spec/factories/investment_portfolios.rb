@@ -5,6 +5,5 @@ FactoryBot.define do
     user { create(:user) }
     name { 'My stocks' }
     description { 'Stocks based portfolio' }
-    currency { create(:currency) }
   end
 end

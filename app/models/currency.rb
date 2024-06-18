@@ -29,4 +29,8 @@ class Currency < ApplicationRecord
 
     record
   end
+
+  def self.default_currency
+    Currency.find_by!(code: 'BRL')
+  end
 end

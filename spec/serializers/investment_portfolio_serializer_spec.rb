@@ -24,8 +24,6 @@ RSpec.describe InvestmentPortfolioSerializer, type: :serializer do
       expect(serializer[:investment_portfolio_assets]).to eq(investment_portfolio.investment_portfolio_assets.map do |investment_portfolio_asset|
         InvestmentPortfolioAssetSerializer.new(investment_portfolio_asset).as_json
       end)
-
-      expect(serializer[:currency]).to eq(CurrencySerializer.new(investment_portfolio.currency).as_json)
     end
   end
 end

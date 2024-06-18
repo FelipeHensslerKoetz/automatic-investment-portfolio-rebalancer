@@ -83,7 +83,7 @@ module Rebalances
 
     def investment_portfolio_asset_details(investment_portfolio_asset)
       asset = investment_portfolio_asset.asset
-      newest_asset_price = AssetPrices::NewestUpdatedAssetPriceService.call(asset:, currency: investment_portfolio.currency)
+      newest_asset_price = AssetPrices::NewestUpdatedAssetPriceService.call(asset:)
       price = compute_price_and_currency_parity_exchange_rate(newest_asset_price)
 
       {
@@ -92,7 +92,7 @@ module Rebalances
         target_allocation_weight_percentage: investment_portfolio_asset.target_allocation_weight_percentage,
         target_variation_limit_percentage: investment_portfolio_asset.target_variation_limit_percentage,
         price: price[:price],
-        currency: investment_portfolio.currency,
+        currency: Currency.default_currency,
         original_price: newest_asset_price.price,
         original_currency: newest_asset_price.currency,
         asset_price: newest_asset_price,
@@ -105,7 +105,7 @@ module Rebalances
     end
 
     def compute_price_and_currency_parity_exchange_rate(asset_price)
-      AssetPrices::ConvertParityService.call(asset_price:, output_currency: investment_portfolio.currency)
+      AssetPrices::ConvertParityService.call(asset_price:)
     end
 
     def investment_portfolio_indicators(asset_details)

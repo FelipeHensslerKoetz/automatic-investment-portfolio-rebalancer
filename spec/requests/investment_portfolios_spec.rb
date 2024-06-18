@@ -125,7 +125,6 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
           expect(response.body).to eq(serialized_new_investment_portfolio)
           expect(new_investment_portfolio.name).to eq('My Investment Portfolio')
           expect(new_investment_portfolio.description).to eq('My first investment portfolio')
-          expect(new_investment_portfolio.currency).to eq(currency)
           expect(InvestmentPortfolio.count).to eq(1)
         end
       end
@@ -173,8 +172,7 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
               expect(response).to have_http_status(:ok)
               expect(investment_portfolio.reload.attributes).to include(
                 'name' => 'My Updated Investment Portfolio',
-                'description' => 'My updated description',
-                'currency_id' => another_currency.id
+                'description' => 'My updated description'
               )
               expect(response.body).to eq(InvestmentPortfolioSerializer.new(investment_portfolio).to_json)
             end

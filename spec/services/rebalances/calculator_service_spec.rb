@@ -6,13 +6,13 @@ RSpec.describe Rebalances::CalculatorService do
   subject(:rebalance_service) { described_class.call(rebalance_order_id:) }
 
   let(:user) { create(:user) }
+  let!(:brl_currency) { create(:currency, :brl) }
 
   describe '.call' do
     context 'when rebalance requirements are met' do
-      let(:brl_currency) { create(:currency, :brl) }
       let(:usd_currency) { create(:currency, :usd) }
       let(:rebalance_order_id) { rebalance_order.id }
-      let(:investment_portfolio) { create(:investment_portfolio, user:, currency: brl_currency) }
+      let(:investment_portfolio) { create(:investment_portfolio, user:) }
 
       before do
         asset = create(:asset, ticker_symbol: 'IVVB11')
@@ -168,8 +168,7 @@ RSpec.describe Rebalances::CalculatorService do
       context 'when the investment portfolio total allocation weight is invalid' do
         let(:rebalance_order_id) { rebalance_order.id }
         let(:rebalance_order) { create(:rebalance_order, status: :scheduled, investment_portfolio:) }
-        let(:investment_portfolio) { create(:investment_portfolio, currency: brl_currency) }
-        let(:brl_currency) { create(:currency, :brl) }
+        let(:investment_portfolio) { create(:investment_portfolio) }
         let(:expected_error_message) do
           "InvestmentPortfolios::InvalidTotalAllocationWeightError: Investment Portfolio id: #{investment_portfolio.id} has an invalid " \
             'total allocation weight: 99.99'
@@ -248,10 +247,9 @@ RSpec.describe Rebalances::CalculatorService do
       end
 
       context 'when withdrawal value is greater than current investment_portfolio value' do
-        let(:brl_currency) { create(:currency, :brl) }
         let(:usd_currency) { create(:currency, :usd) }
         let(:rebalance_order_id) { rebalance_order.id }
-        let(:investment_portfolio) { create(:investment_portfolio, user:, currency: brl_currency) }
+        let(:investment_portfolio) { create(:investment_portfolio, user:) }
         let(:rebalance_order) { create(:rebalance_order, status: :scheduled, kind: 'withdraw', investment_portfolio:, amount: 30_000) }
         let(:expected_error_message) do
           'RebalanceOrders::InvalidWithdrawAmountError: Insufficient funds to withdraw 30000.0, the max withdraw is 3000.0.'

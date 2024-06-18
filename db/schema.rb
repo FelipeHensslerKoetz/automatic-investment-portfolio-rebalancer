@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_17_221559) do
+ActiveRecord::Schema.define(version: 2024_06_18_005040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,10 +103,8 @@ ActiveRecord::Schema.define(version: 2024_06_17_221559) do
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.string "description"
-    t.bigint "currency_id", null: false # não atrelar uma moeda por padrão
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["currency_id"], name: "index_investment_portfolios_on_currency_id"
     t.index ["user_id"], name: "index_investment_portfolios_on_user_id"
   end
 
@@ -209,7 +207,6 @@ ActiveRecord::Schema.define(version: 2024_06_17_221559) do
   add_foreign_key "currency_parity_exchange_rates", "partner_resources"
   add_foreign_key "investment_portfolio_assets", "assets"
   add_foreign_key "investment_portfolio_assets", "investment_portfolios"
-  add_foreign_key "investment_portfolios", "currencies"
   add_foreign_key "investment_portfolios", "users"
   add_foreign_key "partner_resources", "partners"
   add_foreign_key "rebalance_orders", "investment_portfolios"

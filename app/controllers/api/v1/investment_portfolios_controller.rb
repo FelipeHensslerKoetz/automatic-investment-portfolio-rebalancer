@@ -61,7 +61,7 @@ module Api
       end
 
       def investment_portfolio_params
-        params.require(:investment_portfolio).permit(:name, :description, :currency_id)
+        params.require(:investment_portfolio).permit(:name, :description)
       end
 
       def investment_portfolio_assets_params

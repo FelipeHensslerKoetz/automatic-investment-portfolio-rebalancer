@@ -4,13 +4,13 @@ module AssetPrices
   class ConvertParityService
     attr_reader :asset_price, :output_currency
 
-    def self.call(asset_price:, output_currency:)
-      new(asset_price:, output_currency:).call
+    def self.call(asset_price:)
+      new(asset_price:).call
     end
 
-    def initialize(asset_price:, output_currency:)
+    def initialize(asset_price:)
       @asset_price = asset_price
-      @output_currency = output_currency
+      @output_currency = Currency.default_currency
     end
 
     def call
@@ -26,15 +26,18 @@ module AssetPrices
     end
 
     def output_to_input_currency_parity
-      @output_to_input_currency_parity ||= CurrencyParity.find_by(currency_from: output_currency, currency_to: input_currency)
+      @output_to_input_currency_parity ||= CurrencyParity.find_by(currency_from: output_currency,
+                                                                  currency_to: input_currency)
     end
 
     def output_to_input_currency_parity_exchange_rate
-      @output_to_input_currency_parity_exchange_rate ||= fetch_updated_currency_parity_exchange_rate(output_to_input_currency_parity)
+      @output_to_input_currency_parity_exchange_rate ||=
+        fetch_updated_currency_parity_exchange_rate(output_to_input_currency_parity)
     end
 
     def input_to_output_currency_parity
-      @input_to_output_currency_parity ||= CurrencyParity.find_by(currency_from: input_currency, currency_to: output_currency)
+      @input_to_output_currency_parity ||= CurrencyParity.find_by(currency_from: input_currency,
+                                                                  currency_to: output_currency)
     end
 
     def input_to_output_currency_parity_exchange_rate
@@ -44,35 +47,33 @@ module AssetPrices
     def validate_parity_conversion_requirements
       validate_arguments
       validate_asset_price_up_to_date
-      validate_currency_parities_existence
-      validate_currency_parities_exchange_rate_up_to_date
+      validate_any_currency_parity_available unless asset_price_already_in_output_currency?
+      validate_currency_parities_exchange_rate_up_to_date unless asset_price_already_in_output_currency?
     end
 
     def validate_arguments
       raise ArgumentError, 'Invalid asset_price argument' unless asset_price.is_a?(AssetPrice)
-      raise ArgumentError, 'Invalid output_currency argument' unless output_currency.is_a?(Currency)
     end
 
     def validate_asset_price_up_to_date
       raise AssetPrices::OutdatedError.new(asset_price:) unless asset_price.updated?
     end
 
-    def validate_currency_parities_existence
-      if asset_price_already_in_output_currency? || output_to_input_currency_parity.present? || input_to_output_currency_parity.present?
-        return
-      end
+    def validate_any_currency_parity_available
+      return if any_currency_parity_available?
 
       raise CurrencyParities::MissingError,
             "Missing currency parities for conversion: #{input_currency.code} to #{output_currency.code} or
              #{output_currency.code} to #{input_currency.code}"
     end
 
+    def any_currency_parity_available?
+      output_to_input_currency_parity.present? || input_to_output_currency_parity.present?
+    end
+
     def validate_currency_parities_exchange_rate_up_to_date
-      if asset_price_already_in_output_currency? ||
-         output_to_input_currency_parity_exchange_rate.present? ||
-         input_to_output_currency_parity_exchange_rate.present?
-        return
-      end
+      return if output_to_input_currency_parity_exchange_rate.present? ||
+                input_to_output_currency_parity_exchange_rate.present?
 
       raise CurrencyParities::OutdatedError,
             "Missing updated currency parities exchange rates for conversion: #{input_currency.code} to
@@ -91,7 +92,8 @@ module AssetPrices
       if input_to_output_currency_parity_exchange_rate.present?
         { price: input_to_output_currency_parity_price, currency_parity_exchange_rate: input_to_output_currency_parity_exchange_rate }
       else
-        { price: output_to_input_currency_parity_price, currency_parity_exchange_rate: output_to_input_currency_parity_exchange_rate }
+        { price: output_to_input_currency_parity_price,
+          currency_parity_exchange_rate: output_to_input_currency_parity_exchange_rate }
       end
     end
 

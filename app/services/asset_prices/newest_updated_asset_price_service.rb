@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 module AssetPrices
-  class NewestUpdatedAssetPriceService
+  class NewestUpdatedAssetPriceService # TODO: Prioritize the asse_price by updated and by partner priority
     attr_reader :asset, :currency
 
-    def initialize(asset:, currency:)
+    def initialize(asset:)
       @asset = asset
-      @currency = currency
+      @currency = Currency.default_currency
     end
 
-    def self.call(asset:, currency:)
-      new(asset:, currency:).call
+    def self.call(asset:)
+      new(asset:).call
     end
 
     def call
@@ -32,7 +32,6 @@ module AssetPrices
 
     def validate_arguments
       raise ArgumentError, 'Asset must be present' unless asset.is_a?(Asset)
-      raise ArgumentError, 'Currency must be present' unless currency.is_a?(Currency)
     end
 
     def fetch_newest_updated_asset_price

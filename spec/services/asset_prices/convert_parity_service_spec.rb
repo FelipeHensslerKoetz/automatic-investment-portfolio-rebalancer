@@ -3,185 +3,162 @@
 require 'rails_helper'
 
 RSpec.describe AssetPrices::ConvertParityService do
-  subject(:price) { described_class.call(asset_price:, output_currency:) }
+  subject(:price) { described_class.call(asset_price:) }
 
+  let!(:brl_currency) { create(:currency, :brl) }
+  let(:usd_currency) { create(:currency, :usd) }
   let(:petr4_asset) do
     create(:asset,
            ticker_symbol: 'PETR4',
            name: 'Petrobras')
   end
-  let(:brl_currency) { create(:currency, :brl) }
-  let(:usd_currency) { create(:currency, :usd) }
-  let(:btc_currency) { create(:currency, :btc) }
 
-  context 'when asset price can be calculated' do
-    let(:asset) { petr4_asset }
-    let(:output_currency) { usd_currency }
-    let(:asset_price) do
-      create(:asset_price,
-             :with_hg_brasil_stock_price_partner_resource,
-             asset:,
-             currency: brl_currency,
-             price: 40.0,
-             status: :updated)
-    end
+  context 'when convert is possible' do
+    context 'when input_currency is different from output_currency' do
+      context 'when only input to output currency parity is available' do
+        let(:asset_price) do
+          create(:asset_price,
+                 :with_hg_brasil_stock_price_partner_resource,
+                 asset: petr4_asset,
+                 currency: usd_currency,
+                 status: :updated)
+        end
 
-    context 'when only input to output currency parity is available' do
-      before do
-        currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
+        let!(:currency_parity_exchange_rate) do
+          create(:currency_parity_exchange_rate,
+                 :with_hg_brasil_stock_price_partner_resource,
+                 exchange_rate: 5,
+                 currency_parity:,
+                 status: :updated)
+        end
 
-        create(:currency_parity_exchange_rate,
-               :with_hg_brasil_stock_price_partner_resource,
-               currency_parity:,
-               exchange_rate: 5.0)
+        let(:currency_parity) { create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency) }
 
-        another_currency_parity = create(:currency_parity, currency_from: brl_currency, currency_to: usd_currency)
-
-        create(:currency_parity_exchange_rate,
-               :with_hg_brasil_stock_price_partner_resource,
-               currency_parity: another_currency_parity,
-               exchange_rate: 0.2)
+        it 'returns the asset_price price converted to output_currency' do
+          expect(price).to eq({ price: asset_price.price * 5, currency_parity_exchange_rate: })
+        end
       end
 
-      it 'returns the asset price in the target currency' do
-        response = price
+      context 'when only output to input currency parity is available' do
+        let(:asset_price) do
+          create(:asset_price,
+                 :with_hg_brasil_stock_price_partner_resource,
+                 asset: petr4_asset,
+                 currency: usd_currency,
+                 status: :updated)
+        end
 
-        expect(response[:price]).to be_a(BigDecimal)
-        expect(response[:price].truncate(2)).to eq(8.0.to_d)
-        expect(response[:price] * 5.0.to_d).to eq(40.0.to_d)
-        expect(response[:currency_parity_exchange_rate]).to be_a(CurrencyParityExchangeRate)
-      end
-    end
+        let!(:currency_parity_exchange_rate) do
+          create(:currency_parity_exchange_rate,
+                 :with_hg_brasil_stock_price_partner_resource,
+                 exchange_rate: 0.20,
+                 currency_parity:,
+                 status: :updated)
+        end
 
-    context 'when only output to input currency parity is available' do
-      let(:currency_parity) do
-        create(:currency_parity,
-               currency_from: usd_currency,
-               currency_to: brl_currency)
-      end
+        let(:currency_parity) { create(:currency_parity, currency_from: brl_currency, currency_to: usd_currency) }
 
-      let!(:currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate,
-               :with_hg_brasil_stock_price_partner_resource,
-               currency_parity:,
-               exchange_rate: 5.0)
-      end
-
-      it 'returns the asset price in the target currency' do
-        response = price
-
-        expect(response[:price]).to be_a(BigDecimal)
-        expect(response[:price].truncate(2)).to eq(8.0.to_d)
-        expect(response[:price] * 5.0.to_d).to eq(40.0.to_d)
-        expect(response[:currency_parity_exchange_rate]).to eq(currency_parity_exchange_rate)
-      end
-    end
-
-    context 'when both input to output currency parity and output to input currency parity are available' do
-      let(:currency_parity) do
-        create(:currency_parity,
-               currency_from: brl_currency,
-               currency_to: usd_currency)
+        it 'returns the asset_price price converted to output_currency' do
+          expect(price).to eq({ price: asset_price.price / 0.20, currency_parity_exchange_rate: })
+        end
       end
 
-      let!(:currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate,
-               :with_hg_brasil_stock_price_partner_resource,
-               currency_parity:,
-               exchange_rate: 0.2)
-      end
+      context 'when both input to output currency parity and output to input currency parity are available' do
+        let(:asset_price) do
+          create(:asset_price,
+                 :with_hg_brasil_stock_price_partner_resource,
+                 asset: petr4_asset,
+                 currency: usd_currency,
+                 status: :updated)
+        end
 
-      it 'returns the asset price in the target currency' do
-        response = price
-        expect(response[:price]).to be_a(BigDecimal)
-        expect(response[:price].truncate(2)).to eq(8.0.to_d)
-        expect(response[:price] * 5.0.to_d).to eq(40.0.to_d)
-        expect(response[:currency_parity_exchange_rate]).to eq(currency_parity_exchange_rate)
+        let!(:usd_to_brl_currency_parity_exchange_rate) do
+          create(:currency_parity_exchange_rate,
+                 :with_hg_brasil_stock_price_partner_resource,
+                 exchange_rate: 5,
+                 currency_parity: currency_parity_input_to_output,
+                 status: :updated)
+        end
+
+        let!(:brl_to_usd_currency_parity_exchange_rate) do
+          create(:currency_parity_exchange_rate,
+                 :with_hg_brasil_stock_price_partner_resource,
+                 exchange_rate: 0.20,
+                 currency_parity: currency_parity_output_to_input,
+                 status: :updated)
+        end
+
+        let!(:currency_parity_input_to_output) { create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency) }
+        let!(:currency_parity_output_to_input) { create(:currency_parity, currency_from: brl_currency, currency_to: usd_currency) }
+
+        it 'returns the asset_price price converted to output_currency' do
+          expect(price).to eq({ price: asset_price.price * 5, currency_parity_exchange_rate: usd_to_brl_currency_parity_exchange_rate })
+        end
       end
     end
 
-    context 'when output currency is the same as the asset price currency' do
-      let(:output_currency) { brl_currency }
+    context 'when input_currency is the same as output_currency' do
+      let(:asset_price) do
+        create(:asset_price,
+               :with_hg_brasil_stock_price_partner_resource,
+               asset: petr4_asset,
+               currency: brl_currency,
+               status: :updated)
+      end
 
-      it 'returns the asset price in the target currency' do
-        response = price
-        expect(response[:price]).to be_a(BigDecimal)
-        expect(response[:price].truncate(2)).to eq(40.0.to_d)
-        expect(response[:currency_parity_exchange_rate]).to be_nil
+      it 'returns the asset_price price' do
+        expect(price).to eq({ price: asset_price.price, currency_parity_exchange_rate: nil })
       end
     end
   end
 
-  context 'when asset price cannot be calculated' do
-    context 'when asset param is invalid' do
+  context 'when convert is not possible' do
+    context 'when asset_price is invalid' do
       let(:asset_price) { nil }
-      let(:output_currency) { usd_currency }
 
       it { expect { price }.to raise_error(ArgumentError) }
     end
 
-    context 'when output_currency param is invalid' do
-      let(:asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource) }
-      let(:output_currency) { nil }
-
-      it { expect { price }.to raise_error(ArgumentError) }
-    end
-
-    context 'when the asset_price status is different from updated' do
+    context 'whe asset_price status is not updated' do
       let(:asset_price) do
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, status: :scheduled, asset: petr4_asset,
-                                                                           currency: brl_currency)
-      end
-
-      let(:output_currency) { usd_currency }
-
-      before do
-        currency_parity = create(:currency_parity,
-                                 currency_from: usd_currency,
-                                 currency_to: brl_currency)
-
-        create(:currency_parity_exchange_rate,
+        create(:asset_price,
                :with_hg_brasil_stock_price_partner_resource,
-               currency_parity:,
-               exchange_rate: 5.12)
+               asset: petr4_asset,
+               currency: brl_currency,
+               status: :scheduled)
       end
 
       it { expect { price }.to raise_error(AssetPrices::OutdatedError) }
     end
 
-    context 'when there are no currency parities' do
-      let(:asset) { petr4_asset }
-      let(:output_currency) { btc_currency }
-      let!(:asset_price) do
+    context 'when there are not at least one currency_parity_available' do
+      let(:asset_price) do
         create(:asset_price,
                :with_hg_brasil_stock_price_partner_resource,
-               asset:,
-               currency: brl_currency,
+               asset: petr4_asset,
+               currency: usd_currency,
                status: :updated)
       end
 
       it { expect { price }.to raise_error(CurrencyParities::MissingError) }
     end
 
-    context 'when there are no updated currency parities' do
-      let(:asset) { petr4_asset }
-      let(:output_currency) { btc_currency }
-      let!(:asset_price) do
+    context 'when there are not at least one updated currency_parity_exchange_rate' do
+      let(:asset_price) do
         create(:asset_price,
                :with_hg_brasil_stock_price_partner_resource,
-               asset:,
-               currency: brl_currency,
+               asset: petr4_asset,
+               currency: usd_currency,
                status: :updated)
       end
 
-      let!(:currency_parity) do
-        create(:currency_parity,
-               currency_from: btc_currency,
-               currency_to: brl_currency)
-      end
-
-      let!(:currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, :with_hg_brasil_stock_price_partner_resource, :scheduled, currency_parity:)
+      before do
+        currency_parity = create(:currency_parity, currency_from: brl_currency, currency_to: usd_currency)
+        create(:currency_parity_exchange_rate,
+               :with_hg_brasil_stock_price_partner_resource,
+               exchange_rate: 5.0,
+               currency_parity:,
+               status: :scheduled)
       end
 
       it { expect { price }.to raise_error(CurrencyParities::OutdatedError) }
