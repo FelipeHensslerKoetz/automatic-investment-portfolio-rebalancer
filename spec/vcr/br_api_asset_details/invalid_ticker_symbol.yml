@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/INVALID
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=10, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '60'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 19 Jun 2024 23:32:36 GMT
+      etag:
+      - '"4nsi9xdm751l"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::rzqs5-1718839956394-d94552e92dee
+    body:
+      encoding: UTF-8
+      string: '{"error":true,"message":"Não encontramos a ação INVALID"}'
+  recorded_at: Wed, 19 Jun 2024 23:32:36 GMT
+recorded_with: VCR 6.2.0

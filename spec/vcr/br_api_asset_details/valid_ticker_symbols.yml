@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/PETR4,VALE3,BBAS3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 19 Jun 2024 23:42:39 GMT
+      etag:
+      - W/"xiw5y7quii1kg"
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::8kz2f-1718840558727-0876bf50f72c
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"currency":"BRL","shortName":"PETROBRAS   PN  EDJ N2","longName":"Petróleo
+        Brasileiro S.A. - Petrobras","regularMarketChange":0.03,"regularMarketChangePercent":0.084,"regularMarketTime":"2024-06-19T20:08:10.000Z","regularMarketPrice":35.93,"regularMarketDayHigh":36.12,"regularMarketDayRange":"35.57
+        - 36.12","regularMarketDayLow":35.57,"regularMarketVolume":20678300,"regularMarketPreviousClose":35.9,"regularMarketOpen":35.96,"fiftyTwoWeekRange":"35.57
+        - 36.12","fiftyTwoWeekLow":35.57,"fiftyTwoWeekHigh":36.12,"symbol":"PETR4","priceEarnings":4.238177807660096,"earningsPerShare":8.4776858,"logourl":"https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--big.svg"},{"currency":"BRL","shortName":"VALE        ON      NM","longName":"Vale
+        S.A.","regularMarketChange":0.19,"regularMarketChangePercent":0.313,"regularMarketTime":"2024-06-19T20:07:53.000Z","regularMarketPrice":60.85,"regularMarketDayHigh":61.08,"regularMarketDayRange":"60.37
+        - 61.08","regularMarketDayLow":60.37,"regularMarketVolume":8730200,"regularMarketPreviousClose":60.66,"regularMarketOpen":60.35,"fiftyTwoWeekRange":"60.37
+        - 61.08","fiftyTwoWeekLow":60.37,"fiftyTwoWeekHigh":61.08,"symbol":"VALE3","priceEarnings":6.794555199481894,"earningsPerShare":8.9744931,"logourl":"https://s3-symbol-logo.tradingview.com/vale--big.svg"},{"currency":"BRL","shortName":"BRASIL      ON  EDJ
+        NM","longName":"Banco do Brasil S.A.","regularMarketChange":0.19,"regularMarketChangePercent":0.729,"regularMarketTime":"2024-06-19T20:07:52.000Z","regularMarketPrice":26.27,"regularMarketDayHigh":26.34,"regularMarketDayRange":"26.03
+        - 26.34","regularMarketDayLow":26.03,"regularMarketVolume":12063600,"regularMarketPreviousClose":26.08,"regularMarketOpen":26.55,"fiftyTwoWeekRange":"26.03
+        - 26.34","fiftyTwoWeekLow":26.03,"fiftyTwoWeekHigh":26.34,"symbol":"BBAS3","priceEarnings":4.754320875938829,"earningsPerShare":4.0604768,"logourl":"https://s3-symbol-logo.tradingview.com/banco-do-brasil--big.svg"}],"requestedAt":"2024-06-19T23:42:39.090Z","took":"0ms"}'
+  recorded_at: Wed, 19 Jun 2024 23:42:39 GMT
+recorded_with: VCR 6.2.0

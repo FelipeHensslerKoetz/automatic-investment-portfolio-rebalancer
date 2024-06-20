@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/PETR4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '744'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 19 Jun 2024 23:28:38 GMT
+      etag:
+      - '"6x7ygrpqdmkn"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::g2x9n-1718839717577-16232fc991ba
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"currency":"BRL","shortName":"PETROBRAS   PN  EDJ N2","longName":"Petróleo
+        Brasileiro S.A. - Petrobras","regularMarketChange":0.03,"regularMarketChangePercent":0.084,"regularMarketTime":"2024-06-19T20:08:10.000Z","regularMarketPrice":35.93,"regularMarketDayHigh":36.12,"regularMarketDayRange":"35.57
+        - 36.12","regularMarketDayLow":35.57,"regularMarketVolume":20678300,"regularMarketPreviousClose":35.9,"regularMarketOpen":35.96,"fiftyTwoWeekRange":"35.57
+        - 36.12","fiftyTwoWeekLow":35.57,"fiftyTwoWeekHigh":36.12,"symbol":"PETR4","priceEarnings":4.238177807660096,"earningsPerShare":8.4776858,"logourl":"https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--big.svg"}],"requestedAt":"2024-06-19T23:28:37.889Z","took":"0ms"}'
+  recorded_at: Wed, 19 Jun 2024 23:28:38 GMT
+recorded_with: VCR 6.2.0

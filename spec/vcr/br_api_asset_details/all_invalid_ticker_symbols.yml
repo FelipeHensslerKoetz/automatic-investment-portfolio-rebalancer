@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/INVALID1,INVALID2,INVALID3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '313'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 20 Jun 2024 00:08:41 GMT
+      etag:
+      - '"jkbtzekywf8g"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::r7s5x-1718842120902-3fac5a691ed7
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"symbol":"INVALID1","error":true,"message":"Não encontramos
+        a ação INVALID1"},{"symbol":"INVALID2","error":true,"message":"Não encontramos
+        a ação INVALID2"},{"symbol":"INVALID3","error":true,"message":"Não encontramos
+        a ação INVALID3"}],"requestedAt":"2024-06-20T00:08:41.239Z","took":"0ms"}'
+  recorded_at: Thu, 20 Jun 2024 00:08:41 GMT
+recorded_with: VCR 6.2.0
