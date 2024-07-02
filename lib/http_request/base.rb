@@ -48,7 +48,7 @@ module HttpRequest
     end
 
     def create_http_request_log(faraday_response)
-      Logs::CreatorService.create_log(kind: :info, data: {
+      System::Logs::CreatorService.create_log(kind: :info, data: {
                                         request_url: faraday_response.env.url.to_s,
                                         request_method: faraday_response.env.method.to_s.upcase,
                                         request_headers: faraday_response.env.request_headers,
@@ -60,7 +60,7 @@ module HttpRequest
     end
 
     def create_http_request_error_log(url, params, headers, error)
-      Logs::CreatorService.create_log(kind: :error, data: {
+      System::Logs::CreatorService.create_log(kind: :error, data: {
                                         request_url: url,
                                         request_method: 'GET',
                                         request_headers: headers,

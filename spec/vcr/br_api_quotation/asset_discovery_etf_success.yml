@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/BOVA11
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '661'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 20 Jun 2024 11:58:50 GMT
+      etag:
+      - '"xeeqjo65tqid"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::f59d5-1718884730305-ae80d43e0598
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"currency":"BRL","shortName":"ISHARES BOVACI","longName":"iShares
+        Ibovespa Index Fund","regularMarketChange":0.64,"regularMarketChangePercent":0.551,"regularMarketTime":"2024-06-19T20:17:00.000Z","regularMarketPrice":116.76,"regularMarketDayHigh":0,"regularMarketDayRange":"0
+        - 0","regularMarketDayLow":0,"regularMarketVolume":0,"regularMarketPreviousClose":116.12,"regularMarketOpen":116.55,"fiftyTwoWeekRange":"0
+        - 0","fiftyTwoWeekLow":0,"fiftyTwoWeekHigh":0,"symbol":"BOVA11","priceEarnings":null,"earningsPerShare":null,"logourl":"https://s3-symbol-logo.tradingview.com/ishares--big.svg"}],"requestedAt":"2024-06-20T11:58:50.670Z","took":"0ms"}'
+  recorded_at: Thu, 20 Jun 2024 11:58:50 GMT
+recorded_with: VCR 6.2.0

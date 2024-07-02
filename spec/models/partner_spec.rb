@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Partner, type: :model do
   describe 'constants' do
-    it { expect(described_class::INTEGRATED_PARTNERS).to eq([:hg_brasil]) }
+    it { expect(described_class::INTEGRATED_PARTNERS).to eq(%i[hg_brasil br_api]) }
   end
 
   describe 'associations' do

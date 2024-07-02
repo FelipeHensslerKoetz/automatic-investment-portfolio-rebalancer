@@ -17,7 +17,7 @@ module BrApi
     private
 
     def request_error?(response)
-      response['error'] || !response['results'].is_a?(Array)
+      response.blank? || response['error'] || !response['results'].is_a?(Array)
     end
 
     def formatted_asset_details(asset_details)

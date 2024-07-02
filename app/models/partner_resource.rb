@@ -5,6 +5,7 @@ class PartnerResource < ApplicationRecord
   INTEGRATED_PARTNER_RESOURCES = %i[
     hg_brasil_stock_price
     hg_brasil_quotation
+    br_api_quotation
   ].freeze
 
   # Associations

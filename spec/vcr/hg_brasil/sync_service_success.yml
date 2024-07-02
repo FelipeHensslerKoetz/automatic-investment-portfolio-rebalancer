@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=PETR4%2CWIZC3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sun, 30 Jun 2024 22:04:17 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      etag:
+      - W/"4d0f3241084ec61eb970157147a82aa2"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - 55abf537-1e06-4e6b-93c4-229cd850a197
+      x-runtime:
+      - '0.045873'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cf-cache-status:
+      - DYNAMIC
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=3FEUta%2BBmJAaut7P8aBadcsqrzxEYwMQXS5QybnGyBJNwKK4nuXcBGwHlUKiSSaDRdr41RHqxfCqTrJRHHqMKzMP%2BqcAvwCupJwNuHtmqDwpq3dDY7086Q%2Bf9K5A%2B6pYW2vuxESfEqKTwPp4b7ZZ"}],"group":"cf-nel","max_age":604800}'
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      server:
+      - cloudflare
+      cf-ray:
+      - 89c1737ee84f498e-MIA
+      content-encoding:
+      - gzip
+      alt-svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"by":"symbol","valid_key":true,"results":{"PETR4":{"kind":"stock","symbol":"PETR4","name":"Petrobras","company_name":"Petroleo
+        Brasileiro S.A. Petrobras","document":"33.000.167/0001-01","description":"Pesquisa.
+        Lavra. Refinação. Processamento. Comércio E Transporte de Petróleo. de Seus
+        Derivados. de Gás Natural E de Outros Hidrocarbonetos Fluidos. Além Das Atividades
+        Vinculadas à Energia.","website":"http://www.petrobras.com.br/","sector":"Petróleo.
+        Gás e Biocombustíveis / Petróleo. Gás e Biocombustíveis / Exploração. Refino
+        e Distribuição","financials":{"quota_count":5602042788,"dividends":{"yield_12m":3.422,"yield_12m_sum":1.302}},"region":"Brazil/Sao
+        Paulo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"logo":{"small":"https://assets.hgbrasil.com/finance/companies/small/petrobras.png","big":"https://assets.hgbrasil.com/finance/companies/big/petrobras.png"},"market_cap":509601.0,"price":38.05,"change_percent":0.9,"change_price":0.34,"updated_at":"2024-06-29
+        20:46:00"},"WIZC3":{"kind":"stock","symbol":"WIZC3","name":"Wiz","company_name":"Wiz
+        Soluções E Corretagem De Seguros S.A.","document":"42.278.473/0001-03","description":"Corretagem
+        de Seguros de Todos Os Ramos. Assessoria E Consultoria Na área de Seguros
+        em Geral. Intermediação E Desenvolvimento de Soluções em Negócios. Sem Especificação
+        Definida. Dentre Outros.","website":"http://www.wizsolucoes.com.br/","sector":"Financeiro
+        / Previdência e Seguros / Corretoras de Seguros","financials":{"quota_count":159907282,"dividends":{"yield_12m":0.0,"yield_12m_sum":0.0}},"region":"Brazil/Sao
+        Paulo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"logo":{"small":"https://assets.hgbrasil.com/finance/companies/small/wiz-s-a.png","big":"https://assets.hgbrasil.com/finance/companies/big/wiz-s-a.png"},"market_cap":900.84,"price":5.71,"change_percent":-2.39,"change_price":-0.14,"updated_at":"2024-06-29
+        20:46:01"}},"execution_time":0.01,"from_cache":false}'
+  recorded_at: Sun, 30 Jun 2024 22:04:17 GMT
+recorded_with: VCR 6.2.0

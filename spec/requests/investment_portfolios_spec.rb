@@ -297,20 +297,19 @@ RSpec.describe 'InvestmentPortfolios', type: :request do
                   asset_id: asset.id,
                   quantity: 10,
                   target_allocation_weight_percentage: 100,
-                  target_deviation_percentage: 5
+                  target_variation_limit_percentage: 5
                 },
                 {
                   asset_id: asset.id,
                   quantity: 10,
                   target_allocation_weight_percentage: 100,
-                  target_deviation_percentage: 5
+                  target_variation_limit_percentage: 5
                 }
               ]
             }
           end
 
           before do
-            allow(InvestmentPortfolioAssets::CreatorService).to receive(:call).and_raise(StandardError)
             post "/api/investment_portfolios/#{investment_portfolio.id}/investment_portfolio_assets",
                  params: investment_portfolio_assets_params, headers: valid_headers, as: :json
           end

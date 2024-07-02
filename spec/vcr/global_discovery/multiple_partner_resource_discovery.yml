@@ -1,0 +1,127 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/PETR4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '705'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 30 Jun 2024 23:10:24 GMT
+      etag:
+      - '"7ofc2o5p1cjk"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::w5v7p-1719789024315-5bf144971edc
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"currency":"BRL","shortName":"PETROBRAS   PN      N2","longName":"Petróleo
+        Brasileiro S.A. - Petrobras","regularMarketChange":0.34,"regularMarketChangePercent":0.902,"regularMarketTime":"2024-06-28T20:07:37.000Z","regularMarketPrice":38.05,"regularMarketDayHigh":0,"regularMarketDayRange":"0
+        - 0","regularMarketDayLow":0,"regularMarketVolume":0,"regularMarketPreviousClose":37.71,"regularMarketOpen":36.91,"fiftyTwoWeekRange":"0
+        - 0","fiftyTwoWeekLow":0,"fiftyTwoWeekHigh":0,"symbol":"PETR4","priceEarnings":4.48824551470328,"earningsPerShare":8.4776858,"logourl":"https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--big.svg"}],"requestedAt":"2024-06-30T23:10:24.633Z","took":"0ms"}'
+  recorded_at: Sun, 30 Jun 2024 23:10:24 GMT
+- request:
+    method: get
+    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=PETR4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sun, 30 Jun 2024 23:10:25 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      etag:
+      - W/"99c759b2cf25863e199719b032989ecd"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - 7cb061bd-58db-40bd-896e-19571f6f788f
+      x-runtime:
+      - '0.008471'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cf-cache-status:
+      - DYNAMIC
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=VEAW8QfYUqQH6737YOQLggOi1koeeor%2BlL%2BFBzr0kblPur4cS6Y7OPK%2BY0vMx%2B5MKrr7v5d2lsg1EjHMOMTXv8JkeL2A2ShqP0GGSGsDr43rzqQR9jHY8DNca8UcIQmw%2BQE5ANp0XtxKGjFEelt4"}],"group":"cf-nel","max_age":604800}'
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      server:
+      - cloudflare
+      cf-ray:
+      - 89c1d45dd8ada420-GRU
+      content-encoding:
+      - gzip
+      alt-svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"by":"symbol","valid_key":true,"results":{"PETR4":{"kind":"stock","symbol":"PETR4","name":"Petrobras","company_name":"Petroleo
+        Brasileiro S.A. Petrobras","document":"33.000.167/0001-01","description":"Pesquisa.
+        Lavra. Refinação. Processamento. Comércio E Transporte de Petróleo. de Seus
+        Derivados. de Gás Natural E de Outros Hidrocarbonetos Fluidos. Além Das Atividades
+        Vinculadas à Energia.","website":"http://www.petrobras.com.br/","sector":"Petróleo.
+        Gás e Biocombustíveis / Petróleo. Gás e Biocombustíveis / Exploração. Refino
+        e Distribuição","financials":{"quota_count":5602042788,"dividends":{"yield_12m":3.422,"yield_12m_sum":1.302}},"region":"Brazil/Sao
+        Paulo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"logo":{"small":"https://assets.hgbrasil.com/finance/companies/small/petrobras.png","big":"https://assets.hgbrasil.com/finance/companies/big/petrobras.png"},"market_cap":509601.0,"price":38.05,"change_percent":0.9,"change_price":0.34,"updated_at":"2024-06-29
+        20:46:00"}},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Sun, 30 Jun 2024 23:10:25 GMT
+recorded_with: VCR 6.2.0

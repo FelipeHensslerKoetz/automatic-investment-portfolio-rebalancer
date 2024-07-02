@@ -2,7 +2,8 @@ require 'csv'
 
 # Generate partners
 partner_attributes = [
-  { name: 'HG Brasil' , slug: 'hg_brasil' }
+  { name: 'HG Brasil' , slug: 'hg_brasil' },
+  { name: 'BR API' , slug: 'br_api' }
 ]
 
 partner_attributes.each do |partner_attributes|
@@ -27,6 +28,13 @@ partner_resources_attributes = [
     description: 'API that retrieves the quotation of currencies and cryptocurrencies. The endpoint example is: https://api.hgbrasil.com/finance/quotations',
     url: 'https://console.hgbrasil.com/documentation/finance',
     partner: Partner.find_by(slug: 'hg_brasil')
+  },
+  {
+    slug: 'br_api_quotation',
+    name: 'BR API - Quotation',
+    description: 'API that retrieves the quotation of stocks fiis and etfs. The endpoint example is: https://brapi.dev/api/quote/',
+    url: 'https://brapi.dev/docs/acoes',
+    partner: Partner.find_by(slug: 'br_api')
   }
 ]
 

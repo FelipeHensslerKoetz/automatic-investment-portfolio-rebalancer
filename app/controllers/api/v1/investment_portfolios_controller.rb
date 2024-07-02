@@ -65,7 +65,7 @@ module Api
       end
 
       def investment_portfolio_assets_params
-        params.require(:investment_portfolio).permit(investment_portfolio_assets_attributes: %i[asset_id quantity target_allocation_weight_percentage asset_ticker_symbol target_deviation_percentage _destroy])
+        params.require(:investment_portfolio).permit(investment_portfolio_assets_attributes: %i[asset_id quantity target_allocation_weight_percentage asset_ticker_symbol target_variation_limit_percentage _destroy])
       end
     end
   end

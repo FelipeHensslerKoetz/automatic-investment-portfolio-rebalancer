@@ -2,6 +2,61 @@
 http_interactions:
 - request:
     method: get
+    uri: https://brapi.dev/api/quote/NOT_FOUND
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=10, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '62'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 30 Jun 2024 23:10:25 GMT
+      etag:
+      - '"y53vn0tdfh1n"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::zjfnb-1719789025378-8bb571afb776
+    body:
+      encoding: UTF-8
+      string: '{"error":true,"message":"Não encontramos a ação NOT_FOUND"}'
+  recorded_at: Sun, 30 Jun 2024 23:10:25 GMT
+- request:
+    method: get
     uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=NOT_FOUND
     body:
       encoding: US-ASCII
@@ -17,7 +72,7 @@ http_interactions:
       message: OK
     headers:
       date:
-      - Wed, 08 May 2024 23:09:37 GMT
+      - Sun, 30 Jun 2024 23:10:26 GMT
       content-type:
       - application/json; charset=utf-8
       transfer-encoding:
@@ -35,21 +90,21 @@ http_interactions:
       cache-control:
       - max-age=0, private, must-revalidate
       x-request-id:
-      - 3af1a36b-0ee7-4f7b-94a2-6aaf4e7ae372
+      - 728d3d15-f6ae-42c1-b874-ad054e35784d
       x-runtime:
-      - '0.014815'
+      - '0.013990'
       x-ua-compatible:
       - IE=Edge,chrome=1
       cf-cache-status:
       - DYNAMIC
       report-to:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=YPC03VKOI0y82gs26N%2BNHjDi0Xoc6ogF7tKQp8nnc5JQIqijbhVOVBD%2FqJLl7NqtooQMPMlVG37pF1wPq6wSzWcznVK7z%2F6A21o7T6GIl3inXawDXOrflt0XsHi2bxd9LbXk9zUeFKWFJIFQf%2FBS"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=1UGm%2FakfkerIU2%2FpImJ9S%2FiNej95VIVej2rM7znV3%2F%2BDNKfoXq68qAn35ujfMXzwrLcmCJ2hyq%2Brm8cx8%2FCae01fqPwqzxolLNgcDj%2FrtQgxwUbg6Y4ZZLnP9xjfiFjUOOAnRDKsyauBFeERwWLK"}],"group":"cf-nel","max_age":604800}'
       nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       server:
       - cloudflare
       cf-ray:
-      - 880d1e54ad4fa435-GRU
+      - 89c1d465bd45d9d5-MIA
       content-encoding:
       - gzip
       alt-svc:
@@ -59,5 +114,5 @@ http_interactions:
       string: '{"by":"symbol","valid_key":true,"results":{"NOT_FOUND":{"error":true,"message":"Error
         to get Stock for #NOT_FOUND: Erro 852 - Símbolo não encontrado, por favor
         entre em contato conosco em console.hgbrasil.com."}},"execution_time":0.0,"from_cache":true}'
-  recorded_at: Wed, 08 May 2024 23:09:37 GMT
+  recorded_at: Sun, 30 Jun 2024 23:10:26 GMT
 recorded_with: VCR 6.2.0

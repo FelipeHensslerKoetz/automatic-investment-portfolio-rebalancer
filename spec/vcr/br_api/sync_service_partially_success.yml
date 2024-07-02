@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/PETR4,WIZC3,UNAVAILABLE_ASSET
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 30 Jun 2024 21:19:50 GMT
+      etag:
+      - W/"3kwjs6919j13p"
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::2kcgq-1719782389618-646bd686e423
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"currency":"BRL","shortName":"PETROBRAS   PN      N2","longName":"Petróleo
+        Brasileiro S.A. - Petrobras","regularMarketChange":0.34,"regularMarketChangePercent":0.902,"regularMarketTime":"2024-06-28T20:07:37.000Z","regularMarketPrice":38.05,"regularMarketDayHigh":0,"regularMarketDayRange":"0
+        - 0","regularMarketDayLow":0,"regularMarketVolume":0,"regularMarketPreviousClose":37.71,"regularMarketOpen":36.91,"fiftyTwoWeekRange":"0
+        - 0","fiftyTwoWeekLow":0,"fiftyTwoWeekHigh":0,"symbol":"PETR4","priceEarnings":4.48824551470328,"earningsPerShare":8.4776858,"logourl":"https://s3-symbol-logo.tradingview.com/brasileiro-petrobras--big.svg"},{"currency":"BRL","shortName":"WIZ
+        CO      ON      NM","longName":"Wiz Co Participações e Corretagem de Seguros
+        S.A.","regularMarketChange":-0.14,"regularMarketChangePercent":-2.393,"regularMarketTime":"2024-06-28T20:06:00.000Z","regularMarketPrice":5.71,"regularMarketDayHigh":0,"regularMarketDayRange":"0
+        - 0","regularMarketDayLow":0,"regularMarketVolume":0,"regularMarketPreviousClose":5.85,"regularMarketOpen":5.7,"fiftyTwoWeekRange":"0
+        - 0","fiftyTwoWeekLow":0,"fiftyTwoWeekHigh":0,"symbol":"WIZC3","priceEarnings":5.529730776680225,"earningsPerShare":1.0325609,"logourl":"https://s3-symbol-logo.tradingview.com/wiz-s-a--big.svg"},{"priceEarnings":null,"earningsPerShare":null,"logourl":"https://brapi.dev/favicon.svg"}],"requestedAt":"2024-06-30T21:19:49.855Z","took":"0ms"}'
+  recorded_at: Sun, 30 Jun 2024 21:19:50 GMT
+recorded_with: VCR 6.2.0

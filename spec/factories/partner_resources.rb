@@ -23,5 +23,16 @@ FactoryBot.define do
         Partner.find_by(slug: :hg_brasil)
       end
     end
+
+    trait :br_api_quotation do
+      slug { 'br_api_quotation' }
+      name { 'BR API - Quotation' }
+      description { 'API that retrieves the quotation of stocks fiis and etfs. The endpoint example is: https://brapi.dev/api/quote/' }
+      url { 'https://brapi.dev/docs/acoes' }
+      partner do
+        create(:partner, :br_api) unless Partner.exists?(slug: :br_api)
+        Partner.find_by(slug: :br_api)
+      end
+    end
   end
 end

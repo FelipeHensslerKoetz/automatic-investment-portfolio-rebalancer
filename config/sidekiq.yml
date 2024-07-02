@@ -1,10 +1,10 @@
 ---
 :queues:
   - critical
-  - assets_hg_brasil_sync
-  - currency_parity_exchange_rates_hg_brasil_sync
-  - assets_global_sync
-  - currency_parity_exchange_rates_global_sync
-  - asset_discovery
+  - global_assets_sync
+  - global_currency_parity_exchange_rates_sync
+  - hg_brasil_assets_sync
+  - hg_brasil_currency_parity_exchange_rates_sync
+  - global_assets_discovery
   - default
   - low

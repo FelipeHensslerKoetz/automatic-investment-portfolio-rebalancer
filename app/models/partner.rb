@@ -2,7 +2,8 @@
 
 class Partner < ApplicationRecord
   INTEGRATED_PARTNERS = [
-    :hg_brasil
+    :hg_brasil,
+    :br_api
   ].freeze
 
   # Associations
