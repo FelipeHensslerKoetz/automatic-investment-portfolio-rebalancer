@@ -7,6 +7,7 @@ class Asset < ApplicationRecord
     etf
     mutual_fund
     fii
+    bdr
   ].freeze
 
   # Associations
