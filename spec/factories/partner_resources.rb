@@ -34,5 +34,16 @@ FactoryBot.define do
         Partner.find_by(slug: :br_api)
       end
     end
+
+    trait :br_api_currency do
+      slug { 'br_api_currency' }
+      name { 'BR API - Currency' }
+      description { 'API that retrieves the quotation of currencies. The endpoint example is: https://brapi.dev/api/v2/currency' }
+      url { 'https://brapi.dev/docs/acoes' }
+      partner do
+        create(:partner, :br_api) unless Partner.exists?(slug: :br_api)
+        Partner.find_by(slug: :br_api)
+      end
+    end
   end
 end

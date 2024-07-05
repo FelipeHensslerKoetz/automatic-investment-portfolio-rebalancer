@@ -15,15 +15,22 @@ RSpec.describe CurrencyParityExchangeRate, type: :model do
   end
 
   describe 'scopes' do
+    let!(:pending_currency_parity_exchange_rate) do
+      create(:currency_parity_exchange_rate, :pending, :with_hg_brasil_stock_price_partner_resource)
+    end
+
     let!(:updated_currency_parity_exchange_rate) do
       create(:currency_parity_exchange_rate, :updated, :with_hg_brasil_stock_price_partner_resource)
     end
+
     let!(:processing_currency_parity_exchange_rate) do
       create(:currency_parity_exchange_rate, :processing, :with_hg_brasil_stock_price_partner_resource)
     end
+
     let!(:failed_currency_parity_exchange_rate) do
       create(:currency_parity_exchange_rate, :failed, :with_hg_brasil_stock_price_partner_resource)
     end
+
     let!(:scheduled_currency_parity_exchange_rate) do
       create(:currency_parity_exchange_rate, :scheduled, :with_hg_brasil_stock_price_partner_resource)
     end
@@ -51,12 +58,19 @@ RSpec.describe CurrencyParityExchangeRate, type: :model do
         expect(CurrencyParityExchangeRate.scheduled).to contain_exactly(scheduled_currency_parity_exchange_rate)
       end
     end
+
+    describe '.pending' do
+      it 'returns pending currency parity exchange rate' do
+        expect(CurrencyParityExchangeRate.pending).to contain_exactly(pending_currency_parity_exchange_rate)
+      end
+    end
   end
 
   describe 'aasm' do
-    it { should have_state(:updated) }
-    it { should transition_from(:updated).to(:scheduled).on_event(:schedule) }
-    it { should transition_from(:failed).to(:scheduled).on_event(:schedule) }
+    it { should have_state(:pending) }
+    it { should transition_from(:updated).to(:pending).on_event(:reset_currency_parity_exchange_rate) }
+    it { should transition_from(:failed).to(:pending).on_event(:reset_currency_parity_exchange_rate) }
+    it { should transition_from(:pending).to(:scheduled).on_event(:schedule) }
     it { should transition_from(:scheduled).to(:processing).on_event(:process) }
     it { should transition_from(:processing).to(:failed).on_event(:fail) }
     it { should transition_from(:processing).to(:updated).on_event(:up_to_date) }

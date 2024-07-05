@@ -2,16 +2,16 @@
 
 module Global
   module Assets
-    class SyncJob
+    class SyncRetryJob
       include Sidekiq::Job
 
-      sidekiq_options queue: 'global_assets_sync', retry: false
+      sidekiq_options queue: 'global_assets_sync_retry', retry: false
 
       def perform
         return if any_rebalance_order_being_processed?
 
-        br_api_assets_sync
-        hg_brasil_assets_sync
+        br_api_assets_sync_retry
+        hg_brasil_assets_sync_retry
       end
 
       private
@@ -21,6 +21,7 @@ module Global
       end
 
       def schedule_record(record, delay_in_seconds)
+        record.reset_asset_price!
         record.schedule!
         record.update(scheduled_at: Time.zone.now + delay_in_seconds.seconds)
       end
@@ -29,10 +30,10 @@ module Global
         batch.map(&:ticker_symbol).join(',')
       end
 
-      def br_api_assets_sync
+      def br_api_assets_sync_retry
         current_delay_in_seconds = 0
 
-        AssetPrice.pending.where(partner_resource: br_api_partner_resource).find_in_batches(batch_size: 20) do |batch|
+        AssetPrice.failed.where(partner_resource: br_api_partner_resource).find_in_batches(batch_size: 1) do |batch|
           batch.each do |batch_item|
             batch_item.with_lock { schedule_record(batch_item, current_delay_in_seconds) }
           end
@@ -50,10 +51,10 @@ module Global
         @br_api_schedule_delay_in_seconds ||= Rails.application.credentials.br_api[:request_delay_in_seconds]
       end
 
-      def hg_brasil_assets_sync
+      def hg_brasil_assets_sync_retry
         current_delay_in_seconds = 0
 
-        AssetPrice.pending.where(partner_resource: hg_brasil_partner_resource).find_in_batches(batch_size: 5) do |batch|
+        AssetPrice.failed.where(partner_resource: hg_brasil_partner_resource).find_in_batches(batch_size: 1) do |batch|
           batch.each do |batch_item|
             batch_item.with_lock { schedule_record(batch_item, current_delay_in_seconds) }
           end

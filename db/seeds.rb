@@ -35,6 +35,13 @@ partner_resources_attributes = [
     description: 'API that retrieves the quotation of stocks fiis and etfs. The endpoint example is: https://brapi.dev/api/quote/',
     url: 'https://brapi.dev/docs/acoes',
     partner: Partner.find_by(slug: 'br_api')
+  },
+  {
+    slug: 'br_api_currency',
+    name: 'BR API - Currency',
+    description: 'API that retrieves the quotation of currencies. The endpoint example is: https://brapi.dev/api/quote/',
+    url: 'https://brapi.dev/docs/acoes',
+    partner: Partner.find_by(slug: 'br_api')
   }
 ]
 
@@ -74,8 +81,8 @@ end
 # Generate HG Brasil currency parity exchange rates
 ['USD','EUR', 'GBP', 'ARS', 'CAD', 'AUD', 'JPY', 'CNY', 'BTC'].each do |currency_code|
   currency = Currency.find_by(code: currency_code)
-  currency_parity = CurrencyParity.find_by(currency_from: currency, currency_to: brl_currency)
-  partner_resource = PartnerResource.find_by(slug: 'hg_brasil_quotation')
+  currency_parity = CurrencyParity.find_by!(currency_from: currency, currency_to: brl_currency)
+  partner_resource = PartnerResource.find_by!(slug: 'hg_brasil_quotation')
 
   if !CurrencyParityExchangeRate.exists?(currency_parity: currency_parity, partner_resource: partner_resource)
     CurrencyParityExchangeRate.create!(
@@ -84,8 +91,29 @@ end
       exchange_rate: 0.0,
       reference_date: Date.today,
       last_sync_at: Time.zone.now,
-      status: 'scheduled'
+      status: 'pending'
     )
-    puts "#{currency_code} to BRL currency_parity_exchange_rate created!"
+    puts "(HgBrasil) #{currency_code} to BRL currency_parity_exchange_rate created!"
+  end
+end
+
+# Generate BrApi currency parity exchange rates
+Currency.all.pluck(:code).each do |currency_code|
+  next if currency_code == 'BRL'
+
+  currency = Currency.find_by(code: currency_code)
+  currency_parity = CurrencyParity.find_by!(currency_from: currency, currency_to: brl_currency)
+  partner_resource = PartnerResource.find_by!(slug: 'br_api_currency')
+
+  if !CurrencyParityExchangeRate.exists?(currency_parity: currency_parity, partner_resource: partner_resource)
+    CurrencyParityExchangeRate.create!(
+      currency_parity: currency_parity,
+      partner_resource: partner_resource,
+      exchange_rate: 0.0,
+      reference_date: Date.today,
+      last_sync_at: Time.zone.now,
+      status: 'pending'
+    )
+    puts "(BrApi) #{currency_code} to BRL currency_parity_exchange_rate created!"
   end
 end

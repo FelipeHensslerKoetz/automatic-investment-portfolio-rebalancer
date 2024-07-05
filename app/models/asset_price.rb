@@ -17,16 +17,18 @@ class AssetPrice < ApplicationRecord
   scope :scheduled, -> { where(status: :scheduled) }
   scope :processing, -> { where(status: :processing) }
   scope :failed, -> { where(status: :failed) }
+  scope :pending, -> { where(status: :pending) }
 
   # AASM
   aasm column: :status do
+    state :pending, initial: true
     state :scheduled
     state :processing
-    state :updated, initial: true
+    state :updated
     state :failed
 
     event :schedule do
-      transitions from: %i[failed updated], to: :scheduled
+      transitions from: :pending, to: :scheduled
     end
 
     event :process do
@@ -39,6 +41,10 @@ class AssetPrice < ApplicationRecord
 
     event :up_to_date do
       transitions from: :processing, to: :updated
+    end
+
+    event :reset_asset_price do
+      transitions from: %i[failed updated], to: :pending
     end
   end
 end

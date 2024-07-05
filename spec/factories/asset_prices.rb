@@ -9,6 +9,10 @@ FactoryBot.define do
     last_sync_at { Time.zone.now }
     reference_date { Time.zone.now }
 
+    trait :pending do
+      status { 'pending' }
+    end
+
     trait :updated do
       status { 'updated' }
     end

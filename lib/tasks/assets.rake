@@ -11,7 +11,7 @@ namespace :assets do
     current_delay = 0
 
     parsed_brazilian_assets_csv.each do |row|
-      ticker_symbol = row['Ticker']
+      ticker_symbol = row['ticker_symbol']
 
       next if ticker_symbol.blank? || Asset.exists?(ticker_symbol:)
 
@@ -19,7 +19,7 @@ namespace :assets do
 
       puts "Scheduling asset discovery of: #{ticker_symbol}"
 
-      Assets::DiscoveryJob.perform_in(current_delay.seconds, ticker_symbol)
+      Global::Assets::DiscoveryJob.perform_in(current_delay.seconds, ticker_symbol)
     end
 
     puts 'Done!'

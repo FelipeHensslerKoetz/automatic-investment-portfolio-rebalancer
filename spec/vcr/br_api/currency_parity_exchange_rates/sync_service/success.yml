@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/v2/currency?currency=USD-BRL
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '291'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Thu, 04 Jul 2024 22:40:25 GMT
+      etag:
+      - '"vzyfdwewir82"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/v2/currency"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::gjsmj-1720132824890-3e14dc325504
+    body:
+      encoding: UTF-8
+      string: '{"currency":[{"fromCurrency":"USD","toCurrency":"BRL","name":"Dólar
+        Americano/Real Brasileiro","high":"5.4895","low":"5.4895","bidVariation":"0.0008","percentageChange":"0.01","bidPrice":"5.4887","askPrice":"5.4903","updatedAtTimestamp":"1720126799","updatedAtDate":"2024-07-04
+        17:59:59"}]}'
+  recorded_at: Thu, 04 Jul 2024 22:40:25 GMT
+recorded_with: VCR 6.2.0

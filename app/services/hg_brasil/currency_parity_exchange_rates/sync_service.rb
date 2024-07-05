@@ -7,7 +7,8 @@ module HgBrasil
         new.call
       end
 
-      # trazer para classe base
+      # TODO: tratar cenário de falha
+      # TODO: trazer para classe base - problema está atualizando todos as currencies de uma vez só
       def call
         currencies.each do |currency|
           hg_brasil_quotation = fetch_hg_brasil_quotation(currency)

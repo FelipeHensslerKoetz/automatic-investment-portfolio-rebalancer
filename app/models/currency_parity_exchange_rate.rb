@@ -16,16 +16,18 @@ class CurrencyParityExchangeRate < ApplicationRecord
   scope :scheduled, -> { where(status: :scheduled) }
   scope :processing, -> { where(status: :processing) }
   scope :failed, -> { where(status: :failed) }
+  scope :pending, -> { where(status: :pending) }
 
   # AASM
   aasm column: :status do
-    state :updated, initial: true
+    state :pending, initial: true
+    state :updated
     state :scheduled
     state :processing
     state :failed
 
     event :schedule do
-      transitions from: %i[updated failed], to: :scheduled
+      transitions from: :pending, to: :scheduled
     end
 
     event :process do
@@ -38,6 +40,10 @@ class CurrencyParityExchangeRate < ApplicationRecord
 
     event :up_to_date do
       transitions from: :processing, to: :updated
+    end
+
+    event :reset_currency_parity_exchange_rate do
+      transitions from: %i[failed updated], to: :pending
     end
   end
 end

@@ -13,7 +13,7 @@ module System
         def initialize(ticker_symbol:, partner_resource_slug:)
           @ticker_symbol = ticker_symbol&.upcase
           @partner_resource = PartnerResource.find_by!(slug: partner_resource_slug)
-          @existing_asset = Asset.global.find_by('ticker_symbol LIKE :asset', asset: "%#{ticker_symbol}%")
+          @existing_asset = Asset.global.find_by(ticker_symbol:)
         end
 
         def call
@@ -64,7 +64,8 @@ module System
                                            last_sync_at: Time.zone.now,
                                            ticker_symbol: asset_details[:ticker_symbol],
                                            currency:,
-                                           reference_date: asset_details[:reference_date])
+                                           reference_date: asset_details[:reference_date],
+                                           status: 'updated')
 
           System::Logs::CreatorService.create_log(kind: :info, data: new_asset_price_message(asset_price))
 

@@ -34,6 +34,7 @@ RSpec.describe BrApi::Assets::DiscoveryService do
             expect(asset_price.created_at).to be_a(Time)
             expect(asset_price.updated_at).to be_a(Time)
             expect(asset_price.reference_date).to be_a(Time)
+            expect(asset_price).to be_updated
             expect(Log.info.count).to eq(2)
           end
         end

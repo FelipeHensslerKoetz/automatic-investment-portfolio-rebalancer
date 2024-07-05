@@ -16,6 +16,7 @@ RSpec.describe AssetPrice, type: :model do
   end
 
   describe 'scopes' do
+    let!(:pending_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :pending) }
     let!(:scheduled_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :scheduled) }
     let!(:updated_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :updated) }
     let!(:processing_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :processing) }
@@ -44,14 +45,20 @@ RSpec.describe AssetPrice, type: :model do
         expect(AssetPrice.failed).to contain_exactly(failed_asset_price)
       end
     end
+
+    describe '.pending' do
+      it 'returns pending asset prices' do
+        expect(AssetPrice.pending).to contain_exactly(pending_asset_price)
+      end
+    end
   end
 
   describe 'aasm' do
-    it { should have_state(:updated) }
-    it { should transition_from(:updated).to(:scheduled).on_event(:schedule) }
-    it { should transition_from(:failed).to(:scheduled).on_event(:schedule) }
+    it { should transition_from(:pending).to(:scheduled).on_event(:schedule) }
     it { should transition_from(:scheduled).to(:processing).on_event(:process) }
     it { should transition_from(:processing).to(:failed).on_event(:fail) }
     it { should transition_from(:processing).to(:updated).on_event(:up_to_date) }
+    it { should transition_from(:failed).to(:pending).on_event(:reset_asset_price) }
+    it { should transition_from(:updated).to(:pending).on_event(:reset_asset_price) }
   end
 end

@@ -26,7 +26,7 @@ module BrApi
       {
         ticker_symbol: asset_details['symbol'].upcase,
         kind: resolve_kind(asset_details),
-        name: asset_details['longName'],
+        name: asset_details['longName'] || asset_details['shortName'],
         price: asset_details['regularMarketPrice'],
         currency: asset_details['currency'],
         reference_date: asset_details['regularMarketTime']
@@ -34,16 +34,17 @@ module BrApi
     end
 
     def all_required_keys_present?(asset_details)
-      %w[symbol longName shortName regularMarketPrice currency regularMarketTime].all? { |key| asset_details.key?(key) }
+      (asset_details['longName'].present? || asset_details['shortName'].present?) &&
+        %w[symbol regularMarketPrice currency regularMarketTime].all? { |key| asset_details.key?(key) }
     end
 
     def resolve_kind(asset_details)
-      long_name = asset_details['longName'].downcase
+      long_name = asset_details['longName']&.downcase
       short_name = asset_details['shortName'].downcase
 
-      if long_name.match?(/fundo de investimento imobiliario|\bfii\b/) || short_name.match?(/\bfii\b/)
+      if long_name&.match?(/fundo de investimento imobiliario|\bfii\b/) || short_name.match?(/\bfii\b/)
         'fii'
-      elsif long_name.match?(/index|fundo|fund/)
+      elsif long_name&.match?(/index|fundo|fund/)
         'etf'
       else
         'stock'

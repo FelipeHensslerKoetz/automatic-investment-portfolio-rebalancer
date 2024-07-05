@@ -1,10 +1,13 @@
 ---
 :queues:
   - critical
+  - global_assets_discovery
   - global_assets_sync
+  - global_assets_sync_retry
   - global_currency_parity_exchange_rates_sync
+  - br_api_assets_sync
+  - br_api_currency_parity_exchange_rates_sync
   - hg_brasil_assets_sync
   - hg_brasil_currency_parity_exchange_rates_sync
-  - global_assets_discovery
   - default
   - low

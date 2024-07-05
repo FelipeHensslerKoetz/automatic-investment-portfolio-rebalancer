@@ -6,6 +6,7 @@ class PartnerResource < ApplicationRecord
     hg_brasil_stock_price
     hg_brasil_quotation
     br_api_quotation
+    br_api_currency
   ].freeze
 
   # Associations
