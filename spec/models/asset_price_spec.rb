@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe AssetPrice, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:asset) }
-    it { is_expected.to belong_to(:partner_resource) }
+    it { is_expected.to belong_to(:partner_resource).optional }
     it { is_expected.to belong_to(:currency) }
   end
 
@@ -13,6 +13,32 @@ RSpec.describe AssetPrice, type: :model do
     it { is_expected.to validate_presence_of(:price) }
     it { is_expected.to validate_presence_of(:last_sync_at) }
     it { is_expected.to validate_presence_of(:reference_date) }
+
+    context 'when asset is not custom' do
+      let!(:asset) { create(:asset, custom: false) }
+      let(:asset_price) { build(:asset_price, asset:) }
+
+      before do
+        asset_price.partner_resource = nil
+      end
+
+      it 'validates presence of partner_resource' do
+        expect(asset_price).to be_invalid
+      end
+    end
+
+    context 'when asset is custom' do
+      let!(:asset) { create(:asset, custom: true) }
+      let(:asset_price) { build(:asset_price, asset:) }
+
+      before do
+        asset_price.partner_resource = nil
+      end
+
+      it 'does not validate presence of partner_resource' do
+        expect(asset_price).to be_valid
+      end
+    end
   end
 
   describe 'scopes' do

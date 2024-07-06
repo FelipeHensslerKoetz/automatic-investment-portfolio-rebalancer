@@ -7,10 +7,11 @@ class AssetPrice < ApplicationRecord
   # Associations
   belongs_to :asset
   belongs_to :currency
-  belongs_to :partner_resource
+  belongs_to :partner_resource, optional: true
 
   # Validations
   validates :ticker_symbol, :price, :last_sync_at, :reference_date, :status, presence: true
+  validate :partner_resource_presence, if: -> { asset.present? && !asset.custom }
 
   # Scopes
   scope :updated, -> { where(status: :updated) }
@@ -46,5 +47,11 @@ class AssetPrice < ApplicationRecord
     event :reset_asset_price do
       transitions from: %i[failed updated], to: :pending
     end
+  end
+
+  private
+
+  def partner_resource_presence
+    errors.add(:partner_resource, 'must be present') if partner_resource.blank?
   end
 end
