@@ -41,7 +41,7 @@ module System
 
       def fetch_asset(investment_portfolio_asset_attributes)
         asset = Asset.find_by(id: investment_portfolio_asset_attributes['asset_id']) ||
-                Asset.find_by(ticker_symbol: investment_portfolio_asset_attributes['asset_ticker_symbol']&.upcase)
+                Asset.find_by(ticker_symbol: investment_portfolio_asset_attributes['asset_ticker_symbol']&.upcase) # TODO: rever busca de ativos custom
 
         raise ActiveRecord::RecordNotFound, 'Asset not found' if asset.blank?
         raise ActiveRecord::RecordNotFound, 'Asset not found' if asset.user != investment_portfolio.user && asset.custom?

@@ -3,7 +3,7 @@
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/MethodLength
 module System
-  module Rebalances 
+  module Rebalances
     class CalculatorService
       attr_reader :rebalance_order_id
 

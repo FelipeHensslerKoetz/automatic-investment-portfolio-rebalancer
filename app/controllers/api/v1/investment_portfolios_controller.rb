@@ -45,7 +45,7 @@ module Api
       end
 
       def investment_portfolio_assets
-        InvestmentPortfolioAssets::CreatorService.call(investment_portfolio: @investment_portfolio,
+        System::InvestmentPortfolioAssets::CreatorService.call(investment_portfolio: @investment_portfolio,
                                                        investment_portfolio_assets_attributes: investment_portfolio_assets_params['investment_portfolio_assets_attributes'])
         render json: @investment_portfolio.reload.investment_portfolio_assets, status: :ok
       rescue StandardError => e
