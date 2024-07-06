@@ -12,6 +12,10 @@ RSpec.describe BrApi::CurrencyParityExchangeRates::SyncService do
     create(:currency_parity_exchange_rate, :scheduled, :with_br_api_currency_partner_resource, currency_parity:)
   end
 
+  before do
+    travel_to '2024-07-05'
+  end
+
   describe '#call' do
     context 'when the currency parity exists on API' do
       context 'when the api returns the currency parity exchange rate' do

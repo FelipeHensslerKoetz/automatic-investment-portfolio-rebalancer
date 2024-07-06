@@ -21,6 +21,8 @@ Rails.application.routes.draw do
           post ':id/investment_portfolio_assets', to: 'investment_portfolios#investment_portfolio_assets', as: :investment_portfolio_assets
         end
       end
+
+      resources :custom_assets
     end
 
     scope module: :v2, constraints: ApiConstraints.new({ version: 2, default: false }) do

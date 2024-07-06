@@ -8,6 +8,7 @@ class Asset < ApplicationRecord
     mutual_fund
     fii
     bdr
+    custom
   ].freeze
 
   # Associations
