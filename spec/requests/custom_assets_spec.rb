@@ -321,7 +321,8 @@ RSpec.describe 'CustomAssets', type: :request do
               put "/api/custom_assets/#{custom_asset.id}", headers: valid_headers, params: custom_asset_params, as: :json
 
               expect(response).to have_http_status(:unprocessable_entity)
-              expect(response.parsed_body).to eq({ 'error' => 'Asset cannot be updated while there is a RebalanceOrder being processed or scheduled.' })
+              expect(response.parsed_body).to eq({ 'error' =>
+              'Asset cannot be updated while there is a RebalanceOrder being processed or scheduled' })
             end
           end
         end
