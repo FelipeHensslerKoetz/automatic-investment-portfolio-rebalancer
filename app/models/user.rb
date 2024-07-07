@@ -16,4 +16,5 @@ class User < ApplicationRecord
   has_many :assets, dependent: :restrict_with_error
   has_many :investment_portfolios, dependent: :restrict_with_error
   has_many :rebalance_orders, dependent: :restrict_with_error
+  has_many :customer_support_items, dependent: :restrict_with_error
 end

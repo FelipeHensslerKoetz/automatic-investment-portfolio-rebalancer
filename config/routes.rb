@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       end
 
       resources :custom_assets
+      resources :customer_support_items
     end
 
     scope module: :v2, constraints: ApiConstraints.new({ version: 2, default: false }) do
