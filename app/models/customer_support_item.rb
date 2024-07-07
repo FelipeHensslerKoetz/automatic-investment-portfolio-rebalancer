@@ -6,6 +6,7 @@ class CustomerSupportItem < ApplicationRecord
 
   # Associations
   belongs_to :user
+  has_many :messages, class_name: 'CustomerSupportItemMessage', dependent: :restrict_with_error
 
   # Validations
   validates :title, :description, :status, presence: true

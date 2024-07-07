@@ -7,5 +7,9 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { 'password' }
     encrypted_password { 'p@ssw0rd' }
+
+    trait :admin do
+      admin { true }
+    end
   end
 end

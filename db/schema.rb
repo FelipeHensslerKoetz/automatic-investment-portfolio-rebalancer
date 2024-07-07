@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_07_171842) do
+ActiveRecord::Schema.define(version: 2024_07_07_195803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,16 @@ ActiveRecord::Schema.define(version: 2024_07_07_171842) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["currency_parity_id"], name: "index_currency_parity_exchange_rates_on_currency_parity_id"
     t.index ["partner_resource_id"], name: "index_currency_parity_exchange_rates_on_partner_resource_id"
+  end
+
+  create_table "customer_support_item_messages", force: :cascade do |t|
+    t.bigint "customer_support_item_id", null: false
+    t.bigint "user_id", null: false
+    t.string "message", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_support_item_id"], name: "idx_customer_support_item_messages_on_customer_support_item_id"
+    t.index ["user_id"], name: "index_customer_support_item_messages_on_user_id"
   end
 
   create_table "customer_support_items", force: :cascade do |t|
@@ -215,6 +225,8 @@ ActiveRecord::Schema.define(version: 2024_07_07_171842) do
   add_foreign_key "currency_parities", "currencies", column: "currency_to_id"
   add_foreign_key "currency_parity_exchange_rates", "currency_parities"
   add_foreign_key "currency_parity_exchange_rates", "partner_resources"
+  add_foreign_key "customer_support_item_messages", "customer_support_items"
+  add_foreign_key "customer_support_item_messages", "users"
   add_foreign_key "customer_support_items", "users"
   add_foreign_key "investment_portfolio_assets", "assets"
   add_foreign_key "investment_portfolio_assets", "investment_portfolios"

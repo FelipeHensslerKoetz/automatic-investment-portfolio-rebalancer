@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe CustomerSupportItem, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:messages).class_name('CustomerSupportItemMessage').dependent(:restrict_with_error) }
   end
 
   describe 'validations' do

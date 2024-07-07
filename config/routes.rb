@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
       resources :custom_assets
       resources :customer_support_items
+      resources :customer_support_item_messages, only: %i[index show create]
     end
 
     scope module: :v2, constraints: ApiConstraints.new({ version: 2, default: false }) do
