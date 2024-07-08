@@ -9,7 +9,7 @@ RSpec.describe BrApi::CurrencyParityExchangeRates::SyncService do
   let!(:usd_currency) { create(:currency, :usd) }
   let!(:currency_parity) { create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency) }
   let!(:br_api_usd_to_brl_currency_parity_exchange_rate) do
-    create(:currency_parity_exchange_rate, :scheduled, :with_br_api_currency_partner_resource, currency_parity:)
+    create(:currency_parity_exchange_rate, :scheduled, :with_br_api_currencies_partner_resource, currency_parity:)
   end
 
   before do
@@ -39,7 +39,7 @@ RSpec.describe BrApi::CurrencyParityExchangeRates::SyncService do
         let(:currency_to_code) { brl_currency.code }
 
         before do
-          allow(BrApi::Currencies).to receive(:currencies_details).and_raise(StandardError)
+          allow(Integrations::BrApi::Currencies).to receive(:currencies_details).and_raise(StandardError)
         end
 
         it 'does not update the currency parity exchange rate' do
@@ -95,7 +95,7 @@ RSpec.describe BrApi::CurrencyParityExchangeRates::SyncService do
       let(:currency_to_code) { brl_currency.code }
 
       before do
-        allow(BrApi::Currencies).to receive(:currencies_details).and_raise(StandardError)
+        allow(Integrations::BrApi::Currencies).to receive(:currencies_details).and_raise(StandardError)
       end
 
       it 'does not update the currency parity exchange rate' do

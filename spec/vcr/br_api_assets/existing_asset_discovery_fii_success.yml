@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/HGLG11
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '729'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 08 Jul 2024 16:02:21 GMT
+      etag:
+      - '"16nzmv5kcn3k9"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::bm69j-1720454541769-463538365d20
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"currency":"BRL","shortName":"FII CSHG LOGCI  ER","longName":"Cshg
+        Logistica - Fundo De Investimento Imobiliario","regularMarketChange":-0.08,"regularMarketChangePercent":-0.05,"regularMarketTime":"2024-07-08T15:45:01.000Z","regularMarketPrice":160.37,"regularMarketDayHigh":160.87,"regularMarketDayRange":"160.29
+        - 160.87","regularMarketDayLow":160.29,"regularMarketVolume":22534,"regularMarketPreviousClose":160.45,"regularMarketOpen":159.38,"fiftyTwoWeekRange":"160.29
+        - 160.87","fiftyTwoWeekLow":160.29,"fiftyTwoWeekHigh":160.87,"symbol":"HGLG11","priceEarnings":null,"earningsPerShare":null,"logourl":"https://s3-symbol-logo.tradingview.com/fii--big.svg"}],"requestedAt":"2024-07-08T16:02:21.896Z","took":"0ms"}'
+  recorded_at: Mon, 08 Jul 2024 16:02:22 GMT
+recorded_with: VCR 6.2.0

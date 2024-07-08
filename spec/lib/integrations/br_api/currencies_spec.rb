@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BrApi::Currencies do
+RSpec.describe Integrations::BrApi::Currencies do
   describe '.currencies_details' do
     subject(:currencies_details) { described_class.currencies_details(from_to_iso_code:) }
 

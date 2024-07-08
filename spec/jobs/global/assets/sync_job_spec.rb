@@ -28,21 +28,21 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
     end
 
     context 'when there are no rebalance orders being processed' do
-      let(:hg_brasil_stock_price) { create(:partner_resource, :hg_brasil_stock_price) }
-      let(:br_api_quotation) { create(:partner_resource, :br_api_quotation) }
+      let(:hg_brasil_assets_partner_resource) { create(:partner_resource, :hg_brasil_assets) }
+      let(:br_api_assets_partner_resource) { create(:partner_resource, :br_api_assets) }
 
       let(:mgl3) { create(:asset, ticker_symbol: 'MGLU3', name: 'Magazine Luiza') }
       let!(:mgl3_hg_brasil_asset_price) do
         create(:asset_price,
                asset: mgl3,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'MGLU3')
       end
       let!(:mgl3_br_api_asset_price) do
         create(:asset_price,
                asset: mgl3,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'MGLU3')
       end
@@ -51,14 +51,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:vale3_hg_brasil_asset_price) do
         create(:asset_price,
                asset: vale3,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'VALE3')
       end
       let!(:vale3_br_api_asset_price) do
         create(:asset_price,
                asset: vale3,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'VALE3')
       end
@@ -67,14 +67,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:hapv3_hg_brasil_asset_price) do
         create(:asset_price,
                asset: hapv3,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'HAPV3')
       end
       let!(:hapv3_br_api_asset_price) do
         create(:asset_price,
                asset: hapv3,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'HAPV3')
       end
@@ -83,14 +83,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:petr4_hg_brasil_asset_price) do
         create(:asset_price,
                asset: petr4,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'PETR4')
       end
       let!(:petr4_br_api_asset_price) do
         create(:asset_price,
                asset: petr4,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'PETR4')
       end
@@ -99,14 +99,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:b3sa3_hg_brasil_asset_price) do
         create(:asset_price,
                asset: b3sa3,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'B3SA3')
       end
       let!(:b3sa3_br_api_asset_price) do
         create(:asset_price,
                asset: b3sa3,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'B3SA3')
       end
@@ -115,14 +115,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:bbdc4_hg_brasil_asset_price) do
         create(:asset_price,
                asset: bbdc4,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'BBDC4')
       end
       let!(:bbdc4_br_api_asset_price) do
         create(:asset_price,
                asset: bbdc4,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'BBDC4')
       end
@@ -131,14 +131,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:seql3_hg_brasil_asset_price) do
         create(:asset_price,
                asset: seql3,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'SEQL3')
       end
       let!(:seql3_br_api_asset_price) do
         create(:asset_price,
                asset: seql3,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'SEQL3')
       end
@@ -147,14 +147,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:itsa4_hg_brasil_asset_price) do
         create(:asset_price,
                asset: itsa4,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'ITSA4')
       end
       let!(:itsa4_br_api_asset_price) do
         create(:asset_price,
                asset: itsa4,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'ITSA4')
       end
@@ -163,14 +163,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:abev3_hg_brasil_asset_price) do
         create(:asset_price,
                asset: abev3,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'ABEV3')
       end
       let!(:abev3_br_api_asset_price) do
         create(:asset_price,
                asset: abev3,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'ABEV3')
       end
@@ -179,14 +179,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:petz3_hg_brasil_asset_price) do
         create(:asset_price,
                asset: petz3,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'PETZ3')
       end
       let!(:petz3_br_api_asset_price) do
         create(:asset_price,
                asset: petz3,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'pending',
                ticker_symbol: 'PETZ3')
       end
@@ -195,14 +195,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:tasa4_hg_brasil_asset_price) do
         create(:asset_price,
                asset: tasa4,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'failed',
                ticker_symbol: 'TASA4')
       end
       let!(:tasa4_br_api_asset_price) do
         create(:asset_price,
                asset: tasa4,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'failed',
                ticker_symbol: 'TASA4')
       end
@@ -211,14 +211,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:btci11_hg_brasil_asset_price) do
         create(:asset_price,
                asset: btci11,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'scheduled',
                ticker_symbol: 'BTCI11')
       end
       let!(:btci11_br_api_asset_price) do
         create(:asset_price,
                asset: btci11,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'scheduled',
                ticker_symbol: 'BTCI11')
       end
@@ -227,14 +227,14 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       let!(:hglg11_hg_brasil_asset_price) do
         create(:asset_price,
                asset: hglg11,
-               partner_resource: hg_brasil_stock_price,
+               partner_resource: hg_brasil_assets_partner_resource,
                status: 'processing',
                ticker_symbol: 'HGLG11')
       end
       let!(:hglg11_br_api_asset_price) do
         create(:asset_price,
                asset: hglg11,
-               partner_resource: br_api_quotation,
+               partner_resource: br_api_assets_partner_resource,
                status: 'processing',
                ticker_symbol: 'HGLG11')
       end

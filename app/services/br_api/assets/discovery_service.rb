@@ -8,11 +8,11 @@ module BrApi
       end
 
       def initialize(ticker_symbol:)
-        super(ticker_symbol:, partner_resource_slug: :br_api_quotation)
+        super(ticker_symbol:, partner_resource_slug: 'br_api_assets')
       end
 
       def asset_details
-        @asset_details ||= ::BrApi::Quotes.asset_details(ticker_symbols: ticker_symbol)&.find do |asset|
+        @asset_details ||= Integrations::BrApi::Assets.asset_details(ticker_symbols: ticker_symbol)&.find do |asset|
           asset[:ticker_symbol] == ticker_symbol
         end
       end

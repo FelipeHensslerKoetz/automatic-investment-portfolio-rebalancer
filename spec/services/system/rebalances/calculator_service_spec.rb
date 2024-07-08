@@ -16,17 +16,17 @@ RSpec.describe System::Rebalances::CalculatorService do
 
       before do
         asset = create(:asset, ticker_symbol: 'IVVB11')
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset:, currency: usd_currency, status: :updated, price: 40.0)
+        create(:asset_price, :with_hg_brasil_assets_partner_resource, asset:, currency: usd_currency, status: :updated, price: 40.0)
         create(:investment_portfolio_asset, investment_portfolio:, asset:, target_allocation_weight_percentage: 50, quantity: 10)
 
         second_asset = create(:asset, ticker_symbol: 'BOVA11')
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: second_asset, currency: brl_currency, status: :updated,
+        create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: second_asset, currency: brl_currency, status: :updated,
                                                                            price: 100.0)
         create(:investment_portfolio_asset, investment_portfolio:, asset: second_asset, target_allocation_weight_percentage: 50,
                                             quantity: 10)
 
         brl_usd_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
-        create(:currency_parity_exchange_rate, :with_hg_brasil_quotation_partner_resource, currency_parity: brl_usd_currency_parity,
+        create(:currency_parity_exchange_rate, :with_hg_brasil_currencies_partner_resource, currency_parity: brl_usd_currency_parity,
                                                                                            exchange_rate: 5.0,
                                                                                            status: :updated)
       end
@@ -176,11 +176,11 @@ RSpec.describe System::Rebalances::CalculatorService do
 
         before do
           asset = create(:asset)
-          create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset:, currency: brl_currency, status: :updated)
+          create(:asset_price, :with_hg_brasil_assets_partner_resource, asset:, currency: brl_currency, status: :updated)
           create(:investment_portfolio_asset, investment_portfolio:, asset:, target_allocation_weight_percentage: 50)
 
           second_asset = create(:asset)
-          create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: second_asset, currency: brl_currency, status: :updated)
+          create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: second_asset, currency: brl_currency, status: :updated)
           create(:investment_portfolio_asset, investment_portfolio:, asset: second_asset, target_allocation_weight_percentage: 49.99)
         end
 
@@ -257,17 +257,17 @@ RSpec.describe System::Rebalances::CalculatorService do
 
         before do
           asset = create(:asset, ticker_symbol: 'IVVB11')
-          create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset:, currency: usd_currency, status: :updated, price: 40.0)
+          create(:asset_price, :with_hg_brasil_assets_partner_resource, asset:, currency: usd_currency, status: :updated, price: 40.0)
           create(:investment_portfolio_asset, investment_portfolio:, asset:, target_allocation_weight_percentage: 50, quantity: 10)
 
           second_asset = create(:asset, ticker_symbol: 'BOVA11')
-          create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: second_asset, currency: brl_currency, status: :updated,
+          create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: second_asset, currency: brl_currency, status: :updated,
                                                                              price: 100.0)
           create(:investment_portfolio_asset, investment_portfolio:, asset: second_asset, target_allocation_weight_percentage: 50,
                                               quantity: 10)
 
           brl_usd_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
-          create(:currency_parity_exchange_rate, :with_hg_brasil_quotation_partner_resource, currency_parity: brl_usd_currency_parity,
+          create(:currency_parity_exchange_rate, :with_hg_brasil_currencies_partner_resource, currency_parity: brl_usd_currency_parity,
                                                                                              exchange_rate: 5.0,
                                                                                              status: :updated)
         end

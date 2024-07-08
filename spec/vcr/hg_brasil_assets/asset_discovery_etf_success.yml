@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=BOVA11
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Mon, 08 Jul 2024 15:54:28 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      etag:
+      - W/"daf1847e689a45b9f45e23d3ce8c605b"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - ca1b02c9-64bb-4422-9239-a73853cd7b8f
+      x-runtime:
+      - '0.008507'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cf-cache-status:
+      - DYNAMIC
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=doGx4M9z3CNAtWJv1tC6mcWbkiW%2BNjlDb5SKDpqLqujTw46S5XK6EjSgiCZoTAG%2FuBAWycYaN4k54DQdfozwuxaR6zuOF2ZWPXBaGj49%2FbW8Y%2FhambtKNNJUbCBRoDD29orybr762zGpwFr4uQJE"}],"group":"cf-nel","max_age":604800}'
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      server:
+      - cloudflare
+      cf-ray:
+      - 8a0140c4281c1ab8-GRU
+      content-encoding:
+      - gzip
+      alt-svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"by":"symbol","valid_key":true,"results":{"BOVA11":{"kind":"stock","symbol":"BOVA11","name":"iShares
+        Ibovespa Fundo de Índice ETF","company_name":null,"document":null,"description":null,"website":null,"sector":null,"financials":{"quota_count":0,"dividends":{"yield_12m":null,"yield_12m_sum":null}},"region":"Brazil/Sao
+        Paolo","currency":"BRL","market_time":{"open":"10:00","close":"17:30","timezone":-3},"market_cap":0.0,"price":122.18,"change_percent":-0.42,"change_price":-0.52,"updated_at":"2024-07-08
+        12:09:58"}},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Mon, 08 Jul 2024 15:54:28 GMT
+recorded_with: VCR 6.2.0

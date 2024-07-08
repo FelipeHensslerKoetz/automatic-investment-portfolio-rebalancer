@@ -27,24 +27,17 @@ FactoryBot.define do
       status { 'pending' }
     end
 
-    trait :with_hg_brasil_stock_price_partner_resource do
+    trait :with_hg_brasil_currencies_partner_resource do
       partner_resource do
-        create(:partner_resource, :hg_brasil_stock_price) unless PartnerResource.exists?(slug: 'hg_brasil_stock_price')
-        PartnerResource.find_by(slug: 'hg_brasil_stock_price')
+        create(:partner_resource, :hg_brasil_currencies) unless PartnerResource.exists?(slug: 'hg_brasil_currencies')
+        PartnerResource.find_by(slug: 'hg_brasil_currencies')
       end
     end
 
-    trait :with_hg_brasil_quotation_partner_resource do
+    trait :with_br_api_currencies_partner_resource do
       partner_resource do
-        create(:partner_resource, :hg_brasil_quotation) unless PartnerResource.exists?(slug: 'hg_brasil_quotation')
-        PartnerResource.find_by(slug: 'hg_brasil_quotation')
-      end
-    end
-
-    trait :with_br_api_currency_partner_resource do
-      partner_resource do
-        create(:partner_resource, :br_api_currency) unless PartnerResource.exists?(slug: 'br_api_currency')
-        PartnerResource.find_by(slug: 'br_api_currency')
+        create(:partner_resource, :br_api_currencies) unless PartnerResource.exists?(slug: 'br_api_currencies')
+        PartnerResource.find_by(slug: 'br_api_currencies')
       end
     end
   end

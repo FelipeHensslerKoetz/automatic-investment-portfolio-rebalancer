@@ -29,10 +29,17 @@ FactoryBot.define do
       status { 'failed' }
     end
 
-    trait :with_hg_brasil_stock_price_partner_resource do
+    trait :with_hg_brasil_assets_partner_resource do
       partner_resource do
-        create(:partner_resource, :hg_brasil_stock_price) unless PartnerResource.exists?(name: 'HG Brasil - Stock Price')
-        PartnerResource.find_by(name: 'HG Brasil - Stock Price')
+        create(:partner_resource, :hg_brasil_assets) unless PartnerResource.exists?(slug: 'hg_brasil_assets')
+        PartnerResource.find_by(slug: 'hg_brasil_assets')
+      end
+    end
+
+    trait :with_br_api_assets_partner_resource do
+      partner_resource do
+        create(:partner_resource, :br_api_assets) unless PartnerResource.exists?(slug: 'br_api_assets')
+        PartnerResource.find_by(slug: 'br_api_assets')
       end
     end
   end

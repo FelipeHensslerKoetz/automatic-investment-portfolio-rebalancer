@@ -12,20 +12,43 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
       let(:usd_currency) { create(:currency, :usd) }
       let(:asset) { create(:asset) }
 
-      let!(:newest_asset_price) do
-        create(:asset_price, :updated, :with_hg_brasil_stock_price_partner_resource, asset:, currency: brl_currency, reference_date:
-        Time.zone.now)
+      context 'when there is only hg brasil stock price partner resource' do
+        let!(:newest_asset_price) do
+          create(:asset_price, :updated, :with_hg_brasil_assets_partner_resource, asset:, currency: brl_currency, reference_date:
+          Time.zone.now)
+        end
+
+        before do
+          create(:asset_price, :updated, :with_hg_brasil_assets_partner_resource, asset:, currency: usd_currency,
+                                                                                       reference_date: 2.hours.ago)
+          second_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
+          create(:currency_parity_exchange_rate, :with_hg_brasil_currencies_partner_resource, :updated,
+                 currency_parity: second_currency_parity)
+        end
+
+        it { is_expected.to eq(newest_asset_price) }
       end
 
-      before do
-        create(:asset_price, :updated, :with_hg_brasil_stock_price_partner_resource, asset:, currency: usd_currency,
-                                                                                     reference_date: 2.hours.ago)
-        second_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
-        create(:currency_parity_exchange_rate, :with_hg_brasil_stock_price_partner_resource, :updated,
-               currency_parity: second_currency_parity)
+      context 'when there is only br_api partner resource' do
+        let!(:newest_asset_price) do
+          create(:asset_price, :updated, :with_br_api_assets_partner_resource, asset:, currency: brl_currency, reference_date:
+          Time.zone.now)
+        end
+
+        before do
+          create(:asset_price, :updated, :with_br_api_assets_partner_resource, asset:, currency: usd_currency, reference_date: 2.hours.ago)
+          second_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
+          create(:currency_parity_exchange_rate, :with_br_api_currencies_partner_resource, :updated,
+                 currency_parity: second_currency_parity)
+        end
+
+        it { is_expected.to eq(newest_asset_price) }
       end
 
-      it { is_expected.to eq(newest_asset_price) }
+      context 'when there are multiple partner resources' do
+        it 'prioritizes the asset price by updated and by partner priority' do
+        end
+      end
     end
 
     context 'when there is no updated asset price' do
@@ -41,7 +64,7 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
         let(:asset) { create(:asset) }
 
         before do
-          create(:asset_price, :scheduled, :with_hg_brasil_stock_price_partner_resource, asset:, currency: brl_currency)
+          create(:asset_price, :scheduled, :with_hg_brasil_assets_partner_resource, asset:, currency: brl_currency)
         end
 
         it {
@@ -56,7 +79,7 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
         let(:asset) { create(:asset) }
 
         before do
-          create(:asset_price, :updated, :with_hg_brasil_stock_price_partner_resource, asset:, currency: usd_currency)
+          create(:asset_price, :updated, :with_hg_brasil_assets_partner_resource, asset:, currency: usd_currency)
         end
 
         it {
@@ -71,9 +94,9 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
         let(:asset) { create(:asset) }
 
         before do
-          create(:asset_price, :updated, :with_hg_brasil_stock_price_partner_resource, asset:, currency: usd_currency)
+          create(:asset_price, :updated, :with_hg_brasil_assets_partner_resource, asset:, currency: usd_currency)
           second_currency_parity = create(:currency_parity, currency_from: brl_currency, currency_to: usd_currency)
-          create(:currency_parity_exchange_rate, :with_hg_brasil_stock_price_partner_resource, :scheduled,
+          create(:currency_parity_exchange_rate, :with_hg_brasil_currencies_partner_resource, :scheduled,
                  currency_parity: second_currency_parity)
         end
 

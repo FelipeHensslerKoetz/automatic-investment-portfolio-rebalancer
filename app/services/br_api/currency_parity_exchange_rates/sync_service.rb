@@ -62,7 +62,7 @@ module BrApi
       end
 
       def partner_resource
-        @partner_resource ||= PartnerResource.find_by!(slug: 'br_api_currency')
+        @partner_resource ||= PartnerResource.find_by!(slug: 'br_api_currencies')
       end
 
       def currency_parity
@@ -88,7 +88,7 @@ module BrApi
       end
 
       def currency_parity_exchange_rate_details
-        @currency_parity_exchange_rate_details ||= BrApi::Currencies.currencies_details(from_to_iso_code:).detect do |currency_parities_details|
+        @currency_parity_exchange_rate_details ||= Integrations::BrApi::Currencies.currencies_details(from_to_iso_code:).detect do |currency_parities_details|
           currency_parities_details[:currency_from_code] == currency_from.code &&
             currency_parities_details[:currency_to_code] == currency_to.code
         end

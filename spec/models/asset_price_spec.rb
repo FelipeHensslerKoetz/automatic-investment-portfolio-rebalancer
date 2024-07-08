@@ -42,11 +42,11 @@ RSpec.describe AssetPrice, type: :model do
   end
 
   describe 'scopes' do
-    let!(:pending_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :pending) }
-    let!(:scheduled_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :scheduled) }
-    let!(:updated_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :updated) }
-    let!(:processing_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :processing) }
-    let!(:failed_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, :failed) }
+    let!(:pending_asset_price) { create(:asset_price, :with_hg_brasil_assets_partner_resource, :pending) }
+    let!(:scheduled_asset_price) { create(:asset_price, :with_hg_brasil_assets_partner_resource, :scheduled) }
+    let!(:updated_asset_price) { create(:asset_price, :with_hg_brasil_assets_partner_resource, :updated) }
+    let!(:processing_asset_price) { create(:asset_price, :with_hg_brasil_assets_partner_resource, :processing) }
+    let!(:failed_asset_price) { create(:asset_price, :with_hg_brasil_assets_partner_resource, :failed) }
 
     describe '.scheduled' do
       it 'returns scheduled asset prices' do

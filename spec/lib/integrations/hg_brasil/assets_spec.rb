@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe HgBrasil::Stocks do
+RSpec.describe Integrations::HgBrasil::Assets do
   describe '.asset_details' do
     subject(:asset_details) { described_class.asset_details(ticker_symbols:) }
 

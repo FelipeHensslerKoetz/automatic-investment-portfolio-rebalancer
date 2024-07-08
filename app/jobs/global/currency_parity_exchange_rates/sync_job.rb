@@ -21,7 +21,7 @@ module Global
       end
 
       def hg_brasil_partner_resource
-        @hg_brasil_partner_resource = PartnerResource.find_by(slug: 'hg_brasil_quotation')
+        @hg_brasil_partner_resource = PartnerResource.find_by(slug: 'hg_brasil_currencies')
       end
 
       def hg_brasil_currency_parity_exchange_rates
@@ -35,7 +35,7 @@ module Global
       end
 
       def br_api_partner_resource
-        @br_api_partner_resource = PartnerResource.find_by(slug: 'br_api_currency')
+        @br_api_partner_resource = PartnerResource.find_by(slug: 'br_api_currencies')
       end
 
       def br_api_currency_parity_exchange_rates

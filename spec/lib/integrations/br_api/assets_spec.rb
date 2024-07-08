@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BrApi::Quotes do
+RSpec.describe Integrations::BrApi::Assets do
   describe '.asset_details' do
     subject(:asset_details) { described_class.asset_details(ticker_symbols:) }
 

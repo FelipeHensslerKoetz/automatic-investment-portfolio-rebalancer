@@ -24,7 +24,7 @@ module HgBrasil
 
       # específico
       def hg_brasil_quote_details
-        @hg_brasil_quote_details ||= ::HgBrasil::Quotes.quote_details
+        @hg_brasil_quote_details ||= Integrations::HgBrasil::Currencies.quote_details
       end
 
        # específico
@@ -50,7 +50,7 @@ module HgBrasil
 
       # trazer para classe base
       def partner_resource
-        @partner_resource ||= PartnerResource.find_by!(slug: 'hg_brasil_quotation')
+        @partner_resource ||= PartnerResource.find_by!(slug: 'hg_brasil_currencies')
       end
 
       # trazer para classe base

@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/IVVB11
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '741'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 08 Jul 2024 16:02:22 GMT
+      etag:
+      - '"kp6z9k9grkkl"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::cd4fj-1720454542268-cf17f0344b83
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"currency":"BRL","shortName":"ISHARE SP500CI","longName":"iShares
+        S&P 500 Fundo de Investimento - Investimento No Exterior","regularMarketChange":0.5,"regularMarketChangePercent":0.148,"regularMarketTime":"2024-07-08T15:47:16.000Z","regularMarketPrice":339.01,"regularMarketDayHigh":341.25,"regularMarketDayRange":"338.51
+        - 341.25","regularMarketDayLow":338.51,"regularMarketVolume":64082,"regularMarketPreviousClose":338.51,"regularMarketOpen":343.73,"fiftyTwoWeekRange":"338.51
+        - 341.25","fiftyTwoWeekLow":338.51,"fiftyTwoWeekHigh":341.25,"symbol":"IVVB11","priceEarnings":null,"earningsPerShare":null,"logourl":"https://s3-symbol-logo.tradingview.com/ishares--big.svg"}],"requestedAt":"2024-07-08T16:02:22.636Z","took":"0ms"}'
+  recorded_at: Mon, 08 Jul 2024 16:02:23 GMT
+recorded_with: VCR 6.2.0

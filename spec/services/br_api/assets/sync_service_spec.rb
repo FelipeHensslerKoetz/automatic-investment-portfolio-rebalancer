@@ -7,7 +7,7 @@ RSpec.describe BrApi::Assets::SyncService do
 
   let!(:petr4) { create(:asset, ticker_symbol: 'PETR4') }
   let!(:wizc3) { create(:asset, ticker_symbol: 'WIZC3') }
-  let!(:partner_resource) { create(:partner_resource, :br_api_quotation) }
+  let!(:partner_resource) { create(:partner_resource, :br_api_assets) }
   let!(:petr4_price) do
     create(:asset_price,
            asset: petr4,
@@ -29,7 +29,7 @@ RSpec.describe BrApi::Assets::SyncService do
   describe '#call' do
     context 'when batch update is successful' do
       before do
-        allow(BrApi::Quotes).to receive(:asset_details).with(ticker_symbols:).and_call_original
+        allow(Integrations::BrApi::Assets).to receive(:asset_details).with(ticker_symbols:).and_call_original
       end
 
       it 'updates assets to updated status' do
@@ -46,7 +46,7 @@ RSpec.describe BrApi::Assets::SyncService do
           expect(wizc3_price.reload.reference_date.to_date).to eq(Date.parse('2024-06-28'))
           expect(wizc3_price.reload.error_message).to be_nil
 
-          expect(BrApi::Quotes).to have_received(:asset_details).with(ticker_symbols:).once
+          expect(Integrations::BrApi::Assets).to have_received(:asset_details).with(ticker_symbols:).once
           expect(Log.info.count).to eq(3)
         end
       end
@@ -64,7 +64,7 @@ RSpec.describe BrApi::Assets::SyncService do
       end
 
       before do
-        allow(BrApi::Quotes).to receive(:asset_details).with(ticker_symbols:).and_call_original
+        allow(Integrations::BrApi::Assets).to receive(:asset_details).with(ticker_symbols:).and_call_original
       end
 
       it 'updates the valid assets to updated status' do
@@ -84,7 +84,7 @@ RSpec.describe BrApi::Assets::SyncService do
           expect(unavailable_asset_price.reload.status).to eq('failed')
           expect(unavailable_asset_price.reload.error_message).to be_present
 
-          expect(BrApi::Quotes).to have_received(:asset_details).with(ticker_symbols:).once
+          expect(Integrations::BrApi::Assets).to have_received(:asset_details).with(ticker_symbols:).once
           expect(Log.info.count).to eq(3)
           expect(Log.error.count).to eq(1)
         end
@@ -93,7 +93,7 @@ RSpec.describe BrApi::Assets::SyncService do
 
     context 'when batch update is unsuccessful' do
       before do
-        allow(BrApi::Quotes).to receive(:asset_details).with(ticker_symbols:).and_raise(StandardError, 'Error')
+        allow(Integrations::BrApi::Assets).to receive(:asset_details).with(ticker_symbols:).and_raise(StandardError, 'Error')
       end
 
       it 'updates assets to fail status' do

@@ -18,7 +18,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
       context 'when only input to output currency parity is available' do
         let(:asset_price) do
           create(:asset_price,
-                 :with_hg_brasil_stock_price_partner_resource,
+                 :with_hg_brasil_assets_partner_resource,
                  asset: petr4_asset,
                  currency: usd_currency,
                  status: :updated)
@@ -26,7 +26,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
 
         let!(:currency_parity_exchange_rate) do
           create(:currency_parity_exchange_rate,
-                 :with_hg_brasil_stock_price_partner_resource,
+                 :with_hg_brasil_currencies_partner_resource,
                  exchange_rate: 5,
                  currency_parity:,
                  status: :updated)
@@ -42,7 +42,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
       context 'when only output to input currency parity is available' do
         let(:asset_price) do
           create(:asset_price,
-                 :with_hg_brasil_stock_price_partner_resource,
+                 :with_hg_brasil_assets_partner_resource,
                  asset: petr4_asset,
                  currency: usd_currency,
                  status: :updated)
@@ -50,7 +50,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
 
         let!(:currency_parity_exchange_rate) do
           create(:currency_parity_exchange_rate,
-                 :with_hg_brasil_stock_price_partner_resource,
+                 :with_hg_brasil_currencies_partner_resource,
                  exchange_rate: 0.20,
                  currency_parity:,
                  status: :updated)
@@ -66,7 +66,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
       context 'when both input to output currency parity and output to input currency parity are available' do
         let(:asset_price) do
           create(:asset_price,
-                 :with_hg_brasil_stock_price_partner_resource,
+                 :with_hg_brasil_assets_partner_resource,
                  asset: petr4_asset,
                  currency: usd_currency,
                  status: :updated)
@@ -74,7 +74,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
 
         let!(:usd_to_brl_currency_parity_exchange_rate) do
           create(:currency_parity_exchange_rate,
-                 :with_hg_brasil_stock_price_partner_resource,
+                 :with_hg_brasil_currencies_partner_resource,
                  exchange_rate: 5,
                  currency_parity: currency_parity_input_to_output,
                  status: :updated)
@@ -82,7 +82,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
 
         let!(:brl_to_usd_currency_parity_exchange_rate) do
           create(:currency_parity_exchange_rate,
-                 :with_hg_brasil_stock_price_partner_resource,
+                 :with_hg_brasil_currencies_partner_resource,
                  exchange_rate: 0.20,
                  currency_parity: currency_parity_output_to_input,
                  status: :updated)
@@ -100,7 +100,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
     context 'when input_currency is the same as output_currency' do
       let(:asset_price) do
         create(:asset_price,
-               :with_hg_brasil_stock_price_partner_resource,
+               :with_hg_brasil_assets_partner_resource,
                asset: petr4_asset,
                currency: brl_currency,
                status: :updated)
@@ -122,7 +122,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
     context 'whe asset_price status is not updated' do
       let(:asset_price) do
         create(:asset_price,
-               :with_hg_brasil_stock_price_partner_resource,
+               :with_hg_brasil_assets_partner_resource,
                asset: petr4_asset,
                currency: brl_currency,
                status: :scheduled)
@@ -134,7 +134,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
     context 'when there are not at least one currency_parity_available' do
       let(:asset_price) do
         create(:asset_price,
-               :with_hg_brasil_stock_price_partner_resource,
+               :with_hg_brasil_assets_partner_resource,
                asset: petr4_asset,
                currency: usd_currency,
                status: :updated)
@@ -146,7 +146,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
     context 'when there are not at least one updated currency_parity_exchange_rate' do
       let(:asset_price) do
         create(:asset_price,
-               :with_hg_brasil_stock_price_partner_resource,
+               :with_hg_brasil_assets_partner_resource,
                asset: petr4_asset,
                currency: usd_currency,
                status: :updated)
@@ -155,7 +155,7 @@ RSpec.describe System::AssetPrices::ConvertParityService do
       before do
         currency_parity = create(:currency_parity, currency_from: brl_currency, currency_to: usd_currency)
         create(:currency_parity_exchange_rate,
-               :with_hg_brasil_stock_price_partner_resource,
+               :with_hg_brasil_currencies_partner_resource,
                exchange_rate: 5.0,
                currency_parity:,
                status: :scheduled)

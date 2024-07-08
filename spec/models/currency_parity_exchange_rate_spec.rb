@@ -16,23 +16,23 @@ RSpec.describe CurrencyParityExchangeRate, type: :model do
 
   describe 'scopes' do
     let!(:pending_currency_parity_exchange_rate) do
-      create(:currency_parity_exchange_rate, :pending, :with_hg_brasil_stock_price_partner_resource)
+      create(:currency_parity_exchange_rate, :pending, :with_hg_brasil_currencies_partner_resource)
     end
 
     let!(:updated_currency_parity_exchange_rate) do
-      create(:currency_parity_exchange_rate, :updated, :with_hg_brasil_stock_price_partner_resource)
+      create(:currency_parity_exchange_rate, :updated, :with_hg_brasil_currencies_partner_resource)
     end
 
     let!(:processing_currency_parity_exchange_rate) do
-      create(:currency_parity_exchange_rate, :processing, :with_hg_brasil_stock_price_partner_resource)
+      create(:currency_parity_exchange_rate, :processing, :with_hg_brasil_currencies_partner_resource)
     end
 
     let!(:failed_currency_parity_exchange_rate) do
-      create(:currency_parity_exchange_rate, :failed, :with_hg_brasil_stock_price_partner_resource)
+      create(:currency_parity_exchange_rate, :failed, :with_hg_brasil_currencies_partner_resource)
     end
 
     let!(:scheduled_currency_parity_exchange_rate) do
-      create(:currency_parity_exchange_rate, :scheduled, :with_hg_brasil_stock_price_partner_resource)
+      create(:currency_parity_exchange_rate, :scheduled, :with_hg_brasil_currencies_partner_resource)
     end
 
     describe '.updated' do

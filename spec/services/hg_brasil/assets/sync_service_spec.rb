@@ -7,7 +7,7 @@ RSpec.describe HgBrasil::Assets::SyncService, type: :service do
 
   let!(:petr4) { create(:asset, ticker_symbol: 'PETR4') }
   let!(:wizc3) { create(:asset, ticker_symbol: 'WIZC3') }
-  let!(:partner_resource) { create(:partner_resource, :hg_brasil_stock_price) }
+  let!(:partner_resource) { create(:partner_resource, :hg_brasil_assets) }
   let!(:petr4_price) do
     create(:asset_price,
            asset: petr4,
@@ -29,7 +29,7 @@ RSpec.describe HgBrasil::Assets::SyncService, type: :service do
   describe '#call' do
     context 'when batch update is successful' do
       before do
-        allow(HgBrasil::Stocks).to receive(:asset_details).with(ticker_symbols:).and_call_original
+        allow(Integrations::HgBrasil::Assets).to receive(:asset_details).with(ticker_symbols:).and_call_original
       end
 
       it 'updates assets to success status' do
@@ -45,7 +45,7 @@ RSpec.describe HgBrasil::Assets::SyncService, type: :service do
           expect(wizc3_price.reference_date.to_date).to eq(Date.parse('2024-06-29'))
           expect(wizc3_price.error_message).to be_nil
 
-          expect(HgBrasil::Stocks).to have_received(:asset_details).with(ticker_symbols:).once
+          expect(Integrations::HgBrasil::Assets).to have_received(:asset_details).with(ticker_symbols:).once
           expect(Log.info.count).to eq(3)
         end
       end
@@ -63,7 +63,7 @@ RSpec.describe HgBrasil::Assets::SyncService, type: :service do
       end
 
       before do
-        allow(HgBrasil::Stocks).to receive(:asset_details).with(ticker_symbols:).and_call_original
+        allow(Integrations::HgBrasil::Assets).to receive(:asset_details).with(ticker_symbols:).and_call_original
       end
 
       it 'updates available assets to success status and unavailable asset to failed status' do
@@ -83,7 +83,7 @@ RSpec.describe HgBrasil::Assets::SyncService, type: :service do
           expect(unavailable_asset_price.reload.status).to eq('failed')
           expect(unavailable_asset_price.error_message).to be_present
 
-          expect(HgBrasil::Stocks).to have_received(:asset_details).with(ticker_symbols:).once
+          expect(Integrations::HgBrasil::Assets).to have_received(:asset_details).with(ticker_symbols:).once
           expect(Log.info.count).to eq(3)
           expect(Log.error.count).to eq(1)
         end
@@ -92,7 +92,7 @@ RSpec.describe HgBrasil::Assets::SyncService, type: :service do
 
     context 'when batch update fails' do
       before do
-        allow(HgBrasil::Stocks).to receive(:asset_details).with(ticker_symbols:).and_raise(StandardError, 'Error')
+        allow(Integrations::HgBrasil::Assets).to receive(:asset_details).with(ticker_symbols:).and_raise(StandardError, 'Error')
         sync_service.call
       end
 
@@ -103,7 +103,7 @@ RSpec.describe HgBrasil::Assets::SyncService, type: :service do
         expect(wizc3_price.reload.status).to eq('failed')
         expect(wizc3_price.error_message).to eq('Error')
 
-        expect(HgBrasil::Stocks).to have_received(:asset_details).with(ticker_symbols:).twice
+        expect(Integrations::HgBrasil::Assets).to have_received(:asset_details).with(ticker_symbols:).twice
         expect(Log.error.count).to eq(2)
       end
     end

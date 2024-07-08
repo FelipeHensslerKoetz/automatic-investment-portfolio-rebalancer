@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://brapi.dev/api/quote/BOVA11
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <BR_API_SECRET_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-headers:
+      - X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,
+        Content-Type, Date, X-Api-Version
+      access-control-allow-methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      access-control-allow-origin:
+      - "*"
+      cache-control:
+      - s-maxage=900, stale-while-revalidate
+      cdn-cache-control:
+      - s-maxage=900, stale-while-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '707'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 08 Jul 2024 16:02:19 GMT
+      etag:
+      - '"g7d65hpm4sjn"'
+      server:
+      - Vercel
+      strict-transport-security:
+      - max-age=63072000
+      x-matched-path:
+      - "/api/quote/[slugs]"
+      x-vercel-cache:
+      - BYPASS
+      x-vercel-id:
+      - gru1::iad1::pzrf9-1720454539564-8efb97532458
+    body:
+      encoding: UTF-8
+      string: '{"results":[{"currency":"BRL","shortName":"ISHARES BOVACI","longName":"iShares
+        Ibovespa Index Fund","regularMarketChange":-0.05,"regularMarketChangePercent":-0.041,"regularMarketTime":"2024-07-08T15:47:18.000Z","regularMarketPrice":122.65,"regularMarketDayHigh":122.89,"regularMarketDayRange":"122.05
+        - 122.89","regularMarketDayLow":122.05,"regularMarketVolume":1144782,"regularMarketPreviousClose":122.7,"regularMarketOpen":121.4,"fiftyTwoWeekRange":"122.05
+        - 122.89","fiftyTwoWeekLow":122.05,"fiftyTwoWeekHigh":122.89,"symbol":"BOVA11","priceEarnings":null,"earningsPerShare":null,"logourl":"https://s3-symbol-logo.tradingview.com/ishares--big.svg"}],"requestedAt":"2024-07-08T16:02:19.723Z","took":"0ms"}'
+  recorded_at: Mon, 08 Jul 2024 16:02:20 GMT
+recorded_with: VCR 6.2.0

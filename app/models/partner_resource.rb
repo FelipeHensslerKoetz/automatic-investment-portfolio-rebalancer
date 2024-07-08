@@ -3,10 +3,10 @@
 class PartnerResource < ApplicationRecord
   # Constants
   INTEGRATED_PARTNER_RESOURCES = %i[
-    hg_brasil_stock_price
-    hg_brasil_quotation
-    br_api_quotation
-    br_api_currency
+    hg_brasil_assets
+    hg_brasil_currencies
+    br_api_assets
+    br_api_currencies
   ].freeze
 
   # Associations

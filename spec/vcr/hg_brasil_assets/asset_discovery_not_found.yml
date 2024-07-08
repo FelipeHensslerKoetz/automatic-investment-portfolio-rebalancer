@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.hgbrasil.com/finance/stock_price?key=<HG_BRASIL_SECRET_KEY>&symbol=INVALID
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Mon, 08 Jul 2024 15:54:28 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      etag:
+      - W/"55daffa73ecf4336d2abff1190c25c31"
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - f4e13436-99e7-4751-9572-68750da26cb6
+      x-runtime:
+      - '0.011218'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cf-cache-status:
+      - DYNAMIC
+      report-to:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=i0s7dvYE9WEcxz4mrsRPA6XZlyV6yFBL1CW10uGPvI9W%2B7HGf%2BbzZz%2Bv%2BdFF2yue5J8Q5Luw0Nzqa6jSjTg2HcwqHinrKsNQReQY74cG2tqNio%2BmCrGTnN1b8o0FAea5ERiSCfKszKx4rbbu%2FKRi"}],"group":"cf-nel","max_age":604800}'
+      nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      server:
+      - cloudflare
+      cf-ray:
+      - 8a0140c75c5401a5-GRU
+      content-encoding:
+      - gzip
+      alt-svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"by":"symbol","valid_key":true,"results":{"INVALID":{"error":true,"message":"Error
+        to get Stock for #INVALID: Erro 852 - Símbolo não encontrado, por favor entre
+        em contato conosco em console.hgbrasil.com."}},"execution_time":0.0,"from_cache":true}'
+  recorded_at: Mon, 08 Jul 2024 15:54:28 GMT
+recorded_with: VCR 6.2.0

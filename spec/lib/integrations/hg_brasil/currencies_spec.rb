@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe HgBrasil::Quotes do
+RSpec.describe Integrations::HgBrasil::Currencies do
   subject(:quotes) { described_class.quote_details }
 
   context 'when request is successful' do

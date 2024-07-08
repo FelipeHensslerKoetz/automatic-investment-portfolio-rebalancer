@@ -8,13 +8,13 @@ module HgBrasil
       end
 
       def initialize(ticker_symbols:)
-        super(ticker_symbols:, partner_resource_slug: 'hg_brasil_stock_price')
+        super(ticker_symbols:, partner_resource_slug: 'hg_brasil_assets')
       end
 
       private
 
       def fetch_asset_details
-        @fetch_asset_details ||= ::HgBrasil::Stocks.asset_details(ticker_symbols:)
+        @fetch_asset_details ||= Integrations::HgBrasil::Assets.asset_details(ticker_symbols:)
       end
     end
   end

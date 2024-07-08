@@ -89,7 +89,7 @@ RSpec.describe System::Assets::Custom::UpdateService do
 
       context 'when the asset is not custom' do
         let(:custom_asset) { create(:asset, custom: false, user: nil) }
-        let!(:custom_asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: custom_asset) }
+        let!(:custom_asset_price) { create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: custom_asset) }
         let!(:btc_currency) { create(:currency, :btc) }
 
         let(:custom_asset_params) do

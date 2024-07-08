@@ -6,8 +6,8 @@ RSpec.describe Global::Assets::DiscoveryService do
   subject(:global_discovery) { described_class.new(keywords:) }
 
   before do
-    create(:partner_resource, :hg_brasil_stock_price)
-    create(:partner_resource, :br_api_quotation)
+    create(:partner_resource, :hg_brasil_assets)
+    create(:partner_resource, :br_api_assets)
     create(:currency, code: 'BRL', name: 'Brazilian Real')
     create(:currency, code: 'USD', name: 'United States Dollar')
   end
@@ -21,7 +21,7 @@ RSpec.describe Global::Assets::DiscoveryService do
 
         expect(assets.count).to eq(1)
         expect(assets.first.asset_prices.count).to eq(2)
-        expect(assets.first.asset_prices.map { |ap| ap.partner_resource.slug }).to match_array(%w[hg_brasil_stock_price br_api_quotation])
+        expect(assets.first.asset_prices.map { |ap| ap.partner_resource.slug }).to match_array(%w[hg_brasil_assets br_api_assets])
       end
     end
   end

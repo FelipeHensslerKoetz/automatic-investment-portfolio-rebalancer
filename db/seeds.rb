@@ -16,29 +16,29 @@ end
 # Generate partner resources
 partner_resources_attributes = [
   { 
-    slug: 'hg_brasil_stock_price',
-    name: 'HG Brasil - Stock Price',
+    slug: 'hg_brasil_assets',
+    name: 'HG Brasil - Assets',
     description: 'API that retrieves brazilian asset prices with a delay between 15 minutes up to 1 hour. The endpoint example is: https://api.hgbrasil.com/finance/stock_price?key=282f20db&symbol=embr3',
     url: 'https://console.hgbrasil.com/documentation/finance',
     partner: Partner.find_by(slug: 'hg_brasil')
   },
   {
-    slug: 'hg_brasil_quotation',
-    name: 'HG Brasil - Quotation',
+    slug: 'hg_brasil_currencies',
+    name: 'HG Brasil - Currencies',
     description: 'API that retrieves the quotation of currencies and cryptocurrencies. The endpoint example is: https://api.hgbrasil.com/finance/quotations',
     url: 'https://console.hgbrasil.com/documentation/finance',
     partner: Partner.find_by(slug: 'hg_brasil')
   },
   {
-    slug: 'br_api_quotation',
-    name: 'BR API - Quotation',
+    slug: 'br_api_assets',
+    name: 'BR API - Assets',
     description: 'API that retrieves the quotation of stocks fiis and etfs. The endpoint example is: https://brapi.dev/api/quote/',
     url: 'https://brapi.dev/docs/acoes',
     partner: Partner.find_by(slug: 'br_api')
   },
   {
-    slug: 'br_api_currency',
-    name: 'BR API - Currency',
+    slug: 'br_api_currencies',
+    name: 'BR API - Currencies',
     description: 'API that retrieves the quotation of currencies. The endpoint example is: https://brapi.dev/api/quote/',
     url: 'https://brapi.dev/docs/acoes',
     partner: Partner.find_by(slug: 'br_api')
@@ -82,7 +82,7 @@ end
 ['USD','EUR', 'GBP', 'ARS', 'CAD', 'AUD', 'JPY', 'CNY', 'BTC'].each do |currency_code|
   currency = Currency.find_by(code: currency_code)
   currency_parity = CurrencyParity.find_by!(currency_from: currency, currency_to: brl_currency)
-  partner_resource = PartnerResource.find_by!(slug: 'hg_brasil_quotation')
+  partner_resource = PartnerResource.find_by!(slug: 'hg_brasil_currencies')
 
   if !CurrencyParityExchangeRate.exists?(currency_parity: currency_parity, partner_resource: partner_resource)
     CurrencyParityExchangeRate.create!(
@@ -103,7 +103,7 @@ Currency.all.pluck(:code).each do |currency_code|
 
   currency = Currency.find_by(code: currency_code)
   currency_parity = CurrencyParity.find_by!(currency_from: currency, currency_to: brl_currency)
-  partner_resource = PartnerResource.find_by!(slug: 'br_api_currency')
+  partner_resource = PartnerResource.find_by!(slug: 'br_api_currencies')
 
   if !CurrencyParityExchangeRate.exists?(currency_parity: currency_parity, partner_resource: partner_resource)
     CurrencyParityExchangeRate.create!(

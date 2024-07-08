@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe PartnerResource, type: :model do
   describe 'constants' do
-    it { expect(described_class::INTEGRATED_PARTNER_RESOURCES).to eq(%i[hg_brasil_stock_price hg_brasil_quotation br_api_quotation br_api_currency]) }
+    it { expect(described_class::INTEGRATED_PARTNER_RESOURCES).to eq(%i[hg_brasil_assets hg_brasil_currencies br_api_assets br_api_currencies]) }
   end
 
   describe 'associations' do

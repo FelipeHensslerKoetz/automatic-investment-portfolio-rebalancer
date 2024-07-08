@@ -13,11 +13,11 @@ RSpec.describe System::Rebalances::ValidationService do
 
     before do
       first_asset = create(:asset)
-      create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: first_asset, currency: brl_currency, status: :updated)
+      create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: first_asset, currency: brl_currency, status: :updated)
       create(:investment_portfolio_asset, investment_portfolio:, asset: first_asset, target_allocation_weight_percentage: 50)
 
       second_asset = create(:asset)
-      create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: second_asset, currency: brl_currency, status: :updated)
+      create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: second_asset, currency: brl_currency, status: :updated)
       create(:investment_portfolio_asset, investment_portfolio:, asset: second_asset, target_allocation_weight_percentage: 50)
     end
 
@@ -53,11 +53,11 @@ RSpec.describe System::Rebalances::ValidationService do
 
       before do
         first_asset = create(:asset)
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: first_asset, currency: brl_currency, status: :updated)
+        create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: first_asset, currency: brl_currency, status: :updated)
         create(:investment_portfolio_asset, investment_portfolio:, asset: first_asset, target_allocation_weight_percentage: 50)
 
         second_asset = create(:asset)
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: second_asset, currency: brl_currency, status: :updated)
+        create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: second_asset, currency: brl_currency, status: :updated)
         create(:investment_portfolio_asset, investment_portfolio:, asset: second_asset, target_allocation_weight_percentage: 45)
       end
 
@@ -72,11 +72,11 @@ RSpec.describe System::Rebalances::ValidationService do
 
       before do
         first_asset = create(:asset)
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: first_asset, currency: brl_currency, status: :updated)
+        create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: first_asset, currency: brl_currency, status: :updated)
         create(:investment_portfolio_asset, investment_portfolio:, asset: first_asset, target_allocation_weight_percentage: 50)
 
         second_asset = create(:asset)
-        create(:asset_price, :with_hg_brasil_stock_price_partner_resource, asset: second_asset, currency: brl_currency, status: :scheduled)
+        create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: second_asset, currency: brl_currency, status: :scheduled)
         create(:investment_portfolio_asset, investment_portfolio:, asset: second_asset, target_allocation_weight_percentage: 50)
       end
 

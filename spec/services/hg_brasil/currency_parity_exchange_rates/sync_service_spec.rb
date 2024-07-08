@@ -11,66 +11,66 @@ RSpec.describe HgBrasil::CurrencyParityExchangeRates::SyncService do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: usd_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
       let!(:eur_to_brl_currency_parity_exchange_rate) do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: eur_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
       let!(:gbp_to_brl_currency_parity_exchange_rate) do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: gbp_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
       let!(:ars_to_brl_currency_parity_exchange_rate) do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: ars_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
       let!(:cad_to_brl_currency_parity_exchange_rate) do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: cad_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
       let!(:aud_to_brl_currency_parity_exchange_rate) do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: aud_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
       let!(:jpy_to_brl_currency_parity_exchange_rate) do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: jpy_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
       let!(:cny_to_brl_currency_parity_exchange_rate) do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: cny_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
       let!(:btc_to_brl_currency_parity_exchange_rate) do
         create(:currency_parity_exchange_rate,
                :scheduled,
                currency_parity: btc_to_brl_currency_parity,
-               partner_resource: hg_brasil_partner_resource)
+               partner_resource: hg_brasil_currencies_partner_resource)
       end
 
-      let(:hg_brasil_partner_resource) { create(:partner_resource, :hg_brasil_quotation) }
+      let(:hg_brasil_currencies_partner_resource) { create(:partner_resource, :hg_brasil_currencies) }
       let(:brl_currency) { create(:currency, code: 'BRL', name: 'Brazilian Real') }
       let(:usd_currency) { create(:currency, code: 'USD', name: 'US Dollar') }
       let(:eur_currency) { create(:currency, code: 'EUR', name: 'Euro') }

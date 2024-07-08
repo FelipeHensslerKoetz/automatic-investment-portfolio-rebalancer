@@ -23,39 +23,39 @@ RSpec.describe Global::CurrencyParityExchangeRates::SyncJob, type: :job do
     context 'when there is no rebalance order being processed' do
       subject(:global_sync_job) { described_class.new }
 
-      let(:hg_brasil_quotation_partner_resource) { create(:partner_resource, :hg_brasil_quotation) }
-      let(:br_api_currency_partner_resource) { create(:partner_resource, :br_api_currency) }
+      let(:hg_brasil_currencies_partner_resource) { create(:partner_resource, :hg_brasil_currencies) }
+      let(:br_api_currencies_partner_resource) { create(:partner_resource, :br_api_currencies) }
 
       let!(:hg_brasil_pending_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_quotation_partner_resource, status: 'pending')
+        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_currencies_partner_resource, status: 'pending')
       end
       let!(:hg_brasil_failed_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_quotation_partner_resource, status: 'failed')
+        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_currencies_partner_resource, status: 'failed')
       end
       let!(:hg_brasil_updated_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_quotation_partner_resource, status: 'updated')
+        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_currencies_partner_resource, status: 'updated')
       end
       let!(:hg_brasil_processing_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_quotation_partner_resource, status: 'processing')
+        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_currencies_partner_resource, status: 'processing')
       end
       let!(:hg_brasil_scheduled_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_quotation_partner_resource, status: 'scheduled')
+        create(:currency_parity_exchange_rate, partner_resource: hg_brasil_currencies_partner_resource, status: 'scheduled')
       end
 
       let!(:br_api_pending_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: br_api_currency_partner_resource, status: 'pending')
+        create(:currency_parity_exchange_rate, partner_resource: br_api_currencies_partner_resource, status: 'pending')
       end
       let!(:br_api_failed_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: br_api_currency_partner_resource, status: 'failed')
+        create(:currency_parity_exchange_rate, partner_resource: br_api_currencies_partner_resource, status: 'failed')
       end
       let!(:br_api_updated_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: br_api_currency_partner_resource, status: 'updated')
+        create(:currency_parity_exchange_rate, partner_resource: br_api_currencies_partner_resource, status: 'updated')
       end
       let!(:br_api_processing_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: br_api_currency_partner_resource, status: 'processing')
+        create(:currency_parity_exchange_rate, partner_resource: br_api_currencies_partner_resource, status: 'processing')
       end
       let!(:br_api_scheduled_currency_parity_exchange_rate) do
-        create(:currency_parity_exchange_rate, partner_resource: br_api_currency_partner_resource, status: 'scheduled')
+        create(:currency_parity_exchange_rate, partner_resource: br_api_currencies_partner_resource, status: 'scheduled')
       end
 
       before do

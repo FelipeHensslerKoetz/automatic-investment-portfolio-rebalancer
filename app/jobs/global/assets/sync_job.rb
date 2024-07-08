@@ -43,7 +43,7 @@ module Global
       end
 
       def br_api_partner_resource
-        @br_api_partner_resource ||= PartnerResource.find_by!(slug: :br_api_quotation)
+        @br_api_partner_resource ||= PartnerResource.find_by!(slug: 'br_api_assets')
       end
 
       def br_api_schedule_delay_in_seconds
@@ -64,7 +64,7 @@ module Global
       end
 
       def hg_brasil_partner_resource
-        @hg_brasil_partner_resource ||= PartnerResource.find_by!(slug: :hg_brasil_stock_price)
+        @hg_brasil_partner_resource ||= PartnerResource.find_by!(slug: 'hg_brasil_assets')
       end
 
       def hg_brasil_schedule_delay_in_seconds

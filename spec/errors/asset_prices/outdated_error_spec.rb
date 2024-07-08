@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe AssetPrices::OutdatedError do
   subject(:error) { described_class.new(asset_price:) }
 
-  let(:asset_price) { create(:asset_price, :with_hg_brasil_stock_price_partner_resource) }
+  let(:asset_price) { create(:asset_price, :with_hg_brasil_assets_partner_resource) }
 
   it 'inherits from StandardError' do
     expect(error).to be_a(StandardError)
