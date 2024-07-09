@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
-  subject(:newest_updated_asset_price_service) { described_class.call(asset:) }
+RSpec.describe System::AssetPrices::UpdatedAssetPriceService do
+  subject(:updated_asset_price_service) { described_class.call(asset:) }
 
   let!(:brl_currency) { create(:currency, :brl) }
 
@@ -13,40 +13,36 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
       let(:asset) { create(:asset) }
 
       context 'when there is only hg brasil stock price partner resource' do
-        let!(:newest_asset_price) do
+        let!(:hg_brasil_asset_price) do
           create(:asset_price, :updated, :with_hg_brasil_assets_partner_resource, asset:, currency: brl_currency, reference_date:
           Time.zone.now)
         end
 
-        before do
-          create(:asset_price, :updated, :with_hg_brasil_assets_partner_resource, asset:, currency: usd_currency,
-                                                                                       reference_date: 2.hours.ago)
-          second_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
-          create(:currency_parity_exchange_rate, :with_hg_brasil_currencies_partner_resource, :updated,
-                 currency_parity: second_currency_parity)
-        end
-
-        it { is_expected.to eq(newest_asset_price) }
+        it { is_expected.to eq(hg_brasil_asset_price) }
       end
 
       context 'when there is only br_api partner resource' do
-        let!(:newest_asset_price) do
+        let!(:br_api_asset_price) do
           create(:asset_price, :updated, :with_br_api_assets_partner_resource, asset:, currency: brl_currency, reference_date:
           Time.zone.now)
         end
 
-        before do
-          create(:asset_price, :updated, :with_br_api_assets_partner_resource, asset:, currency: usd_currency, reference_date: 2.hours.ago)
-          second_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
-          create(:currency_parity_exchange_rate, :with_br_api_currencies_partner_resource, :updated,
-                 currency_parity: second_currency_parity)
-        end
-
-        it { is_expected.to eq(newest_asset_price) }
+        it { is_expected.to eq(br_api_asset_price) }
       end
 
       context 'when there are multiple partner resources' do
-        it 'prioritizes the asset price by updated and by partner priority' do
+        let!(:hg_brasil_newest_asset_price) do
+          create(:asset_price, :updated, :with_hg_brasil_assets_partner_resource, asset:, currency: brl_currency, reference_date:
+          Time.zone.today.beginning_of_day + 1.hour)
+        end
+
+        let!(:br_api_newest_asset_price) do
+          create(:asset_price, :updated, :with_br_api_assets_partner_resource, asset:, currency: brl_currency, reference_date:
+          Time.zone.today.beginning_of_day)
+        end
+
+        it 'returns the updated asset price based on partner_resource priority' do
+          expect(updated_asset_price_service).to eq(br_api_newest_asset_price)
         end
       end
     end
@@ -56,7 +52,7 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
         context 'when asset is not present' do
           let(:asset) { nil }
 
-          it { expect { newest_updated_asset_price_service }.to raise_error(ArgumentError, 'Asset must be present') }
+          it { expect { updated_asset_price_service }.to raise_error(ArgumentError, 'Asset must be present') }
         end
       end
 
@@ -69,7 +65,7 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
 
         it {
           expect do
-            newest_updated_asset_price_service
+            updated_asset_price_service
           end.to raise_error(Assets::OutdatedError, "Asset with id: #{asset.id} is outdated.")
         }
       end
@@ -84,7 +80,7 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
 
         it {
           expect do
-            newest_updated_asset_price_service
+            updated_asset_price_service
           end.to raise_error(Assets::OutdatedError, "Asset with id: #{asset.id} is outdated.")
         }
       end
@@ -102,7 +98,7 @@ RSpec.describe System::AssetPrices::NewestUpdatedAssetPriceService do
 
         it {
           expect do
-            newest_updated_asset_price_service
+            updated_asset_price_service
           end.to raise_error(Assets::OutdatedError, "Asset with id: #{asset.id} is outdated.")
         }
       end

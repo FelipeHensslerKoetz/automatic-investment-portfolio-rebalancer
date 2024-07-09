@@ -84,7 +84,7 @@ module System
 
       def investment_portfolio_asset_details(investment_portfolio_asset)
         asset = investment_portfolio_asset.asset
-        newest_asset_price = AssetPrices::NewestUpdatedAssetPriceService.call(asset:)
+        newest_asset_price = AssetPrices::UpdatedAssetPriceService.call(asset:)
         price = compute_price_and_currency_parity_exchange_rate(newest_asset_price)
 
         {

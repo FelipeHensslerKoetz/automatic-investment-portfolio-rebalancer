@@ -5,6 +5,8 @@ module System
     class ConvertParityService
       attr_reader :asset_price, :output_currency
 
+      PARTNER_RESOURCE_PRIORITY = %w[br_api_currencies hg_brasil_currencies].freeze
+
       def self.call(asset_price:)
         new(asset_price:).call
       end
@@ -84,7 +86,18 @@ module System
       def fetch_updated_currency_parity_exchange_rate(currency_parity)
         return nil if currency_parity.blank?
 
-        currency_parity.currency_parity_exchange_rates.updated.order(reference_date: :desc).first
+        currency_parity_exchange_rate_by_partner_resource_priority(currency_parity.currency_parity_exchange_rates.updated)
+      end
+
+      def currency_parity_exchange_rate_by_partner_resource_priority(updated_currency_parity_exchange_rates)
+        PARTNER_RESOURCE_PRIORITY.each do |partner_resource|
+          currency_parity_exchange_rate = updated_currency_parity_exchange_rates.find do |updated_currency_parity_exchange_rate|
+            updated_currency_parity_exchange_rate.partner_resource.slug == partner_resource
+          end
+
+          return currency_parity_exchange_rate if currency_parity_exchange_rate.present?
+        end
+        nil
       end
 
       def compute_asset_price_in_output_currency

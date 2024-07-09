@@ -12,6 +12,15 @@ RSpec.describe CurrencyParityExchangeRate, type: :model do
     it { should validate_presence_of(:exchange_rate) }
     it { should validate_presence_of(:reference_date) }
     it { should validate_presence_of(:last_sync_at) }
+
+    context 'currency_parity_id and partner_resource_id unique index' do
+      let!(:currency_parity_exchange_rate) { create(:currency_parity_exchange_rate, :with_hg_brasil_currencies_partner_resource) }
+
+      it 'validates uniqueness of asset_id scoped to partner_resource_id' do
+        expect(build(:currency_parity_exchange_rate, currency_parity: currency_parity_exchange_rate.currency_parity,
+                                                     partner_resource: currency_parity_exchange_rate.partner_resource)).to be_invalid
+      end
+    end
   end
 
   describe 'scopes' do

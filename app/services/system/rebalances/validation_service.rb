@@ -83,7 +83,7 @@ module System
 
       def validate_all_asset_prices_up_to_date
         investment_portfolio_assets.each do |investment_portfolio_asset|
-          AssetPrices::NewestUpdatedAssetPriceService.call(asset: investment_portfolio_asset.asset)
+          AssetPrices::UpdatedAssetPriceService.call(asset: investment_portfolio_asset.asset)
         end
       end
     end

@@ -12,6 +12,7 @@ class AssetPrice < ApplicationRecord
   # Validations
   validates :ticker_symbol, :price, :last_sync_at, :reference_date, :status, presence: true
   validate :partner_resource_presence, if: -> { asset.present? && !asset.custom }
+  validates :asset_id, uniqueness: { scope: :partner_resource_id }
 
   # Scopes
   scope :updated, -> { where(status: :updated) }

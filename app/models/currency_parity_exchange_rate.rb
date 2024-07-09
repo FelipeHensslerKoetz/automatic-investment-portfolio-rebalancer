@@ -10,6 +10,7 @@ class CurrencyParityExchangeRate < ApplicationRecord
 
   # Validations
   validates :exchange_rate, :reference_date, :last_sync_at, presence: true
+  validates :currency_parity_id, uniqueness: { scope: :partner_resource_id }
 
   # Scopes
   scope :updated, -> { where(status: :updated) }

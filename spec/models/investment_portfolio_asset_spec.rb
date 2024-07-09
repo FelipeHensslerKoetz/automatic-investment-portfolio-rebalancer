@@ -36,5 +36,17 @@ RSpec.describe InvestmentPortfolioAsset, type: :model do
       expect(investment_portfolio_asset.errors[:quantity]).to include('must be greater than or equal to 0')
       expect(investment_portfolio_asset).to be_invalid
     end
+
+    context 'investment_portfolio_id and asset_id unique index' do 
+      let!(:investment_portfolio_asset) { create(:investment_portfolio_asset) }
+
+      it 'validates investment_portfolio_id uniqueness with scope asset_id' do
+        new_investment_portfolio_asset = build(:investment_portfolio_asset, investment_portfolio: investment_portfolio_asset.investment_portfolio, asset: investment_portfolio_asset.asset)
+        new_investment_portfolio_asset.valid?
+
+        expect(new_investment_portfolio_asset.errors[:investment_portfolio_id]).to include('has already been taken')
+        expect(new_investment_portfolio_asset).to be_invalid
+      end
+    end
   end
 end

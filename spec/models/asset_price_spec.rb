@@ -10,9 +10,11 @@ RSpec.describe AssetPrice, type: :model do
   end
 
   describe 'validations' do
+    it { is_expected.to validate_presence_of(:ticker_symbol) }
     it { is_expected.to validate_presence_of(:price) }
     it { is_expected.to validate_presence_of(:last_sync_at) }
     it { is_expected.to validate_presence_of(:reference_date) }
+    it { is_expected.to validate_presence_of(:status) }
 
     context 'when asset is not custom' do
       let!(:asset) { create(:asset, custom: false) }
@@ -37,6 +39,14 @@ RSpec.describe AssetPrice, type: :model do
 
       it 'does not validate presence of partner_resource' do
         expect(asset_price).to be_valid
+      end
+    end
+
+    context 'asset_id and partner_resource_id unique index' do
+      let!(:asset_price) { create(:asset_price, :with_hg_brasil_assets_partner_resource) }
+
+      it 'validates uniqueness of asset_id scoped to partner_resource_id' do
+        expect(build(:asset_price, asset: asset_price.asset, partner_resource: asset_price.partner_resource)).to be_invalid
       end
     end
   end

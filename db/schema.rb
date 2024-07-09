@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_07_195803) do
+ActiveRecord::Schema.define(version: 2024_07_09_000408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2024_07_07_195803) do
     t.string "error_message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["asset_id", "partner_resource_id"], name: "index_asset_prices_on_asset_id_and_partner_resource_id", unique: true
     t.index ["asset_id"], name: "index_asset_prices_on_asset_id"
     t.index ["currency_id"], name: "index_asset_prices_on_currency_id"
     t.index ["partner_resource_id"], name: "index_asset_prices_on_partner_resource_id"
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(version: 2024_07_07_195803) do
     t.string "error_message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["currency_parity_id", "partner_resource_id"], name: "currency_parity_and_partner_resource_index", unique: true
     t.index ["currency_parity_id"], name: "index_currency_parity_exchange_rates_on_currency_parity_id"
     t.index ["partner_resource_id"], name: "index_currency_parity_exchange_rates_on_partner_resource_id"
   end
@@ -115,6 +117,7 @@ ActiveRecord::Schema.define(version: 2024_07_07_195803) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "target_variation_limit_percentage", null: false
+    t.index ["asset_id", "investment_portfolio_id"], name: "asset_id_and_investment_portfolio_id_index", unique: true
     t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"
     t.index ["investment_portfolio_id"], name: "index_investment_portfolio_assets_on_investment_portfolio_id"
   end

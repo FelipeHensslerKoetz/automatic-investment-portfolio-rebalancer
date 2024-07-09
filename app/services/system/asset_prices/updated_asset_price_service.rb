@@ -2,9 +2,10 @@
 
 module System
   module AssetPrices
-    # TODO: Prioritize the asse_price by updated and by partner priority
-    class NewestUpdatedAssetPriceService
+    class UpdatedAssetPriceService
       attr_reader :asset, :currency
+
+      PARTNER_RESOURCE_PRIORITY = %w[br_api_assets hg_brasil_assets].freeze
 
       def initialize(asset:)
         @asset = asset
@@ -17,7 +18,7 @@ module System
 
       def call
         validate_arguments
-        fetch_newest_updated_asset_price
+        updated_asset_price
       end
 
       private
@@ -36,10 +37,19 @@ module System
         raise ArgumentError, 'Asset must be present' unless asset.is_a?(Asset)
       end
 
-      def fetch_newest_updated_asset_price
+      def updated_asset_price
         raise ::Assets::OutdatedError.new(asset:) if updated_asset_prices.blank?
 
-        updated_asset_prices.max_by(&:reference_date)
+        updated_asset_price_by_partner_resource_priority(updated_asset_prices)
+      end
+
+      def updated_asset_price_by_partner_resource_priority(updated_asset_prices)
+        PARTNER_RESOURCE_PRIORITY.each do |partner_resource|
+          updated_asset_price = updated_asset_prices.find { |asset_price| asset_price.partner_resource.slug == partner_resource }
+
+          return updated_asset_price if updated_asset_price.present?
+        end
+        nil
       end
 
       def asset_price_with_same_currency?(asset_price)
