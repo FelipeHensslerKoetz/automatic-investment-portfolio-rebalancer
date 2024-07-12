@@ -18,4 +18,5 @@ class User < ApplicationRecord
   has_many :rebalance_orders, dependent: :restrict_with_error
   has_many :customer_support_items, dependent: :restrict_with_error
   has_many :customer_support_item_messages, dependent: :restrict_with_error
+  has_many :automatic_rebalance_options, through: :investment_portfolios
 end

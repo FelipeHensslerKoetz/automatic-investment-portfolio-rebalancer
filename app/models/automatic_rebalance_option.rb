@@ -11,4 +11,8 @@ class AutomaticRebalanceOption < ApplicationRecord
   validates :kind, :start_date, presence: true
   validates :recurrence_days, numericality: { only_integer: true, greater_than: 0 }, if: -> { kind == 'recurrence' }
   validates :investment_portfolio_id, uniqueness: true
+
+  # Scopes
+  scope :deviation, -> { where(kind: 'deviation') }
+  scope :recurrence, -> { where(kind: 'recurrence') }
 end
