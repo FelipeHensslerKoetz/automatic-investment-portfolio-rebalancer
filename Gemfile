@@ -38,6 +38,9 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
 # Sidekiq is a simple, efficient background processing library for Ruby.
 gem 'sidekiq', '~> 6.5', '>= 6.5.12'
 
+# Sidekiq-cron is an extension to Sidekiq that adds support for running scheduled jobs.
+gem "sidekiq-cron", "~> 1.12"
+
 # Tzinfo provides access to time zone data and allows times to be converted using time zone rules
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
@@ -56,6 +59,9 @@ group :development, :test do
 
   # Rspec-rails is a testing framework for Rails 3.x, 4.x and 5.x.
   gem 'rspec-rails', '~> 6.1'
+
+  # Redis-lock is a distributed lock manager built on top of Redis.
+  gem "redis-lock", "~> 0.2.0"
 end
 
 group :development do

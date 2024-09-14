@@ -1,0 +1,19 @@
+global_currency_parity_exchange_rates_sync:
+  cron: '0 12-21 * * *'
+  class: Global::CurrencyParityExchangeRates::SyncJob
+  queue: global_currency_parity_exchange_rates_sync
+
+global_assets_sync:
+  cron: '0 12-21 * * *'
+  class: Global::Assets::SyncJob
+  queue: global_assets_sync
+
+global_assets_sync_retry:
+  cron: '20 12-21 * * *'
+  class: Global::Assets::SyncRetryJob
+  queue: global_assets_sync_retry
+
+global_rebalance_orders_process:
+  cron: '0 12-21 * * *'
+  class: Global::RebalanceOrders::ProcessJob
+  queue: global_rebalance_orders_process
