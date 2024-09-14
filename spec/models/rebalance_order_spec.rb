@@ -15,6 +15,7 @@ RSpec.describe RebalanceOrder, type: :model do
     it {
       is_expected.to validate_inclusion_of(:kind).in_array(RebalanceOrder::REBALANCE_ORDER_KINDS)
     }
+    it { is_expected.to validate_presence_of(:amount) }
   end
 
   describe 'scopes' do

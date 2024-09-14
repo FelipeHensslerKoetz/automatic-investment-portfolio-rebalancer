@@ -7,6 +7,7 @@ module Global
 
       sidekiq_options queue: 'global_assets_sync', retry: false
 
+      # TODO: redis-lock
       def perform
         return if any_rebalance_order_being_processed?
 
@@ -17,7 +18,7 @@ module Global
       private
 
       def any_rebalance_order_being_processed?
-        RebalanceOrder.processing.any?
+        RebalanceOrder.scheduled.any? || RebalanceOrder.processing.any?
       end
 
       def schedule_record(record, delay_in_seconds)

@@ -114,8 +114,18 @@ RSpec.describe 'RebalanceOrders', type: :request do
           it 'creates a rebalance order' do
             post '/api/rebalance_orders', headers: valid_headers, params: rebalance_order_params, as: :json
 
+            created_rebalance_order = RebalanceOrder.last
+
             expect(response).to be_successful
-            expect(response.parsed_body['kind']).to eq('default')
+            expect(JSON.parse(response.body)).to eq(JSON.parse(RebalanceOrderSerializer.new(created_rebalance_order).to_json))
+            expect(RebalanceOrder.count).to eq(1)
+            expect(created_rebalance_order.attributes).to include(
+             'kind' => 'default',
+             'amount' => 0,
+             'investment_portfolio_id' => investment_portfolio.id,
+             'scheduled_at' => Time.zone.today,
+             'user_id' => user.id,
+             'created_by_system' => false) 
           end
         end
 
@@ -133,9 +143,18 @@ RSpec.describe 'RebalanceOrders', type: :request do
           it 'creates a rebalance order' do
             post '/api/rebalance_orders', headers: valid_headers, params: rebalance_order_params, as: :json
 
+            created_rebalance_order = RebalanceOrder.last
+
             expect(response).to be_successful
-            expect(response.parsed_body['kind']).to eq('deposit')
-            expect(response.parsed_body['amount']).to eq('100.0')
+            expect(JSON.parse(response.body)).to eq(JSON.parse(RebalanceOrderSerializer.new(created_rebalance_order).to_json))
+            expect(RebalanceOrder.count).to eq(1)
+            expect(created_rebalance_order.attributes).to include(
+             'kind' => 'deposit',
+             'amount' => 100,
+             'investment_portfolio_id' => investment_portfolio.id,
+             'scheduled_at' => Time.zone.today,
+             'user_id' => user.id,
+             'created_by_system' => false) 
           end
         end
 
@@ -145,7 +164,8 @@ RSpec.describe 'RebalanceOrders', type: :request do
               rebalance_order: {
                 investment_portfolio_id: investment_portfolio.id,
                 kind: 'withdraw',
-                amount: 100.0
+                amount: 100.0,
+                scheduled_at: Time.zone.today + 1.day
               }
             }
           end
@@ -153,9 +173,18 @@ RSpec.describe 'RebalanceOrders', type: :request do
           it 'creates a rebalance order' do
             post '/api/rebalance_orders', headers: valid_headers, params: rebalance_order_params, as: :json
 
+            created_rebalance_order = RebalanceOrder.last
+
             expect(response).to be_successful
-            expect(response.parsed_body['kind']).to eq('withdraw')
-            expect(response.parsed_body['amount']).to eq('100.0')
+            expect(JSON.parse(response.body)).to eq(JSON.parse(RebalanceOrderSerializer.new(created_rebalance_order).to_json))
+            expect(RebalanceOrder.count).to eq(1)
+            expect(created_rebalance_order.attributes).to include(
+             'kind' => 'withdraw',
+             'amount' => 100,
+             'investment_portfolio_id' => investment_portfolio.id,
+             'scheduled_at' => Time.zone.today + 1.day,
+             'user_id' => user.id,
+             'created_by_system' => false)
           end
         end
       end
@@ -359,6 +388,29 @@ RSpec.describe 'RebalanceOrders', type: :request do
             post '/api/rebalance_orders', headers: valid_headers, params: rebalance_order_params, as: :json
 
             expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
+
+        context 'when scheduled_at is not a valid date' do
+          context 'when scheduled_at is in the past' do
+            let(:investment_portfolio) { create(:investment_portfolio, user:) }
+
+            let(:rebalance_order_params) do
+              {
+                rebalance_order: {
+                  investment_portfolio_id: investment_portfolio.id,
+                  kind: 'deposit',
+                  amount: 100.0,
+                  scheduled_at: Time.zone.today - 1.day
+                }
+              }
+            end
+
+            it 'returns an unprocessable entity status' do
+              post '/api/rebalance_orders', headers: valid_headers, params: rebalance_order_params, as: :json
+
+              expect(response).to have_http_status(:unprocessable_entity)
+            end
           end
         end
       end

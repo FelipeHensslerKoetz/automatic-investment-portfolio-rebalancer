@@ -64,7 +64,7 @@ module Api
       end
 
       def rebalance_order_params
-        params.require(:rebalance_order).permit(:investment_portfolio_id, :kind, :amount)
+        params.require(:rebalance_order).permit(:investment_portfolio_id, :kind, :amount, :scheduled_at)
       end
 
       def investment_portfolio_belong_to_user?(investment_portfolio_id)

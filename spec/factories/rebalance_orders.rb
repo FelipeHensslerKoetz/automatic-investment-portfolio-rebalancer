@@ -5,7 +5,7 @@ FactoryBot.define do
     user { create(:user) }
     investment_portfolio { create(:investment_portfolio) }
     kind { 'default' }
-    scheduled_at { nil }
+    scheduled_at { Time.zone.today }
     amount { 0 }
 
     trait :pending do

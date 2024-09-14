@@ -11,7 +11,8 @@ RSpec.describe InvestmentPortfolioSerializer, type: :serializer do
       expect(serializer.attributes).to eq(
         id: investment_portfolio.id,
         name: investment_portfolio.name,
-        description: investment_portfolio.description
+        description: investment_portfolio.description,
+        total_value: 0
       )
     end
   end
@@ -21,9 +22,11 @@ RSpec.describe InvestmentPortfolioSerializer, type: :serializer do
       investment_portfolio = build(:investment_portfolio)
       serializer = described_class.new(investment_portfolio).as_json
 
-      expect(serializer[:investment_portfolio_assets]).to eq(investment_portfolio.investment_portfolio_assets.map do |investment_portfolio_asset|
-        InvestmentPortfolioAssetSerializer.new(investment_portfolio_asset).as_json
-      end)
+      expect(serializer[:investment_portfolio_assets]).to eq(
+        investment_portfolio.investment_portfolio_assets.map do |investment_portfolio_asset|
+          InvestmentPortfolioAssetSerializer.new(investment_portfolio_asset).as_json
+        end
+      )
     end
   end
 end

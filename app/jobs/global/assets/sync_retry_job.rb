@@ -7,6 +7,7 @@ module Global
 
       sidekiq_options queue: 'global_assets_sync_retry', retry: false
 
+      # TODO: redis-lock
       def perform
         return if any_rebalance_order_being_processed?
 
@@ -17,7 +18,7 @@ module Global
       private
 
       def any_rebalance_order_being_processed?
-        RebalanceOrder.processing.any?
+        RebalanceOrder.scheduled.any? || RebalanceOrder.processing.any?
       end
 
       def schedule_record(record, delay_in_seconds)
@@ -44,7 +45,7 @@ module Global
       end
 
       def br_api_partner_resource
-        @br_api_partner_resource ||= PartnerResource.find_by!(slug: :br_api_quotation)
+        @br_api_partner_resource ||= PartnerResource.find_by!(slug: 'br_api_assets')
       end
 
       def br_api_schedule_delay_in_seconds
@@ -65,7 +66,7 @@ module Global
       end
 
       def hg_brasil_partner_resource
-        @hg_brasil_partner_resource ||= PartnerResource.find_by!(slug: :hg_brasil_stock_price)
+        @hg_brasil_partner_resource ||= PartnerResource.find_by!(slug: 'hg_brasil_assets')
       end
 
       def hg_brasil_schedule_delay_in_seconds

@@ -13,6 +13,7 @@ module Global
 
       private
 
+      # TODO: create a worker to handle each automatic rebalance option execution
       def check_automatic_rebalance_options_with_recurrence
         AutomaticRebalanceOption.recurrence.find_in_batches do |automatic_rebalance_options_batch|
           automatic_rebalance_options_batch.each do |automatic_rebalance_option|

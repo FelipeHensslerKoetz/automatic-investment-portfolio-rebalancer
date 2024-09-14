@@ -12,7 +12,7 @@ module Api
         render json: @investment_portfolios, status: :ok
       end
 
-      # TODO: mostrar valor total da carteira e cotação de todos os ativos, considerar moeda da carteira
+      # TODO: Display investment_portfolio total value and all assets quotation, considering investment_portfolio currency code passed as parameter
       def show
         render json: @investment_portfolio, status: :ok
       end
@@ -27,7 +27,7 @@ module Api
         end
       end
 
-      # TODO: não permitir alteração enquanto houver ordens de rebalanceamento pendentes
+      # TODO: Do not allow to update investment_portfolio name if it has rebalance orders scheduled or processing
       def update
         if @investment_portfolio.update(investment_portfolio_params)
           render json: @investment_portfolio, status: :ok

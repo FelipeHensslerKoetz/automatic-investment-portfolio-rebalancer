@@ -38,7 +38,8 @@ module System
 
           {
             price: asset_detail.fetch(:price),
-            reference_date: asset_detail.fetch(:reference_date)
+            reference_date: asset_detail.fetch(:reference_date),
+            last_sync_at: Time.zone.now
           }
         end
 

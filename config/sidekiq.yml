@@ -1,6 +1,8 @@
 ---
 :queues:
   - critical
+  - global_rebalance_orders_automatic_creation
+  - global_rebalance_orders_process
   - global_assets_discovery
   - global_assets_sync
   - global_assets_sync_retry

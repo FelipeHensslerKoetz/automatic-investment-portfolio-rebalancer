@@ -13,10 +13,12 @@ class RebalanceOrder < ApplicationRecord
   has_one :rebalance, dependent: :restrict_with_error
 
   # Validations
-  validates :status, :kind, :amount, presence: true
+  validates :status, :kind, :amount, :scheduled_at, presence: true
   validates :kind, inclusion: { in: REBALANCE_ORDER_KINDS }
   validates :amount, numericality: { greater_than: 0 }, if: -> { kind == 'deposit' || kind == 'withdraw' }
   before_validation :set_default_amount, if: -> { kind == 'default' }
+  before_validation :set_default_scheduled_at, if: -> { scheduled_at.nil? }
+  validate :scheduled_at_cannot_be_in_the_past
 
   # Scopes
   scope :pending, -> { where(status: :pending) }
@@ -58,5 +60,15 @@ class RebalanceOrder < ApplicationRecord
 
   def set_default_amount
     self.amount = 0
+  end
+
+  def scheduled_at_cannot_be_in_the_past
+    return if scheduled_at >= Time.zone.today 
+
+    errors.add(:scheduled_at, 'can not be in the past')
+  end
+
+  def set_default_scheduled_at
+    self.scheduled_at = Time.zone.today
   end
 end
