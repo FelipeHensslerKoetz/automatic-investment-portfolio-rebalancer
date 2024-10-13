@@ -7,6 +7,7 @@ RSpec.describe RebalanceOrder, type: :model do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:investment_portfolio) }
     it { is_expected.to have_one(:rebalance).dependent(:restrict_with_error) }
+    it { is_expected.to have_many(:investment_portfolio_rebalance_notification_orders).dependent(:restrict_with_error) }
   end
 
   describe 'validations' do

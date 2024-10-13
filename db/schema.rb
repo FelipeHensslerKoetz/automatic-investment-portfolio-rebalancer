@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_14_193046) do
+ActiveRecord::Schema.define(version: 2024_10_13_202218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,6 +136,23 @@ ActiveRecord::Schema.define(version: 2024_09_14_193046) do
     t.index ["investment_portfolio_id"], name: "index_iprno_on_ip_id"
   end
 
+  create_table "investment_portfolio_rebalance_notification_orders", force: :cascade do |t|
+    t.bigint "investment_portfolio_id", null: false
+    t.bigint "investment_portfolio_rebalance_notification_option_id", null: false
+    t.bigint "rebalance_id", null: false
+    t.bigint "rebalance_order_id", null: false
+    t.string "error_message"
+    t.string "payload"
+    t.string "status"
+    t.integer "retry_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["investment_portfolio_id"], name: "index_ip_on_iprnor_id"
+    t.index ["investment_portfolio_rebalance_notification_option_id"], name: "index_iprno_on_iprnor_id"
+    t.index ["rebalance_id"], name: "index_rebalance_on_iprnor_id"
+    t.index ["rebalance_order_id"], name: "index_rebalance_order_on_iprnor_id"
+  end
+
   create_table "investment_portfolios", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
@@ -248,6 +265,10 @@ ActiveRecord::Schema.define(version: 2024_09_14_193046) do
   add_foreign_key "investment_portfolio_assets", "assets"
   add_foreign_key "investment_portfolio_assets", "investment_portfolios"
   add_foreign_key "investment_portfolio_rebalance_notification_options", "investment_portfolios"
+  add_foreign_key "investment_portfolio_rebalance_notification_orders", "investment_portfolio_rebalance_notification_options"
+  add_foreign_key "investment_portfolio_rebalance_notification_orders", "investment_portfolios"
+  add_foreign_key "investment_portfolio_rebalance_notification_orders", "rebalance_orders"
+  add_foreign_key "investment_portfolio_rebalance_notification_orders", "rebalances"
   add_foreign_key "investment_portfolios", "users"
   add_foreign_key "partner_resources", "partners"
   add_foreign_key "rebalance_orders", "investment_portfolios"

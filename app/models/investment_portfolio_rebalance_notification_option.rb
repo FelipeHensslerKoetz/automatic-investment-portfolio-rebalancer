@@ -3,6 +3,7 @@ class InvestmentPortfolioRebalanceNotificationOption < ApplicationRecord
   HTTP_METHODS = %w[get post put patch delete].freeze
 
   belongs_to :investment_portfolio
+  has_many :investment_portfolio_rebalance_notification_orders, dependent: :restrict_with_error
 
   validates :name, :kind, presence: true
   validates :kind, inclusion: { in: NOTIFICATION_OPTION_KINDS }

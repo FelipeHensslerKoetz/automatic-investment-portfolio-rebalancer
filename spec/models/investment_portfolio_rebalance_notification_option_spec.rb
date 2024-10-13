@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe InvestmentPortfolioRebalanceNotificationOption, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:investment_portfolio) }
+    it { is_expected.to have_many(:investment_portfolio_rebalance_notification_orders).dependent(:restrict_with_error) }
   end
 
   describe 'validations' do
@@ -29,19 +30,19 @@ RSpec.describe InvestmentPortfolioRebalanceNotificationOption, type: :model do
         end
       end
 
-      context 'when header is not present' do
+      context 'when header is invalid' do
         it 'is invalid' do
-          webhook_notification_option.header = nil
+          webhook_notification_option.header = 'abc'
           expect(webhook_notification_option).to be_invalid
-          expect(webhook_notification_option.errors[:header]).to include("can't be blank")
+          expect(webhook_notification_option.errors[:header]).to include("must be an object")
         end
       end
 
-      context 'when body is not present' do
+      context 'when body is not invalid' do
         it 'is invalid' do
-          webhook_notification_option.body = nil
+          webhook_notification_option.body = 'abc'
           expect(webhook_notification_option).to be_invalid
-          expect(webhook_notification_option.errors[:body]).to include("can't be blank")
+          expect(webhook_notification_option.errors[:body]).to include("must be an object or an array")
         end
       end
 

@@ -11,6 +11,7 @@ class RebalanceOrder < ApplicationRecord
   belongs_to :user
   belongs_to :investment_portfolio
   has_one :rebalance, dependent: :restrict_with_error
+  has_many :investment_portfolio_rebalance_notification_orders, dependent: :restrict_with_error
 
   # Validations
   validates :status, :kind, :amount, :scheduled_at, presence: true

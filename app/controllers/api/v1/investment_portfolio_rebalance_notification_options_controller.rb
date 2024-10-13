@@ -70,10 +70,10 @@ module Api
       end
 
       def investment_portfolio_rebalance_notification_option_formatted_params
-        if investment_portfolio_rebalance_notification_option_params[:header]
+        if investment_portfolio_rebalance_notification_option_params[:header]&.present?
           parsed_header = JSON.parse(investment_portfolio_rebalance_notification_option_params[:header])
         end
-        if investment_portfolio_rebalance_notification_option_params[:body]
+        if investment_portfolio_rebalance_notification_option_params[:body]&.present?
           parsed_body = JSON.parse(investment_portfolio_rebalance_notification_option_params[:body])
         end
 
