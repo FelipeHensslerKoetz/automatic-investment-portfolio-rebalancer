@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_15_205736) do
+ActiveRecord::Schema.define(version: 2024_09_14_193046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,20 @@ ActiveRecord::Schema.define(version: 2024_07_15_205736) do
     t.index ["asset_id", "investment_portfolio_id"], name: "asset_id_and_investment_portfolio_id_index", unique: true
     t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"
     t.index ["investment_portfolio_id"], name: "index_investment_portfolio_assets_on_investment_portfolio_id"
+  end
+
+  create_table "investment_portfolio_rebalance_notification_options", force: :cascade do |t|
+    t.string "kind", null: false
+    t.bigint "investment_portfolio_id", null: false
+    t.string "name", null: false
+    t.string "url"
+    t.string "http_method"
+    t.jsonb "header"
+    t.jsonb "body"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["investment_portfolio_id"], name: "index_iprno_on_ip_id"
   end
 
   create_table "investment_portfolios", force: :cascade do |t|
@@ -233,6 +247,7 @@ ActiveRecord::Schema.define(version: 2024_07_15_205736) do
   add_foreign_key "customer_support_items", "users"
   add_foreign_key "investment_portfolio_assets", "assets"
   add_foreign_key "investment_portfolio_assets", "investment_portfolios"
+  add_foreign_key "investment_portfolio_rebalance_notification_options", "investment_portfolios"
   add_foreign_key "investment_portfolios", "users"
   add_foreign_key "partner_resources", "partners"
   add_foreign_key "rebalance_orders", "investment_portfolios"

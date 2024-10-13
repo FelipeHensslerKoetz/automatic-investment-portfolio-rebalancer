@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       resources :customer_support_items
       resources :customer_support_item_messages, only: %i[index show create]
       resources :automatic_rebalance_options, only: %i[index show create destroy]
+      resources :investment_portfolio_rebalance_notification_options
     end
 
     scope module: :v2, constraints: ApiConstraints.new({ version: 2, default: false }) do
