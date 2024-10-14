@@ -59,6 +59,8 @@ RSpec.describe System::Rebalances::CalculatorService do
                                                         'buy' => [{ 'quantity' => '5.0', 'ticker_symbol' => 'BOVA11' }],
                                                         'sell' => [{ 'quantity' => '2.5', 'ticker_symbol' => 'IVVB11' }]
                                                       })
+
+          expect(InvestmentPortfolioRebalanceNotificationOrder.count).to be_zero
         end
       end
 
@@ -91,6 +93,8 @@ RSpec.describe System::Rebalances::CalculatorService do
                                                                   { 'quantity' => '20.0', 'ticker_symbol' => 'BOVA11' }],
                                                         'sell' => []
                                                       })
+
+          expect(InvestmentPortfolioRebalanceNotificationOrder.count).to be_zero
         end
       end
 
@@ -123,8 +127,49 @@ RSpec.describe System::Rebalances::CalculatorService do
                                                         'sell' => [{ 'quantity' => '10.0', 'ticker_symbol' => 'IVVB11' },
                                                                    { 'quantity' => '10.0', 'ticker_symbol' => 'BOVA11' }]
                                                       })
+
+          expect(InvestmentPortfolioRebalanceNotificationOrder.count).to be_zero
         end
       end
+
+       context 'when the investment portfolio has a notification options' do
+        let(:rebalance_order) { create(:rebalance_order, status: :scheduled, kind: 'default', investment_portfolio:) }
+
+        before do 
+          create(:investment_portfolio_rebalance_notification_option, :email, investment_portfolio: investment_portfolio)
+          create(:investment_portfolio_rebalance_notification_option, :webhook, investment_portfolio: investment_portfolio)          
+        end
+
+        it 'calculates the rebalance and generate a Rebalance record and create the notification orders' do
+          rebalance_service
+
+          rebalance = rebalance_order.rebalance
+
+          expect(rebalance_order.reload.status).to eq('succeed')
+          expect(rebalance).to be_a(Rebalance)
+          expect(rebalance.before_state.count).to eq(2)
+          expect(rebalance.before_state.sum { |asset_details| asset_details['target_total_value'].to_d }).to eq(
+            rebalance.details['investment_portfolio_projected_total_value'].to_d
+          )
+          expect(rebalance.after_state.count).to eq(2)
+          expect(rebalance.after_state.sum { |asset_details| asset_details['target_total_value'].to_d }).to eq(
+            rebalance.details['investment_portfolio_projected_total_value'].to_d
+          )
+          expect(rebalance.details).to include(
+            'rebalance_order_kind' => 'default',
+            'investment_portfolio_id' => investment_portfolio.id,
+            'rebalance_order_amount' => '0.0',
+            'investment_portfolio_projected_total_value' => '3000.0'
+          )
+          expect(rebalance.recommended_actions).to eq({
+                                                        'buy' => [{ 'quantity' => '5.0', 'ticker_symbol' => 'BOVA11' }],
+                                                        'sell' => [{ 'quantity' => '2.5', 'ticker_symbol' => 'IVVB11' }]
+                                                      })
+
+          expect(InvestmentPortfolioRebalanceNotificationOrder.count).to eq(2)
+          expect(investment_portfolio.investment_portfolio_rebalance_notification_orders.count).to eq(2)
+        end
+       end
     end
 
     context 'when rebalance requirements are not met' do

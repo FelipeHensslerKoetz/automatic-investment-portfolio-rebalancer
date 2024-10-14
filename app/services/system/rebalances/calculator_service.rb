@@ -51,6 +51,7 @@ module System
         rebalance_order.process!
         create_rebalance
         set_rebalance_order_success
+        create_investment_portfolio_rebalance_notification_orders
       end
 
       def compute_before_state
@@ -206,6 +207,19 @@ module System
 
         raise RebalanceOrders::InvalidWithdrawAmountError,
               "Insufficient funds to withdraw #{rebalance_order.amount}, the max withdraw is #{assets_sum}."
+      end
+
+      def create_investment_portfolio_rebalance_notification_orders
+        return unless investment_portfolio.investment_portfolio_rebalance_notification_options.any?
+
+        investment_portfolio.investment_portfolio_rebalance_notification_options.each do |investment_portfolio_rebalance_notification_option|
+          InvestmentPortfolioRebalanceNotificationOrder.create!(
+            investment_portfolio: investment_portfolio,
+            investment_portfolio_rebalance_notification_option: investment_portfolio_rebalance_notification_option,
+            rebalance:  rebalance_order.rebalance,
+            rebalance_order: rebalance_order
+          )
+        end
       end
     end
   end
