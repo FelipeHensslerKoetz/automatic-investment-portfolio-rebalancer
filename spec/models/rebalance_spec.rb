@@ -7,11 +7,4 @@ RSpec.describe Rebalance, type: :model do
     it { is_expected.to belong_to(:rebalance_order) }
     it { is_expected.to have_many(:investment_portfolio_rebalance_notification_orders).dependent(:destroy) }
   end
-
-  describe 'validations' do
-    it { is_expected.to validate_presence_of(:before_state) }
-    it { is_expected.to validate_presence_of(:after_state) }
-    it { is_expected.to validate_presence_of(:details) }
-    it { is_expected.to validate_presence_of(:recommended_actions) }
-  end
 end

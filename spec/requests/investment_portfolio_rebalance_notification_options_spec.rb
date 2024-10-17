@@ -114,7 +114,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                   kind: 'webhook',
                   name: 'Name',
                   url: 'http://localhost:3000',
-                  http_method: 'POST',
                   header: { 'Content-Type' => 'application/json' }.to_json,
                   body: { key: 'value' }.to_json
                 }
@@ -130,7 +129,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
               expect(response.parsed_body['kind']).to eq('webhook')
               expect(response.parsed_body['name']).to eq('Name')
               expect(response.parsed_body['url']).to eq('http://localhost:3000')
-              expect(response.parsed_body['http_method']).to eq('post')
               expect(response.parsed_body['header']).to eq('Content-Type' => 'application/json')
               expect(response.parsed_body['body']).to eq('key' => 'value')
               expect(InvestmentPortfolioRebalanceNotificationOption.count).to eq(1)
@@ -174,7 +172,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                 kind: 'webhook',
                 name: 'Name',
                 url: 'http://localhost:3000',
-                http_method: 'POST',
                 header: { 'Content-Type' => 'application/json' },
                 body: { key: 'value' }
               }
@@ -200,7 +197,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                 kind: 'webhook',
                 name: 'Name',
                 url: 'http://localhost:3000',
-                http_method: 'POST',
                 header: { 'Content-Type' => 'application/json' }.to_json,
                 body: { 'key' => 'value' }.to_json
               }
@@ -231,7 +227,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                 kind: 'webhook',
                 name: 'Name',
                 url: 'http://localhost:3000',
-                http_method: 'POST',
                 header: { 'Content-Type' => 'application/json' }.to_json,
                 body: { 'key' => 'value' }.to_json
               }
@@ -260,7 +255,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                 kind: nil,
                 name: nil,
                 url: nil,
-                http_method: nil,
                 header: nil,
                 body: nil
               }
@@ -323,7 +317,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                   investment_portfolio_rebalance_notification_option: {
                     name: 'New Name',
                     url: 'http://localhost:3000',
-                    http_method: 'POST',
                     header: { 'Content-Type' => 'application/json' }.to_json,
                     body: { key: 'value' }.to_json
                   }
@@ -339,7 +332,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                 expect(response).to have_http_status(:ok)
                 expect(response.parsed_body['name']).to eq('New Name')
                 expect(response.parsed_body['url']).to eq('http://localhost:3000')
-                expect(response.parsed_body['http_method']).to eq('post')
                 expect(response.parsed_body['header']).to eq('Content-Type' => 'application/json')
                 expect(response.parsed_body['body']).to eq('key' => 'value')
               end
@@ -410,7 +402,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                     kind: 'webhook',
                     name: 'Name',
                     url: 'http://localhost:3000',
-                    http_method: 'POST',
                     header: { 'Content-Type' => 'application/json' }.to_json,
                     body: { key: 'value' }.to_json
                   }
@@ -427,7 +418,6 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                 expect(response.parsed_body['kind']).to eq('webhook')
                 expect(response.parsed_body['name']).to eq('Name')
                 expect(response.parsed_body['url']).to eq('http://localhost:3000')
-                expect(response.parsed_body['http_method']).to eq('post')
                 expect(response.parsed_body['header']).to eq('Content-Type' => 'application/json')
                 expect(response.parsed_body['body']).to eq('key' => 'value')
               end
@@ -444,9 +434,8 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
                 investment_portfolio_rebalance_notification_option: {
                   name: nil,
                   url: nil,
-                  http_method: 'abc',
-                  header: nil,
-                  body: nil
+                  header: '123',
+                  body: '123'
                 }
               }
             end
@@ -458,7 +447,8 @@ RSpec.describe 'InvestmentPortfolioRebalanceNotificationOptions', type: :request
               expect(response).to have_http_status(:unprocessable_entity)
               expect(response.parsed_body).to eq(
                 {
-                  'http_method' => ['is not included in the list']
+                  "body" => ["must be an object or an array"],
+                  "header" => ["must be an object"],
                 }
               )
             end

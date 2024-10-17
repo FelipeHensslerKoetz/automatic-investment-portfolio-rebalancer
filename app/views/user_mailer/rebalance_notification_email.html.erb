@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+    </style>
+  </head>
+
+  <body>
+    <p> A rebalance has been calculated for the investment portfolio called "<%= @rebalance.rebalance_order.investment_portfolio.name %>"</p>
+
+    <h3> Current Investment Portfolio</h3>
+    <table>
+    <tr>
+      <th>Ticker Symbol</th>
+      <th>Quantity</th>
+      <th>Price (R$)</th>
+      <th>Total Value (R$)</th>
+      <th>Target Total Value (R$)</th>
+      <th>Allocation Weight (%)</th>
+      <th>Target Allocation Weight (%)</th>
+      <th>Deviation (%)</th>
+    </tr>
+    <% @rebalance.before_state.each do |before_state_item| %>
+    <tr>
+      <td><%= before_state_item['ticker_symbol']%></td>
+      <td><%= before_state_item['quantity'].to_d.truncate(2) %></td>
+      <td><%= before_state_item['price'].to_d.truncate(2) %></td>
+      <td><%= before_state_item['current_total_value'].to_d.truncate(2) %></td>
+      <td><%= before_state_item['target_total_value'].to_d.truncate(2) %></td>
+      <td><%= before_state_item['current_allocation_weight_percentage'].to_d.truncate(2) %></td>
+      <td><%= before_state_item['target_allocation_weight_percentage'].to_d.truncate(2) %></td>
+      <td><%= before_state_item['current_deviation_percentage'].to_d.truncate(2) %></td>
+    </tr>
+      <% end %>
+</table>
+  
+<br>
+    <h3> Desired Investment Portfolio</h3>
+    <table>
+    <tr>
+      <th>Ticker Symbol</th>
+      <th>Quantity</th>
+      <th>Price (R$)</th>
+      <th>Total Value (R$)</th>
+      <th>Target Total Value (R$)</th>
+      <th>Allocation Weight (%)</th>
+      <th>Target Allocation Weight (%)</th>
+      <th>Deviation (%)</th>
+    </tr>
+     <% @rebalance.after_state.each do |after_state_item| %>
+      <tr>
+        <td><%= after_state_item['ticker_symbol']%></td>
+        <td><%= after_state_item['quantity'].to_d.truncate(2) %></td>
+        <td><%= after_state_item['price'].to_d.truncate(2) %></td>
+        <td><%= after_state_item['current_total_value'].to_d.truncate(2) %></td>
+        <td><%= after_state_item['target_total_value'].to_d.truncate(2) %></td>
+        <td><%= after_state_item['current_allocation_weight_percentage'].to_d.truncate(2) %></td>
+        <td><%= after_state_item['target_allocation_weight_percentage'].to_d.truncate(2) %></td>
+        <td><%= after_state_item['current_deviation_percentage'].to_d.truncate(2) %></td>
+      </tr>
+      <% end %>
+    </table>
+  
+    <h3> Recommended Actions</h3>
+
+    <table>
+      <tr>
+        <th>Ticker Symbol</th>
+        <th>Action</th>
+        <th>Quantity</th>
+      </tr>
+
+      <% @rebalance.recommended_actions['sell'].each do |buy_order| %>
+        <tr>
+          <td><%= buy_order['ticker_symbol']%></td>
+          <td style="background-color:red;">Sell</td>
+          <td><%= buy_order['quantity'].to_d.truncate(2) %></td>
+        </tr>
+      <% end %>
+
+      <% @rebalance.recommended_actions['buy'].each do |buy_order| %>
+        <tr>
+          <td><%= buy_order['ticker_symbol']%></td>
+          <td style="background-color:green;">Buy</td>
+          <td><%= buy_order['quantity'].to_d.truncate(2) %></td>
+        </tr>
+      <% end %>
+    </table>
+
+    <p> For more details check the rebalance order on the API: (GET) /rebalance_orders/<%= @rebalance.rebalance_order.id %></p>
+    <p> Do not forget to update the investment portfolio assets quantities after taking the actions. (POST) /investment_portfolios/<%= @rebalance.rebalance_order.investment_portfolio.id %>/investment_portfolio_assets </p>
+    <p> The prices were computed at <%= @rebalance.created_at %> and may change, please consider taking the actions as soon as possible.</p>
+  </body>
+</html>

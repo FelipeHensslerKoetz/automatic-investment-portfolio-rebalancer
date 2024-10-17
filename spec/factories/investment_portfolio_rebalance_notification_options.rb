@@ -5,7 +5,6 @@ FactoryBot.define do
 
     trait :webhook do
       kind { "webhook" }
-      http_method { "post" }
       url { "http://example.com" }
       header { { 'Content-Type' => 'application/json' } }
       body { { 'key' => 'value' } }

@@ -10,6 +10,9 @@ class InvestmentPortfolioRebalanceNotificationOrder < ApplicationRecord
   belongs_to :rebalance
   belongs_to :rebalance_order
 
+  # Scopes
+  scope :pending_or_with_error, -> { where(status: %i[pending error]) }
+
   # State Machine
   aasm column: :status do
     state :pending, initial: true

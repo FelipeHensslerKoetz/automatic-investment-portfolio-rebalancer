@@ -7,6 +7,8 @@
   - global_assets_sync
   - global_assets_sync_retry
   - global_currency_parity_exchange_rates_sync
+  - global_investment_portfolio_rebalance_notification_orders_check
+  - global_investment_portfolio_rebalance_notification_orders_notification
   - br_api_assets_sync
   - br_api_currency_parity_exchange_rates_sync
   - hg_brasil_assets_sync

@@ -1,0 +1,42 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://webhook.site/f9c7614e-dfde-4845-9519-1458c5692570
+    body:
+      encoding: UTF-8
+      string: '{"key":"value"}'
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx
+      content-type:
+      - text/html; charset=UTF-8
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-request-id:
+      - 334a5b89-6071-4dd1-99ac-91831990575c
+      x-token-id:
+      - f9c7614e-dfde-4845-9519-1458c5692570
+      cache-control:
+      - no-cache, private
+      date:
+      - Tue, 15 Oct 2024 16:21:24 GMT
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: This URL has no default content configured. <a href="https://webhook.site/#!/view/f9c7614e-dfde-4845-9519-1458c5692570">View
+        in Webhook.site</a>.
+  recorded_at: Tue, 15 Oct 2024 16:21:24 GMT
+recorded_with: VCR 6.2.0

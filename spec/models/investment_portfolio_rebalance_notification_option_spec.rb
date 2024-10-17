@@ -14,14 +14,6 @@ RSpec.describe InvestmentPortfolioRebalanceNotificationOption, type: :model do
     context 'when kind is webhook' do
       let(:webhook_notification_option) { build(:investment_portfolio_rebalance_notification_option, :webhook) }
 
-      context 'when http_method is not present' do
-        it 'is invalid' do
-          webhook_notification_option.http_method = nil
-          expect(webhook_notification_option).to be_invalid
-          expect(webhook_notification_option.errors[:http_method]).to include("is not included in the list")
-        end
-      end
-
       context 'when url is not present' do
         it 'is invalid' do
           webhook_notification_option.url = nil
@@ -43,14 +35,6 @@ RSpec.describe InvestmentPortfolioRebalanceNotificationOption, type: :model do
           webhook_notification_option.body = 'abc'
           expect(webhook_notification_option).to be_invalid
           expect(webhook_notification_option.errors[:body]).to include("must be an object or an array")
-        end
-      end
-
-      context 'when http_method is not in HTTP_METHODS' do
-        it 'is invalid' do
-          webhook_notification_option.http_method = 'invalid'
-          expect(webhook_notification_option).to be_invalid
-          expect(webhook_notification_option.errors[:http_method]).to include("is not included in the list")
         end
       end
 

@@ -62,7 +62,6 @@ module Api
           :kind,
           :name,
           :url,
-          :http_method,
           :header,
           :body,
           :email

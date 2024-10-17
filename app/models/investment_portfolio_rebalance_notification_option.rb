@@ -1,14 +1,12 @@
 class InvestmentPortfolioRebalanceNotificationOption < ApplicationRecord
   NOTIFICATION_OPTION_KINDS = %w[webhook email].freeze
-  HTTP_METHODS = %w[get post put patch delete].freeze
 
   belongs_to :investment_portfolio
   has_many :investment_portfolio_rebalance_notification_orders, dependent: :restrict_with_error
 
   validates :name, :kind, presence: true
   validates :kind, inclusion: { in: NOTIFICATION_OPTION_KINDS }
-  validates :http_method, inclusion: { in: HTTP_METHODS }, if: -> { webhook? }
-  validates :http_method, :url, presence: true, if: -> { webhook? }
+  validates :url, presence: true, if: -> { webhook? }
   validate :valid_header, if: -> { header.present? }
   validate :valid_body, if: -> { body.present? }
   before_validation :set_default_header
