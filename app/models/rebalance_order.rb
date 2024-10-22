@@ -5,7 +5,7 @@ class RebalanceOrder < ApplicationRecord
   include AASM
 
   # Constants
-  REBALANCE_ORDER_KINDS = %w[default deposit withdraw].freeze
+  REBALANCE_ORDER_KINDS = %w[default average_price].freeze
 
   # Associations
   belongs_to :user
@@ -14,10 +14,9 @@ class RebalanceOrder < ApplicationRecord
   has_many :investment_portfolio_rebalance_notification_orders, dependent: :restrict_with_error
 
   # Validations
-  validates :status, :kind, :amount, :scheduled_at, presence: true
+  validates :status, :kind, :scheduled_at, presence: true
   validates :kind, inclusion: { in: REBALANCE_ORDER_KINDS }
-  validates :amount, numericality: { greater_than: 0 }, if: -> { kind == 'deposit' || kind == 'withdraw' }
-  before_validation :set_default_amount, if: -> { kind == 'default' }
+  before_validation :set_default_amount, if: -> { amount.nil? }
   before_validation :set_default_scheduled_at, if: -> { scheduled_at.nil? }
   validate :scheduled_at_cannot_be_in_the_past
 

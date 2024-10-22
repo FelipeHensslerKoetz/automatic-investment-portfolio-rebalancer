@@ -314,7 +314,7 @@ RSpec.describe 'CustomAssets', type: :request do
 
             before do
               create(:currency, code: 'USD')
-              create(:rebalance_order, status: 'scheduled', user:)
+              create(:rebalance_order, :default, status: 'scheduled', user:)
             end
 
             it 'returns unprocessable_entity' do

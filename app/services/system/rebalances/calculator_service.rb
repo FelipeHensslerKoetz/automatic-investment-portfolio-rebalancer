@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
-# rubocop:disable Metrics/MethodLength
 module System
   module Rebalances
     class CalculatorService
@@ -32,19 +30,14 @@ module System
         @investment_portfolio ||= rebalance_order.investment_portfolio
       end
 
-      def investment_portfolio_assets
-        @investment_portfolio_assets ||= investment_portfolio.investment_portfolio_assets
+      def current_investment_portfolio_state
+        @current_investment_portfolio_state ||= compute_current_investment_portfolio_state
       end
 
-      def before_state
-        @before_state ||= compute_before_state
-      end
-
-      def after_state
-        @after_state ||= Marshal.load(Marshal.dump(before_state)).map do |asset_details|
-          asset_details[:quantity] = asset_details[:target_quantity]
-          asset_details.merge(investment_portfolio_indicators(asset_details))
-        end
+      def projected_investment_portfolio_state_with_rebalance_actions
+        @projected_investment_portfolio_state_with_rebalance_actions ||= System::Rebalances::ProjectedInvestmentPortfolioStateWithRebalanceActionsCalculatorService.call(
+          current_investment_portfolio_state: current_investment_portfolio_state_result
+        )
       end
 
       def calculate_rebalance
@@ -54,104 +47,20 @@ module System
         create_investment_portfolio_rebalance_notification_orders
       end
 
-      def compute_before_state
-        state = investment_portfolio_assets.map do |investment_portfolio_asset|
-          investment_portfolio_asset_details(investment_portfolio_asset)
-        end
-
-        @investment_portfolio_projected_total_value = compute_investment_portfolio_projected_total_value(state)
-
-        compute_investment_portfolio_indicators(state)
+      def compute_current_investment_portfolio_state
+        @investment_portfolio_projected_total_value = current_investment_portfolio_state_result[:investment_portfolio_projected_total_value]
+        current_investment_portfolio_state_result[:current_investment_portfolio_state]
       end
 
-      def compute_investment_portfolio_projected_total_value(state)
-        assets_sum = state.sum do |asset_details|
-          asset_details[:price] * asset_details[:quantity]
-        end
-
-        case rebalance_order.kind
-        when 'default'
-          assets_sum
-        when 'withdraw'
-          final_sum = assets_sum - rebalance_order.amount
-
-          check_invalid_withdraw_amount(assets_sum, final_sum)
-
-          final_sum
-        when 'deposit'
-          assets_sum + rebalance_order.amount
-        end
-      end
-
-      def investment_portfolio_asset_details(investment_portfolio_asset)
-        asset = investment_portfolio_asset.asset
-        newest_asset_price = AssetPrices::UpdatedAssetPriceService.call(asset:)
-        price = compute_price_and_currency_parity_exchange_rate(newest_asset_price)
-
-        {
-          ticker_symbol: investment_portfolio_asset.asset.ticker_symbol,
-          quantity: investment_portfolio_asset.quantity,
-          target_allocation_weight_percentage: investment_portfolio_asset.target_allocation_weight_percentage,
-          target_variation_limit_percentage: investment_portfolio_asset.target_variation_limit_percentage,
-          price: price[:price],
-          currency: Currency.default_currency,
-          original_price: newest_asset_price.price,
-          original_currency: newest_asset_price.currency,
-          asset_price: newest_asset_price,
-          currency_parity_exchange_rate: price[:currency_parity_exchange_rate]
-        }
-      end
-
-      def compute_investment_portfolio_indicators(state)
-        state.map { |asset_details| asset_details.merge(investment_portfolio_indicators(asset_details)) }
-      end
-
-      def compute_price_and_currency_parity_exchange_rate(asset_price)
-        AssetPrices::ConvertParityService.call(asset_price:)
-      end
-
-      def investment_portfolio_indicators(asset_details)
-        current_total_value = current_total_value(asset_details)
-        current_allocation_weight_percentage = current_allocation_weight_percentage(current_total_value)
-        current_deviation_percentage = current_deviation_percentage(asset_details, current_allocation_weight_percentage)
-        target_total_value = target_total_value(asset_details)
-        target_quantity = target_quantity(asset_details, target_total_value)
-        quantity_adjustment = quantity_adjustment(asset_details, target_quantity)
-
-        {
-          current_total_value:, current_allocation_weight_percentage:, current_deviation_percentage:, target_total_value:,
-          target_quantity:, quantity_adjustment:
-        }
-      end
-
-      def current_total_value(asset_details)
-        asset_details[:price] * asset_details[:quantity]
-      end
-
-      def current_allocation_weight_percentage(current_total_value)
-        return 0.0 if @investment_portfolio_projected_total_value.zero?
-
-        (current_total_value / @investment_portfolio_projected_total_value) * 100.0
-      end
-
-      def current_deviation_percentage(asset_details, current_allocation_weight_percentage)
-        current_allocation_weight_percentage - asset_details[:target_allocation_weight_percentage]
-      end
-
-      def target_total_value(asset_details)
-        (asset_details[:target_allocation_weight_percentage] / 100.0) * @investment_portfolio_projected_total_value
-      end
-
-      def target_quantity(asset_details, target_total_value)
-        target_total_value / asset_details[:price]
-      end
-
-      def quantity_adjustment(asset_details, target_quantity)
-        target_quantity - asset_details[:quantity]
+      def current_investment_portfolio_state_result
+        @current_investment_portfolio_state_result ||= System::Rebalances::CurrentInvestmentPortfolioStateCalculatorService.call(
+          investment_portfolio:,
+          amount: rebalance_order.amount
+        )
       end
 
       def create_rebalance
-        Rebalance.create!(rebalance_order:, before_state:, after_state:, details:, recommended_actions:)
+        Rebalance.create!(rebalance_order:, current_investment_portfolio_state:, projected_investment_portfolio_state_with_rebalance_actions:, details:, recommended_actions:)
       end
 
       def details
@@ -166,7 +75,7 @@ module System
       def recommended_actions
         actions = { sell: [], buy: [] }
 
-        before_state.each do |asset_details|
+        current_investment_portfolio_state.each do |asset_details|
           next if asset_details[:quantity_adjustment].zero?
 
           if asset_details[:quantity_adjustment].positive?
@@ -202,27 +111,18 @@ module System
         }
       end
 
-      def check_invalid_withdraw_amount(assets_sum, final_sum)
-        return unless final_sum.negative?
-
-        raise RebalanceOrders::InvalidWithdrawAmountError,
-              "Insufficient funds to withdraw #{rebalance_order.amount}, the max withdraw is #{assets_sum}."
-      end
-
       def create_investment_portfolio_rebalance_notification_orders
         return unless investment_portfolio.investment_portfolio_rebalance_notification_options.any?
 
         investment_portfolio.investment_portfolio_rebalance_notification_options.each do |investment_portfolio_rebalance_notification_option|
           InvestmentPortfolioRebalanceNotificationOrder.create!(
-            investment_portfolio: investment_portfolio,
-            investment_portfolio_rebalance_notification_option: investment_portfolio_rebalance_notification_option,
-            rebalance:  rebalance_order.rebalance,
-            rebalance_order: rebalance_order
+            investment_portfolio:,
+            investment_portfolio_rebalance_notification_option:,
+            rebalance: rebalance_order.rebalance,
+            rebalance_order:
           )
         end
       end
     end
   end
 end
-# rubocop:enable Metrics/MethodLength
-# rubocop:enable Metrics/ClassLength

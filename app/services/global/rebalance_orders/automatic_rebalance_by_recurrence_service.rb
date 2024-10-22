@@ -51,9 +51,9 @@ module Global
           investment_portfolio: automatic_rebalance_option.investment_portfolio,
           user: automatic_rebalance_option.investment_portfolio.user,
           status: 'pending',
-          kind: 'default',
-          amount: 0,
-          scheduled_at:,
+          kind: automatic_rebalance_option.rebalance_order_kind,
+          amount: automatic_rebalance_option.amount,
+          scheduled_at:,  
           created_by_system: true
         )
       end

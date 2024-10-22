@@ -37,6 +37,14 @@ RSpec.describe InvestmentPortfolioAsset, type: :model do
       expect(investment_portfolio_asset).to be_invalid
     end
 
+    it 'validates that :target_variation_limit_percentage is grater than or equal to 0 (when not null)' do
+      investment_portfolio_asset = build(:investment_portfolio_asset, target_variation_limit_percentage: -1)
+      investment_portfolio_asset.valid?
+
+      expect(investment_portfolio_asset.errors[:target_variation_limit_percentage]).to include('must be greater than or equal to 0')
+      expect(investment_portfolio_asset).to be_invalid
+    end
+
     context 'investment_portfolio_id and asset_id unique index' do 
       let!(:investment_portfolio_asset) { create(:investment_portfolio_asset) }
 

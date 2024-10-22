@@ -16,15 +16,54 @@ RSpec.describe RebalanceOrder, type: :model do
     it {
       is_expected.to validate_inclusion_of(:kind).in_array(RebalanceOrder::REBALANCE_ORDER_KINDS)
     }
-    it { is_expected.to validate_presence_of(:amount) }
+
+    context 'when validating amount' do 
+      context 'when amount is nil' do
+        let(:rebalance_order) { build(:rebalance_order, :default, amount: nil) }
+
+        it 'is valid' do
+          expect(rebalance_order).to be_valid
+          expect(rebalance_order.amount).to eq(0)
+        end
+      end
+
+      context 'when amount is not nil' do
+        context 'when amount is a negative number' do
+          let(:rebalance_order) { build(:rebalance_order, :default, amount: -1) }
+
+          it 'is valid' do
+            expect(rebalance_order).to be_valid
+            expect(rebalance_order.amount).to eq(-1)
+          end
+        end
+
+        context 'when amount is a positive number' do
+          let(:rebalance_order) { build(:rebalance_order, :default, amount: 1) }
+
+          it 'is valid' do
+            expect(rebalance_order).to be_valid
+            expect(rebalance_order.amount).to eq(1)
+          end
+        end
+
+        context 'when amount is a zero' do
+          let(:rebalance_order) { build(:rebalance_order, :default, amount: 0) }
+
+          it 'is valid' do
+            expect(rebalance_order).to be_valid
+            expect(rebalance_order.amount).to eq(0)
+          end
+        end
+      end
+    end
   end
 
   describe 'scopes' do
-    let!(:pending_rebalance_order) { create(:rebalance_order, status: 'pending') }
-    let!(:scheduled_rebalance_order) { create(:rebalance_order, status: 'scheduled') }
-    let!(:processing_rebalance_order) { create(:rebalance_order, status: 'processing') }
-    let!(:succeed_rebalance_order) { create(:rebalance_order, status: 'succeed') }
-    let!(:failed_rebalance_order) { create(:rebalance_order, status: 'failed') }
+    let!(:pending_rebalance_order) { create(:rebalance_order, :default, status: 'pending') }
+    let!(:scheduled_rebalance_order) { create(:rebalance_order, :default, status: 'scheduled') }
+    let!(:processing_rebalance_order) { create(:rebalance_order, :default, status: 'processing') }
+    let!(:succeed_rebalance_order) { create(:rebalance_order, :default, status: 'succeed') }
+    let!(:failed_rebalance_order) { create(:rebalance_order, :default, status: 'failed') }
 
     describe '.pending' do
       it 'returns pending rebalance orders' do

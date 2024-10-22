@@ -8,7 +8,7 @@ RSpec.describe System::Rebalances::ValidationService do
   describe 'when the rebalance order is valid' do
     let(:brl_currency) { create(:currency, :brl) }
     let(:rebalance_order_id) { rebalance_order.id }
-    let(:rebalance_order) { create(:rebalance_order, status: :scheduled, investment_portfolio:) }
+    let(:rebalance_order) { create(:rebalance_order, :default, status: :scheduled, investment_portfolio:) }
     let(:investment_portfolio) { create(:investment_portfolio) }
 
     before do
@@ -28,19 +28,19 @@ RSpec.describe System::Rebalances::ValidationService do
     context 'when the rebalance order is not found' do
       let(:rebalance_order_id) { nil }
 
-      it { expect { rebalance_validation_service.call }.to raise_error(ArgumentError, 'RebalanceOrder not found, id=') }
+      it { expect { rebalance_validation_service.call }.to raise_error(ActiveRecord::RecordNotFound) }
     end
 
     context 'when the rebalance order status is different from scheduled' do
       let(:rebalance_order_id) { rebalance_order.id }
-      let(:rebalance_order) { create(:rebalance_order, status: :processing) }
+      let(:rebalance_order) { create(:rebalance_order, :default, status: :processing) }
 
       it { expect { rebalance_validation_service.call }.to raise_error(RebalanceOrders::InvalidStatusError) }
     end
 
     context 'when the investment portfolio assets count is invalid' do
       let(:rebalance_order_id) { rebalance_order.id }
-      let(:rebalance_order) { create(:rebalance_order, :scheduled) }
+      let(:rebalance_order) { create(:rebalance_order, :default, :scheduled) }
 
       it { expect { rebalance_validation_service.call }.to raise_error(InvestmentPortfolios::InvalidAssetsCountError) }
     end
@@ -48,7 +48,7 @@ RSpec.describe System::Rebalances::ValidationService do
     context 'when the investment portfolio total allocation weight is invalid' do
       let(:brl_currency) { create(:currency, :brl) }
       let(:rebalance_order_id) { rebalance_order.id }
-      let(:rebalance_order) { create(:rebalance_order, status: :scheduled, investment_portfolio:) }
+      let(:rebalance_order) { create(:rebalance_order, :default, status: :scheduled, investment_portfolio:) }
       let(:investment_portfolio) { create(:investment_portfolio) }
 
       before do
@@ -67,7 +67,7 @@ RSpec.describe System::Rebalances::ValidationService do
     context 'when any of the the investment portfolio assets prices are not up to date' do
       let(:brl_currency) { create(:currency, :brl) }
       let(:rebalance_order_id) { rebalance_order.id }
-      let(:rebalance_order) { create(:rebalance_order, status: :scheduled, investment_portfolio:) }
+      let(:rebalance_order) { create(:rebalance_order, :default, status: :scheduled, investment_portfolio:) }
       let(:investment_portfolio) { create(:investment_portfolio) }
 
       before do
@@ -82,5 +82,15 @@ RSpec.describe System::Rebalances::ValidationService do
 
       it { expect { rebalance_validation_service.call }.to raise_error(Assets::OutdatedError) }
     end
+
+     # TODO
+     context 'when the investment portfolio has average_price kind and any investment_portfolio_asset.average_price is nil' do 
+        
+     end
+
+     # TODO
+     context 'when the investment_portfolio has variation automatic rebalance option and any investment_portfolio_asset.variation is nil' do
+   
+     end
   end
 end

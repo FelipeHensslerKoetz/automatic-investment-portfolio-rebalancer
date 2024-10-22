@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :investment_portfolio_rebalance_notification_order do
-    rebalance_order { create(:rebalance_order) }
+    rebalance_order { create(:rebalance_order, :default) }
     investment_portfolio { rebalance_order.investment_portfolio }
     rebalance { create(:rebalance, rebalance_order: rebalance_order) }
 

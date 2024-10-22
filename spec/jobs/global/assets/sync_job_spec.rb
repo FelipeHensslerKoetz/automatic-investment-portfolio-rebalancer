@@ -294,7 +294,7 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       before do
         allow(HgBrasil::Assets::SyncJob).to receive(:perform_async).and_call_original
         allow(BrApi::Assets::SyncJob).to receive(:perform_async).and_call_original
-        create(:rebalance_order, :processing)
+        create(:rebalance_order, :default, :processing)
       end
 
       it 'does not update the asset prices' do

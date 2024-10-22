@@ -196,7 +196,7 @@ RSpec.describe System::InvestmentPortfolioAssets::CreatorService do
         end
 
         before do
-          create(:rebalance_order, investment_portfolio:, status: 'processing')
+          create(:rebalance_order, :default, investment_portfolio:, status: 'processing')
         end
 
         it 'raises an InvestmentPortfolios::RebalanceOrderInProgressError error' do
@@ -241,7 +241,7 @@ RSpec.describe System::InvestmentPortfolioAssets::CreatorService do
         end
       end
 
-      context 'when target deviation percentage is invalid' do
+      context 'when target variation limit percentage is invalid' do
         let(:asset) { create(:asset) }
 
         let(:investment_portfolio_assets_attributes) do

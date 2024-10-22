@@ -25,8 +25,8 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService do
             expect(new_rebalance_order.investment_portfolio).to eq(investment_portfolio)
             expect(new_rebalance_order.user).to eq(user)
             expect(new_rebalance_order.status).to eq('pending')
-            expect(new_rebalance_order.kind).to eq('default')
-            expect(new_rebalance_order.amount).to eq(0)
+            expect(new_rebalance_order.kind).to eq(automatic_rebalance_option.rebalance_order_kind)
+            expect(new_rebalance_order.amount).to eq(automatic_rebalance_option.amount)
             expect(new_rebalance_order.error_message).to be_nil
             expect(new_rebalance_order.scheduled_at).to eq(automatic_rebalance_option.start_date)
             expect(new_rebalance_order.created_by_system).to eq(true)
@@ -35,11 +35,12 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService do
 
         context 'when generating the next rebalance after the last has been executed' do
           let(:automatic_rebalance_option) do
-            create(:automatic_rebalance_option, :recurrence, investment_portfolio:, start_date: Time.zone.today)
+            create(:automatic_rebalance_option, :average_price, investment_portfolio:, start_date: Time.zone.today,
+            amount: 500.0)
           end
 
           before do
-            create(:rebalance_order, investment_portfolio:, user:, status: 'succeed', scheduled_at: Time.zone.today,
+            create(:rebalance_order, :default, investment_portfolio:, user:, status: 'succeed', scheduled_at: Time.zone.today,
                                      created_by_system: true)
           end
 
@@ -52,8 +53,8 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService do
             expect(new_rebalance_order.investment_portfolio).to eq(investment_portfolio)
             expect(new_rebalance_order.user).to eq(user)
             expect(new_rebalance_order.status).to eq('pending')
-            expect(new_rebalance_order.kind).to eq('default')
-            expect(new_rebalance_order.amount).to eq(0)
+            expect(new_rebalance_order.kind).to eq(automatic_rebalance_option.rebalance_order_kind)
+            expect(new_rebalance_order.amount).to eq(automatic_rebalance_option.amount)
             expect(new_rebalance_order.error_message).to be_nil
             expect(new_rebalance_order.scheduled_at).to eq(
               automatic_rebalance_option.start_date + automatic_rebalance_option.recurrence_days.days
@@ -70,7 +71,7 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService do
           end
 
           before do
-            create(:rebalance_order, investment_portfolio:, user:, status: 'pending', scheduled_at: Time.zone.today,
+            create(:rebalance_order, :default, investment_portfolio:, user:, status: 'pending', scheduled_at: Time.zone.today,
                                      created_by_system: true)
           end
 
@@ -86,7 +87,7 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService do
     context 'when the automatic rebalance option is invalid' do
       context 'when the automatic rebalance option is not a recurrence type' do
         let(:automatic_rebalance_option) do
-          create(:automatic_rebalance_option, investment_portfolio:, start_date: Time.zone.today, kind: 'deviation')
+          create(:automatic_rebalance_option, :variation, investment_portfolio:, start_date: Time.zone.today)
         end
 
         it 'creates a new error log' do

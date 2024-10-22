@@ -4,9 +4,16 @@ FactoryBot.define do
   factory :rebalance_order do
     user { create(:user) }
     investment_portfolio { create(:investment_portfolio) }
-    kind { 'default' }
     scheduled_at { Time.zone.today }
-    amount { 0 }
+    amount { nil }
+
+    trait :default do
+      kind { 'default' }
+    end
+    
+    trait :average_price do 
+      kind { 'average_price' }
+    end
 
     trait :pending do
       status { 'pending' }

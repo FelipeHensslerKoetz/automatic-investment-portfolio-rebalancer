@@ -20,22 +20,26 @@
       <th>Ticker Symbol</th>
       <th>Quantity</th>
       <th>Price (R$)</th>
+      <th>Average Price (R$)</th>
       <th>Total Value (R$)</th>
       <th>Target Total Value (R$)</th>
       <th>Allocation Weight (%)</th>
       <th>Target Allocation Weight (%)</th>
-      <th>Deviation (%)</th>
+      <th>Variation (%)</th>
+       <th>Target Variation (%)</th>
     </tr>
-    <% @rebalance.before_state.each do |before_state_item| %>
+    <% @rebalance.current_investment_portfolio_state.each do |current_investment_portfolio_state_item| %>
     <tr>
-      <td><%= before_state_item['ticker_symbol']%></td>
-      <td><%= before_state_item['quantity'].to_d.truncate(2) %></td>
-      <td><%= before_state_item['price'].to_d.truncate(2) %></td>
-      <td><%= before_state_item['current_total_value'].to_d.truncate(2) %></td>
-      <td><%= before_state_item['target_total_value'].to_d.truncate(2) %></td>
-      <td><%= before_state_item['current_allocation_weight_percentage'].to_d.truncate(2) %></td>
-      <td><%= before_state_item['target_allocation_weight_percentage'].to_d.truncate(2) %></td>
-      <td><%= before_state_item['current_deviation_percentage'].to_d.truncate(2) %></td>
+      <td><%= current_investment_portfolio_state_item['ticker_symbol']%></td>
+      <td><%= current_investment_portfolio_state_item['quantity'].to_d.truncate(2) %></td>
+      <td><%= current_investment_portfolio_state_item['price'].to_d.truncate(2) %></td>
+      <td><%= current_investment_portfolio_state_item['average_price'].present? ? current_investment_portfolio_state_item['average_price'].to_d.truncate(2) : 'N/A' %></td>
+      <td><%= current_investment_portfolio_state_item['current_total_value'].to_d.truncate(2) %></td>
+      <td><%= current_investment_portfolio_state_item['target_total_value'].to_d.truncate(2) %></td>
+      <td><%= current_investment_portfolio_state_item['current_allocation_weight_percentage'].to_d.truncate(2) %></td>
+      <td><%= current_investment_portfolio_state_item['target_allocation_weight_percentage'].to_d.truncate(2) %></td>
+      <td><%= current_investment_portfolio_state_item['current_variation_percentage'].to_d.truncate(2) %></td>
+      <td><%= current_investment_portfolio_state_item['target_variation_limit_percentage'].present? ? current_investment_portfolio_state_item['target_variation_limit_percentage'].to_d.truncate(2) : 'N/A' %></td>
     </tr>
       <% end %>
 </table>
@@ -47,22 +51,26 @@
       <th>Ticker Symbol</th>
       <th>Quantity</th>
       <th>Price (R$)</th>
+      <th>Average Price (R$)</th>
       <th>Total Value (R$)</th>
       <th>Target Total Value (R$)</th>
       <th>Allocation Weight (%)</th>
       <th>Target Allocation Weight (%)</th>
-      <th>Deviation (%)</th>
+      <th>Variation (%)</th>
+      <th>Target Variation (%)</th>
     </tr>
-     <% @rebalance.after_state.each do |after_state_item| %>
+     <% @rebalance.projected_investment_portfolio_state_with_rebalance_actions.each do |projected_investment_portfolio_state_with_rebalance_actions_item| %>
       <tr>
-        <td><%= after_state_item['ticker_symbol']%></td>
-        <td><%= after_state_item['quantity'].to_d.truncate(2) %></td>
-        <td><%= after_state_item['price'].to_d.truncate(2) %></td>
-        <td><%= after_state_item['current_total_value'].to_d.truncate(2) %></td>
-        <td><%= after_state_item['target_total_value'].to_d.truncate(2) %></td>
-        <td><%= after_state_item['current_allocation_weight_percentage'].to_d.truncate(2) %></td>
-        <td><%= after_state_item['target_allocation_weight_percentage'].to_d.truncate(2) %></td>
-        <td><%= after_state_item['current_deviation_percentage'].to_d.truncate(2) %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['ticker_symbol']%></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['quantity'].to_d.truncate(2) %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['price'].to_d.truncate(2) %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['average_price'].present? ? projected_investment_portfolio_state_with_rebalance_actions_item['average_price'].to_d.truncate(2) : 'N/A' %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['current_total_value'].to_d.truncate(2) %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['target_total_value'].to_d.truncate(2) %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['current_allocation_weight_percentage'].to_d.truncate(2) %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['target_allocation_weight_percentage'].to_d.truncate(2) %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['current_variation_percentage'].to_d.truncate(2) %></td>
+        <td><%= projected_investment_portfolio_state_with_rebalance_actions_item['target_variation_limit_percentage'].present? ? projected_investment_portfolio_state_with_rebalance_actions_item['target_variation_limit_percentage'].to_d.truncate(2) : 'N/A' %></td>
       </tr>
       <% end %>
     </table>

@@ -18,7 +18,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
       context 'when there are rebalance orders' do
         let(:user) { create(:user) }
         let(:investment_portfolio) { create(:investment_portfolio, user:) }
-        let!(:rebalance_orders) { create(:rebalance_order, investment_portfolio:, user:) }
+        let!(:rebalance_orders) { create(:rebalance_order, :default, investment_portfolio:, user:) }
 
         it 'returns a list of rebalance orders' do
           get '/api/rebalance_orders', headers: valid_headers, as: :json
@@ -53,7 +53,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
         context 'when the rebalance order belongs to the user' do
           let(:user) { create(:user) }
           let(:investment_portfolio) { create(:investment_portfolio, user:) }
-          let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:) }
+          let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:) }
 
           it 'returns the rebalance order' do
             get "/api/rebalance_orders/#{rebalance_order.id}", headers: valid_headers, as: :json
@@ -67,7 +67,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
           let(:user) { create(:user) }
           let(:another_user) { create(:user) }
           let(:investment_portfolio) { create(:investment_portfolio, user: another_user) }
-          let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user: another_user) }
+          let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user: another_user) }
 
           it 'returns a not found status' do
             get "/api/rebalance_orders/#{rebalance_order.id}", headers: valid_headers, as: :json
@@ -134,7 +134,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
             {
               rebalance_order: {
                 investment_portfolio_id: investment_portfolio.id,
-                kind: 'deposit',
+                kind: 'default',
                 amount: 100.0
               }
             }
@@ -149,7 +149,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
             expect(JSON.parse(response.body)).to eq(JSON.parse(RebalanceOrderSerializer.new(created_rebalance_order).to_json))
             expect(RebalanceOrder.count).to eq(1)
             expect(created_rebalance_order.attributes).to include(
-             'kind' => 'deposit',
+             'kind' => 'default',
              'amount' => 100,
              'investment_portfolio_id' => investment_portfolio.id,
              'scheduled_at' => Time.zone.today,
@@ -163,8 +163,8 @@ RSpec.describe 'RebalanceOrders', type: :request do
             {
               rebalance_order: {
                 investment_portfolio_id: investment_portfolio.id,
-                kind: 'withdraw',
-                amount: 100.0,
+                kind: 'default',
+                amount: -100.0,
                 scheduled_at: Time.zone.today + 1.day
               }
             }
@@ -179,8 +179,8 @@ RSpec.describe 'RebalanceOrders', type: :request do
             expect(JSON.parse(response.body)).to eq(JSON.parse(RebalanceOrderSerializer.new(created_rebalance_order).to_json))
             expect(RebalanceOrder.count).to eq(1)
             expect(created_rebalance_order.attributes).to include(
-             'kind' => 'withdraw',
-             'amount' => 100,
+             'kind' => 'default',
+             'amount' => -100,
              'investment_portfolio_id' => investment_portfolio.id,
              'scheduled_at' => Time.zone.today + 1.day,
              'user_id' => user.id,
@@ -430,7 +430,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
       context 'when params are invalid' do
         context 'when kind is invalid' do
           let(:investment_portfolio) { create(:investment_portfolio, user:) }
-          let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:) }
+          let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:) }
 
           let(:rebalance_order_params) do
             {
@@ -450,7 +450,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
         context 'when amount is invalid' do
           let(:investment_portfolio) { create(:investment_portfolio, user:) }
 
-          let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:) }
+          let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:) }
 
           let(:rebalance_order_params) do
             {
@@ -472,7 +472,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
           context 'when investment_portfolio does not belong to the user' do
             let(:another_user) { create(:user) }
             let(:investment_portfolio) { create(:investment_portfolio, user: another_user) }
-            let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:) }
+            let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:) }
 
             let(:rebalance_order_params) do
               {
@@ -492,7 +492,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
 
           context 'when investment_portfolio does not exist' do
             let(:investment_portfolio) { create(:investment_portfolio, user:) }
-            let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:) }
+            let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:) }
 
             let(:rebalance_order_params) do
               {
@@ -522,7 +522,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
         context 'when record does not belong to the user' do
           let(:another_user) { create(:user) }
           let(:investment_portfolio) { create(:investment_portfolio, user: another_user) }
-          let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user: another_user) }
+          let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user: another_user) }
 
           let(:rebalance_order_params) do
             {
@@ -544,12 +544,11 @@ RSpec.describe 'RebalanceOrders', type: :request do
         context 'when record can be updated' do
           context 'when record status is pending' do
             let(:investment_portfolio) { create(:investment_portfolio, user:) }
-            let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:) }
+            let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:) }
 
             let(:rebalance_order_params) do
               {
                 rebalance_order: {
-                  kind: 'deposit',
                   amount: 500.0
                 }
               }
@@ -567,7 +566,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
         context 'when record cannot be updated' do
           context 'when record status is not pending' do
             let(:investment_portfolio) { create(:investment_portfolio, user:) }
-            let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:, status: :scheduled) }
+            let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:, status: :scheduled) }
 
             let(:rebalance_order_params) do
               {
@@ -602,7 +601,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
         context 'when the record can be deleted' do
           context 'when the record status is pending' do
             let(:investment_portfolio) { create(:investment_portfolio, user:) }
-            let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:) }
+            let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:) }
 
             it 'deletes the rebalance order' do
               delete "/api/rebalance_orders/#{rebalance_order.id}", headers: valid_headers, as: :json
@@ -615,7 +614,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
         context 'when the record cannot be deleted' do
           context 'when the record status is not pending' do
             let(:investment_portfolio) { create(:investment_portfolio, user:) }
-            let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user:, status: :scheduled) }
+            let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user:, status: :scheduled) }
 
             it 'returns an unprocessable entity status' do
               delete "/api/rebalance_orders/#{rebalance_order.id}", headers: valid_headers, as: :json
@@ -629,7 +628,7 @@ RSpec.describe 'RebalanceOrders', type: :request do
       context 'when the record does not belong to the user' do
         let(:another_user) { create(:user) }
         let(:investment_portfolio) { create(:investment_portfolio, user: another_user) }
-        let(:rebalance_order) { create(:rebalance_order, investment_portfolio:, user: another_user) }
+        let(:rebalance_order) { create(:rebalance_order, :default, investment_portfolio:, user: another_user) }
 
         it 'returns a not found status' do
           delete "/api/rebalance_orders/#{rebalance_order.id}", headers: valid_headers, as: :json

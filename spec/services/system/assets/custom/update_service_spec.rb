@@ -57,7 +57,7 @@ RSpec.describe System::Assets::Custom::UpdateService do
         end
 
         before do
-          create(:rebalance_order, :processing, user:)
+          create(:rebalance_order, :default, :processing, user:)
         end
 
         it 'raises an error' do
@@ -79,7 +79,7 @@ RSpec.describe System::Assets::Custom::UpdateService do
         end
 
         before do
-          create(:rebalance_order, :scheduled, user:)
+          create(:rebalance_order, :default, :scheduled, user:)
         end
 
         it 'raises an error' do

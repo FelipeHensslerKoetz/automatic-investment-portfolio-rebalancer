@@ -25,8 +25,8 @@ RSpec.describe Global::RebalanceOrders::AutomaticCreationJob, type: :job do
     let!(:first_recurrence_automatic_rebalance_option) { create(:automatic_rebalance_option, :recurrence) }
     let!(:second_recurrence_automatic_rebalance_option) { create(:automatic_rebalance_option, :recurrence) }
 
-    let!(:first_deviation_automatic_rebalance_option) { create(:automatic_rebalance_option, :deviation) }
-    let!(:second_deviation_automatic_rebalance_option) { create(:automatic_rebalance_option, :deviation) }
+    let!(:first_variation_automatic_rebalance_option) { create(:automatic_rebalance_option, :variation) }
+    let!(:second_variation_automatic_rebalance_option) { create(:automatic_rebalance_option, :variation) }
 
     before do
       allow(Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService).to receive(:call).with(
@@ -34,6 +34,12 @@ RSpec.describe Global::RebalanceOrders::AutomaticCreationJob, type: :job do
       ).and_return(true)
       allow(Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService).to receive(:call).with(
         automatic_rebalance_option: second_recurrence_automatic_rebalance_option
+      ).and_return(true)
+      allow(Global::RebalanceOrders::AutomaticRebalanceByVariationService).to receive(:call).with(
+        automatic_rebalance_option: first_variation_automatic_rebalance_option
+      ).and_return(true)
+      allow(Global::RebalanceOrders::AutomaticRebalanceByVariationService).to receive(:call).with(
+        automatic_rebalance_option: second_variation_automatic_rebalance_option
       ).and_return(true)
     end
 
@@ -45,6 +51,12 @@ RSpec.describe Global::RebalanceOrders::AutomaticCreationJob, type: :job do
       )
       expect(Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService).to have_received(:call).with(
         automatic_rebalance_option: second_recurrence_automatic_rebalance_option
+      )
+      expect(Global::RebalanceOrders::AutomaticRebalanceByVariationService).to have_received(:call).with(
+        automatic_rebalance_option: first_variation_automatic_rebalance_option
+      )
+      expect(Global::RebalanceOrders::AutomaticRebalanceByVariationService).to have_received(:call).with(
+        automatic_rebalance_option: second_variation_automatic_rebalance_option
       )
     end
   end

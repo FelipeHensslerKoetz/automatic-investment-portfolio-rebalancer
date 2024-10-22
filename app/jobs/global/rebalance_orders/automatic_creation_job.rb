@@ -9,15 +9,23 @@ module Global
 
       def perform
         check_automatic_rebalance_options_with_recurrence
+        check_automatic_rebalance_options_with_variation
       end
 
       private
 
-      # TODO: create a worker to handle each automatic rebalance option execution
       def check_automatic_rebalance_options_with_recurrence
         AutomaticRebalanceOption.recurrence.find_in_batches do |automatic_rebalance_options_batch|
           automatic_rebalance_options_batch.each do |automatic_rebalance_option|
             ::Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService.call(automatic_rebalance_option:)
+          end
+        end
+      end
+
+      def check_automatic_rebalance_options_with_variation
+        AutomaticRebalanceOption.variation.find_in_batches do |automatic_rebalance_options_batch|
+          automatic_rebalance_options_batch.each do |automatic_rebalance_option|
+            ::Global::RebalanceOrders::AutomaticRebalanceByVariationService.call(automatic_rebalance_option:)
           end
         end
       end

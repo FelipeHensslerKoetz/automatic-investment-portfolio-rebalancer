@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_16_220855) do
+ActiveRecord::Schema.define(version: 2024_10_21_220425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 2024_10_16_220855) do
     t.date "start_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "rebalance_order_kind", default: "default", null: false
+    t.decimal "amount", default: "0.0", null: false
     t.index ["investment_portfolio_id"], name: "index_automatic_rebalance_options_on_investment_portfolio_id", unique: true
   end
 
@@ -116,7 +118,8 @@ ActiveRecord::Schema.define(version: 2024_10_16_220855) do
     t.decimal "quantity", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "target_variation_limit_percentage", null: false
+    t.decimal "target_variation_limit_percentage"
+    t.decimal "average_price"
     t.index ["asset_id", "investment_portfolio_id"], name: "asset_id_and_investment_portfolio_id_index", unique: true
     t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"
     t.index ["investment_portfolio_id"], name: "index_investment_portfolio_assets_on_investment_portfolio_id"
@@ -209,8 +212,8 @@ ActiveRecord::Schema.define(version: 2024_10_16_220855) do
 
   create_table "rebalances", force: :cascade do |t|
     t.bigint "rebalance_order_id", null: false
-    t.jsonb "before_state", null: false
-    t.jsonb "after_state", null: false
+    t.jsonb "current_investment_portfolio_state", null: false
+    t.jsonb "projected_investment_portfolio_state_with_rebalance_actions", null: false
     t.jsonb "details", null: false
     t.jsonb "recommended_actions", null: false
     t.datetime "created_at", precision: 6, null: false

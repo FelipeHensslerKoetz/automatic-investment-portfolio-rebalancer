@@ -12,7 +12,15 @@ FactoryBot.define do
     kind { 'recurrence' }
   end
 
-  trait :deviation do
-    kind { 'deviation' }
+  trait :variation do
+    kind { 'variation' }
+  end
+
+  trait :default do 
+    rebalance_order_kind { 'default' }
+  end
+
+  trait :average_price do
+    rebalance_order_kind { 'average_price' }
   end
 end

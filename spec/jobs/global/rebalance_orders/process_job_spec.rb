@@ -20,17 +20,17 @@ RSpec.describe Global::RebalanceOrders::ProcessJob, type: :job do
     subject(:process_job) { described_class.new }
 
     context 'when there is no asset price or currency parity exchange rate being updated' do
-      let!(:pending_rebalance_order) { create(:rebalance_order, scheduled_at: Time.zone.today, status: 'pending') }
-      let!(:pending_rebalance_order_without_schedule) { create(:rebalance_order, scheduled_at: Time.zone.today + 1.day, status: 'pending') }
-      let!(:processing_rebalance_order) { create(:rebalance_order, scheduled_at: Time.zone.today, status: 'processing') }
-      let!(:processing_rebalance_order_without_schedule) { create(:rebalance_order, scheduled_at: Time.zone.today + 1.day, status: 'processing') }
-      let!(:scheduled_rebalance_order) { create(:rebalance_order, scheduled_at: Time.zone.today, status: 'scheduled') }
-      let!(:scheduled_rebalance_order_without_schedule) { create(:rebalance_order, scheduled_at: Time.zone.today + 1.day, status: 'scheduled') }
-      let!(:succeed_rebalance_order) { create(:rebalance_order, scheduled_at: Time.zone.today, status: 'succeed') }
-      let!(:succeed_rebalance_order_without_schedule) { create(:rebalance_order, scheduled_at: Time.zone.today + 1.day, status: 'succeed') }
-      let!(:failed_rebalance_order) { create(:rebalance_order, scheduled_at: Time.zone.today, status: 'failed') }
-      let!(:failed_rebalance_order_without_schedule) { create(:rebalance_order, scheduled_at: Time.zone.today + 1.day, status: 'failed') }
-      let!(:pending_rebalance_order_scheduled_to_tomorrow) { create(:rebalance_order, scheduled_at: Time.zone.today + 1.day,
+      let!(:pending_rebalance_order) { create(:rebalance_order, :default, scheduled_at: Time.zone.today, status: 'pending') }
+      let!(:pending_rebalance_order_without_schedule) { create(:rebalance_order, :default, scheduled_at: Time.zone.today + 1.day, status: 'pending') }
+      let!(:processing_rebalance_order) { create(:rebalance_order, :default, scheduled_at: Time.zone.today, status: 'processing') }
+      let!(:processing_rebalance_order_without_schedule) { create(:rebalance_order, :default, scheduled_at: Time.zone.today + 1.day, status: 'processing') }
+      let!(:scheduled_rebalance_order) { create(:rebalance_order, :default, scheduled_at: Time.zone.today, status: 'scheduled') }
+      let!(:scheduled_rebalance_order_without_schedule) { create(:rebalance_order, :default, scheduled_at: Time.zone.today + 1.day, status: 'scheduled') }
+      let!(:succeed_rebalance_order) { create(:rebalance_order, :default, scheduled_at: Time.zone.today, status: 'succeed') }
+      let!(:succeed_rebalance_order_without_schedule) { create(:rebalance_order, :default, scheduled_at: Time.zone.today + 1.day, status: 'succeed') }
+      let!(:failed_rebalance_order) { create(:rebalance_order, :default, scheduled_at: Time.zone.today, status: 'failed') }
+      let!(:failed_rebalance_order_without_schedule) { create(:rebalance_order, :default, scheduled_at: Time.zone.today + 1.day, status: 'failed') }
+      let!(:pending_rebalance_order_scheduled_to_tomorrow) { create(:rebalance_order, :default, scheduled_at: Time.zone.today + 1.day,
                                                                     status: 'pending') }
 
       before do 
@@ -45,7 +45,7 @@ RSpec.describe Global::RebalanceOrders::ProcessJob, type: :job do
     end
 
     context 'when there is asset price or currency parity exchange rate being updated' do
-      let!(:pending_rebalance_order) { create(:rebalance_order, scheduled_at: Time.zone.today, status: 'pending') }
+      let!(:pending_rebalance_order) { create(:rebalance_order, :default, scheduled_at: Time.zone.today, status: 'pending') }
 
       context 'when there is a scheduled currency parity exchange rate' do
         before do 

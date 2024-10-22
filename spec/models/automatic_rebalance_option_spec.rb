@@ -11,6 +11,8 @@ RSpec.describe AutomaticRebalanceOption, type: :model do
     it { should validate_inclusion_of(:kind).in_array(AutomaticRebalanceOption::AUTOMATIC_REBALANCE_OPTIONS) }
     it { should validate_presence_of(:kind) }
     it { should validate_presence_of(:start_date) }
+    it { should validate_presence_of(:rebalance_order_kind) }
+    it { should validate_inclusion_of(:rebalance_order_kind).in_array(AutomaticRebalanceOption::REBALANCE_ORDER_KINDS) }
 
     context 'when kind is recurrence' do
       subject { described_class.new(kind: 'recurrence') }
@@ -27,6 +29,43 @@ RSpec.describe AutomaticRebalanceOption, type: :model do
 
         expect(new_automatic_rebalance_option).not_to be_valid
         expect(new_automatic_rebalance_option.errors[:investment_portfolio_id]).to include('has already been taken')
+      end
+    end
+
+    context 'when validating amount' do 
+      context 'when amount is nil' do
+        let(:automatic_rebalance_option) { create(:automatic_rebalance_option, amount: nil) }
+
+        it 'sets default amount' do
+          expect(automatic_rebalance_option).to be_valid
+          expect(automatic_rebalance_option.amount).to eq(0)
+        end
+      end
+
+      context 'when amount is not nil' do
+        let(:automatic_rebalance_option) { create(:automatic_rebalance_option, amount: 100) }
+
+        it 'does not set default amount' do
+          expect(automatic_rebalance_option).to be_valid
+          expect(automatic_rebalance_option.amount).to eq(100)
+        end
+      end
+    end
+  end
+
+  describe 'scopes' do
+    let!(:variation_automatic_rebalance_option) { create(:automatic_rebalance_option, :variation) }
+    let!(:recurrence_automatic_rebalance_option) { create(:automatic_rebalance_option, :recurrence) }
+
+    describe '.variation' do
+      it 'returns automatic rebalance options with kind variation' do
+        expect(described_class.variation).to match_array([variation_automatic_rebalance_option])
+      end
+    end
+
+    describe '.recurrence' do
+      it 'returns automatic rebalance options with kind recurrence' do
+        expect(described_class.recurrence).to match_array([recurrence_automatic_rebalance_option])
       end
     end
   end
