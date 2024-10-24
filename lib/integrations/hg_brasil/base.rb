@@ -16,7 +16,15 @@ module Integrations
       end
 
       def base_params
-        { 'key' => Rails.application.credentials.hg_brasil[:secret_key] }
+        { 'key' => secret_key }
+      end
+
+      def secret_key
+        if Rails.env.production? 
+          Rails.application.credentials.hg_brasil[:production_secret_key]
+        else
+          Rails.application.credentials.hg_brasil[:secret_key]
+        end
       end
     end
   end
