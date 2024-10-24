@@ -55,7 +55,8 @@ module System
       def current_investment_portfolio_state_result
         @current_investment_portfolio_state_result ||= System::Rebalances::CurrentInvestmentPortfolioStateCalculatorService.call(
           investment_portfolio:,
-          amount: rebalance_order.amount
+          amount: rebalance_order.amount,
+          rebalance_kind: rebalance_order.kind
         )
       end
 

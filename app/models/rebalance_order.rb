@@ -5,7 +5,7 @@ class RebalanceOrder < ApplicationRecord
   include AASM
 
   # Constants
-  REBALANCE_ORDER_KINDS = %w[default average_price].freeze
+  REBALANCE_ORDER_KINDS = %w[default contribution].freeze
 
   # Associations
   belongs_to :user
@@ -16,9 +16,10 @@ class RebalanceOrder < ApplicationRecord
   # Validations
   validates :status, :kind, :scheduled_at, presence: true
   validates :kind, inclusion: { in: REBALANCE_ORDER_KINDS }
-  before_validation :set_default_amount, if: -> { amount.nil? }
+  before_validation :set_default_amount, if: -> { amount.nil? && default? }
   before_validation :set_default_scheduled_at, if: -> { scheduled_at.nil? }
   validate :scheduled_at_cannot_be_in_the_past
+  validates :amount, numericality: { greater_than: 0 }, if: -> { contribution? }
 
   # Scopes
   scope :pending, -> { where(status: :pending) }
@@ -54,6 +55,14 @@ class RebalanceOrder < ApplicationRecord
     event :retry do
       transitions from: :failed, to: :pending
     end
+  end
+
+  def contribution?
+    kind == 'contribution'
+  end 
+
+  def default?
+    kind == 'default'
   end
 
   private

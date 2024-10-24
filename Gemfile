@@ -59,9 +59,6 @@ group :development, :test do
 
   # Rspec-rails is a testing framework for Rails 3.x, 4.x and 5.x.
   gem 'rspec-rails', '~> 6.1'
-
-  # Redis-lock is a distributed lock manager built on top of Redis.
-  gem "redis-lock", "~> 0.2.0"
 end
 
 group :development do

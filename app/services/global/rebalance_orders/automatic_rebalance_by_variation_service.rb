@@ -29,7 +29,8 @@ module Global
       def current_investment_portfolio_state
         @current_investment_portfolio_state ||= System::Rebalances::CurrentInvestmentPortfolioStateCalculatorService.call(
           investment_portfolio:,
-          amount: automatic_rebalance_option.amount
+          amount: automatic_rebalance_option.amount,
+          rebalance_kind: automatic_rebalance_option.rebalance_order_kind
         )
       end
 
@@ -43,6 +44,7 @@ module Global
 
       def check_automatic_rebalance_creation
         System::Rebalances::InvestmentPortfolioValidationService.call(investment_portfolio:)
+
         return unless investment_portfolio_with_variation?
 
         create_rebalance_order

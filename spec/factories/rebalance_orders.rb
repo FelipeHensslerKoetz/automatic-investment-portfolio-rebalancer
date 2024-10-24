@@ -10,9 +10,9 @@ FactoryBot.define do
     trait :default do
       kind { 'default' }
     end
-    
-    trait :average_price do 
-      kind { 'average_price' }
+
+    trait :contribution do 
+      kind { 'contribution' }
     end
 
     trait :pending do

@@ -2,7 +2,7 @@
 
 module HgBrasil
   module CurrencyParityExchangeRates
-    class SyncService # TODO: abstract this service to a base class
+    class SyncService
       def self.call
         new.call
       end

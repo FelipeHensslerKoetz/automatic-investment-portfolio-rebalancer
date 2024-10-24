@@ -2,7 +2,7 @@
 
 module BrApi
   module CurrencyParityExchangeRates
-    class SyncService # TODO: abstract this service to a base class
+    class SyncService
       attr_reader :currency_from, :currency_to, :currency_from_code, :currency_to_code
 
       def initialize(currency_from_code:, currency_to_code:)

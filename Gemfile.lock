@@ -227,8 +227,6 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redis (4.8.1)
-    redis-lock (0.2.0)
-      redis
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -317,7 +315,6 @@ DEPENDENCIES
   pry (~> 0.14.2)
   puma (~> 5.0)
   rails (~> 6.1.4, >= 6.1.4.4)
-  redis-lock (~> 0.2.0)
   rspec-rails (~> 6.1)
   rspec-sidekiq (~> 4.2)
   shoulda-matchers (~> 6.2)

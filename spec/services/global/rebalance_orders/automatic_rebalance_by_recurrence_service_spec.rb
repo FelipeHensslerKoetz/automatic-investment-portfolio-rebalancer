@@ -35,7 +35,7 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByRecurrenceService do
 
         context 'when generating the next rebalance after the last has been executed' do
           let(:automatic_rebalance_option) do
-            create(:automatic_rebalance_option, :average_price, investment_portfolio:, start_date: Time.zone.today,
+            create(:automatic_rebalance_option, :recurrence, investment_portfolio:, start_date: Time.zone.today,
             amount: 500.0)
           end
 

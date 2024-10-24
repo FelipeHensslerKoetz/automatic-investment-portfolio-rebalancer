@@ -13,7 +13,8 @@ RSpec.describe System::Rebalances::ProjectedInvestmentPortfolioStateWithRebalanc
     let(:investment_portfolio) { create(:investment_portfolio, user:) }
     let(:current_investment_portfolio_state) do
       System::Rebalances::CurrentInvestmentPortfolioStateCalculatorService.call(investment_portfolio:,
-                                                                            amount: rebalance_order.amount)
+                                                                            amount: rebalance_order.amount,
+                                                                            rebalance_kind: rebalance_order.kind)
     end
 
     before do
@@ -152,7 +153,7 @@ RSpec.describe System::Rebalances::ProjectedInvestmentPortfolioStateWithRebalanc
           expect(ivvb_11_asset[:currency_parity_exchange_rate]).to be_an_instance_of(CurrencyParityExchangeRate)
           expect(ivvb_11_asset[:current_total_value]).to eq(0.0)
           expect(ivvb_11_asset[:current_allocation_weight_percentage]).to eq(0.0)
-          expect(ivvb_11_asset[:current_variation_percentage]).to eq(-50.0)
+          expect(ivvb_11_asset[:current_variation_percentage]).to eq(-100.0)
           expect(ivvb_11_asset[:target_total_value]).to eq(0.0)
           expect(ivvb_11_asset[:target_quantity]).to eq(0.0)
           expect(ivvb_11_asset[:quantity_adjustment]).to eq(0)
@@ -171,7 +172,7 @@ RSpec.describe System::Rebalances::ProjectedInvestmentPortfolioStateWithRebalanc
           expect(bova_11_asset[:currency_parity_exchange_rate]).to be_nil
           expect(bova_11_asset[:current_total_value]).to eq(0.0)
           expect(bova_11_asset[:current_allocation_weight_percentage]).to eq(0.0)
-          expect(bova_11_asset[:current_variation_percentage]).to eq(-50.0)
+          expect(bova_11_asset[:current_variation_percentage]).to eq(-100.0)
           expect(bova_11_asset[:target_total_value]).to eq(0.0)
           expect(bova_11_asset[:target_quantity]).to eq(0.0)
           expect(bova_11_asset[:quantity_adjustment]).to eq(0)
@@ -180,7 +181,7 @@ RSpec.describe System::Rebalances::ProjectedInvestmentPortfolioStateWithRebalanc
     end
 
     # TODO
-    context 'when rebalance_order kind is average_price' do
+    context 'when rebalance_order kind is contribution' do
     end
   end
 end

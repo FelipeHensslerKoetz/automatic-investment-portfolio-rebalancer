@@ -20,7 +20,8 @@ FactoryBot.define do
     rebalance_order_kind { 'default' }
   end
 
-  trait :average_price do
-    rebalance_order_kind { 'average_price' }
+  trait :contribution do
+    rebalance_order_kind { 'contribution' }
+    amount { 100 }
   end
 end

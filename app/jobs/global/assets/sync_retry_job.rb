@@ -7,7 +7,6 @@ module Global
 
       sidekiq_options queue: 'global_assets_sync_retry', retry: false
 
-      # TODO: redis-lock
       def perform
         return if any_rebalance_order_being_processed?
 

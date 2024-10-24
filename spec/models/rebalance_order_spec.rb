@@ -18,40 +18,78 @@ RSpec.describe RebalanceOrder, type: :model do
     }
 
     context 'when validating amount' do 
-      context 'when amount is nil' do
-        let(:rebalance_order) { build(:rebalance_order, :default, amount: nil) }
-
-        it 'is valid' do
-          expect(rebalance_order).to be_valid
-          expect(rebalance_order.amount).to eq(0)
-        end
-      end
-
-      context 'when amount is not nil' do
-        context 'when amount is a negative number' do
-          let(:rebalance_order) { build(:rebalance_order, :default, amount: -1) }
-
-          it 'is valid' do
-            expect(rebalance_order).to be_valid
-            expect(rebalance_order.amount).to eq(-1)
-          end
-        end
-
-        context 'when amount is a positive number' do
-          let(:rebalance_order) { build(:rebalance_order, :default, amount: 1) }
-
-          it 'is valid' do
-            expect(rebalance_order).to be_valid
-            expect(rebalance_order.amount).to eq(1)
-          end
-        end
-
-        context 'when amount is a zero' do
-          let(:rebalance_order) { build(:rebalance_order, :default, amount: 0) }
-
+      context 'when kind is default' do
+        context 'when amount is nil' do
+          let(:rebalance_order) { build(:rebalance_order, :default, amount: nil) }
+  
           it 'is valid' do
             expect(rebalance_order).to be_valid
             expect(rebalance_order.amount).to eq(0)
+          end
+        end
+  
+        context 'when amount is not nil' do
+          context 'when amount is a negative number' do
+            let(:rebalance_order) { build(:rebalance_order, :default, amount: -1) }
+  
+            it 'is valid' do
+              expect(rebalance_order).to be_valid
+              expect(rebalance_order.amount).to eq(-1)
+            end
+          end
+  
+          context 'when amount is a positive number' do
+            let(:rebalance_order) { build(:rebalance_order, :default, amount: 1) }
+  
+            it 'is valid' do
+              expect(rebalance_order).to be_valid
+              expect(rebalance_order.amount).to eq(1)
+            end
+          end
+  
+          context 'when amount is a zero' do
+            let(:rebalance_order) { build(:rebalance_order, :default, amount: 0) }
+  
+            it 'is valid' do
+              expect(rebalance_order).to be_valid
+              expect(rebalance_order.amount).to eq(0)
+            end
+          end
+        end
+      end 
+
+      context 'when kind is contribution' do
+        context 'when amount is nil' do
+          let(:rebalance_order) { build(:rebalance_order, :contribution, amount: nil) }
+
+          it 'is invalid' do
+            expect { rebalance_order.save! }.to raise_error(ActiveRecord::RecordInvalid)
+          end
+        end
+
+        context 'when amount is not nil' do
+          context 'when amount is a negative number' do
+            let(:rebalance_order) { build(:rebalance_order, :contribution, amount: -1) }
+
+            it 'is invalid' do
+              expect { rebalance_order.save! }.to raise_error(ActiveRecord::RecordInvalid)
+            end
+          end
+
+          context 'when amount is a zero' do
+            let(:rebalance_order) { build(:rebalance_order, :contribution, amount: 0) }
+
+            it 'is invalid' do
+              expect { rebalance_order.save! }.to raise_error(ActiveRecord::RecordInvalid)
+            end
+          end
+
+          context 'when amount is a positive number' do
+            let(:rebalance_order) { build(:rebalance_order, :contribution, amount: 1) }
+
+            it 'is valid' do
+              expect { rebalance_order.save! }.not_to raise_error
+            end
           end
         end
       end

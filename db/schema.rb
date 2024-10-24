@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_21_220425) do
+ActiveRecord::Schema.define(version: 2024_10_22_135611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(version: 2024_10_21_220425) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "target_variation_limit_percentage"
-    t.decimal "average_price"
     t.index ["asset_id", "investment_portfolio_id"], name: "asset_id_and_investment_portfolio_id_index", unique: true
     t.index ["asset_id"], name: "index_investment_portfolio_assets_on_asset_id"
     t.index ["investment_portfolio_id"], name: "index_investment_portfolio_assets_on_investment_portfolio_id"

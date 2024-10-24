@@ -20,20 +20,15 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByVariationService do
 
         before do
           asset = create(:asset, ticker_symbol: 'IVVB11')
-          create(:asset_price, :with_hg_brasil_assets_partner_resource, asset:, currency: usd_currency, status: :updated, price: 40.0)
-          create(:investment_portfolio_asset, investment_portfolio:, asset:, target_allocation_weight_percentage: 50, quantity: 10,
-                                              target_variation_limit_percentage: 17)
+          create(:asset_price, :with_hg_brasil_assets_partner_resource, asset:, currency: brl_currency, status: :updated, price: 1.0)
+          create(:investment_portfolio_asset, investment_portfolio:, asset:, target_allocation_weight_percentage: 50, quantity: 55,
+                                              target_variation_limit_percentage: 10)
 
           second_asset = create(:asset, ticker_symbol: 'BOVA11')
           create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: second_asset, currency: brl_currency, status: :updated,
-                                                                        price: 100.0)
+                                                                        price: 1.0)
           create(:investment_portfolio_asset, investment_portfolio:, asset: second_asset, target_allocation_weight_percentage: 50,
-                                              quantity: 10, target_variation_limit_percentage: 17)
-
-          brl_usd_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
-          create(:currency_parity_exchange_rate, :with_hg_brasil_currencies_partner_resource, currency_parity: brl_usd_currency_parity,
-                                                                                              exchange_rate: 5.0,
-                                                                                              status: :updated)
+                                              quantity: 45, target_variation_limit_percentage: 9)
         end
 
         context 'when no previous order has been created today' do
@@ -76,13 +71,13 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByVariationService do
           asset = create(:asset, ticker_symbol: 'IVVB11')
           create(:asset_price, :with_hg_brasil_assets_partner_resource, asset:, currency: usd_currency, status: :updated, price: 40.0)
           create(:investment_portfolio_asset, investment_portfolio:, asset:, target_allocation_weight_percentage: 50, quantity: 10,
-                                              target_variation_limit_percentage: 17)
+                                              target_variation_limit_percentage: 50)
 
           second_asset = create(:asset, ticker_symbol: 'BOVA11')
           create(:asset_price, :with_hg_brasil_assets_partner_resource, asset: second_asset, currency: brl_currency, status: :updated,
                                                                         price: 100.0)
           create(:investment_portfolio_asset, investment_portfolio:, asset: second_asset, target_allocation_weight_percentage: 50,
-                                              quantity: 10, target_variation_limit_percentage: 17)
+                                              quantity: 10, target_variation_limit_percentage: 50)
 
           brl_usd_currency_parity = create(:currency_parity, currency_from: usd_currency, currency_to: brl_currency)
           create(:currency_parity_exchange_rate, :with_hg_brasil_currencies_partner_resource, currency_parity: brl_usd_currency_parity,
@@ -100,7 +95,7 @@ RSpec.describe Global::RebalanceOrders::AutomaticRebalanceByVariationService do
     end
 
     context 'when the automatic rebalance option is not variation' do
-      let(:automatic_rebalance_option) { create(:automatic_rebalance_option, :average_price) }
+      let(:automatic_rebalance_option) { create(:automatic_rebalance_option, :recurrence) }
 
       it 'should not create a rebalance order' do
         automatic_rebalance_by_variation_service

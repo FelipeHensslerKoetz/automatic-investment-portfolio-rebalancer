@@ -7,7 +7,6 @@ module Global
 
       sidekiq_options queue: 'global_currency_parity_exchange_rates_sync', retry: false
 
-      # TODO: redis-lock
       def perform
         return if any_rebalance_order_being_processed?
 

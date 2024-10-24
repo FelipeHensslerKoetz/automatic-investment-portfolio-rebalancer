@@ -33,21 +33,69 @@ RSpec.describe AutomaticRebalanceOption, type: :model do
     end
 
     context 'when validating amount' do 
-      context 'when amount is nil' do
-        let(:automatic_rebalance_option) { create(:automatic_rebalance_option, amount: nil) }
-
-        it 'sets default amount' do
-          expect(automatic_rebalance_option).to be_valid
-          expect(automatic_rebalance_option.amount).to eq(0)
+      context 'when rebalance_order_kind is default' do
+        context 'when amount is nil' do
+          let(:automatic_rebalance_option) { create(:automatic_rebalance_option, amount: nil) }
+  
+          it 'sets default amount' do
+            expect(automatic_rebalance_option).to be_valid
+            expect(automatic_rebalance_option.amount).to eq(0)
+          end
+        end
+  
+        context 'when amount is not nil' do
+          let(:automatic_rebalance_option) { create(:automatic_rebalance_option, amount: 100) }
+  
+          it 'does not set default amount' do
+            expect(automatic_rebalance_option).to be_valid
+            expect(automatic_rebalance_option.amount).to eq(100)
+          end
         end
       end
 
-      context 'when amount is not nil' do
-        let(:automatic_rebalance_option) { create(:automatic_rebalance_option, amount: 100) }
+      context 'when rebalance_order_kind is contribution' do
+        context 'when amount is nil' do 
+          let(:automatic_rebalance_option) { build(:automatic_rebalance_option, :contribution, amount: nil) }
 
-        it 'does not set default amount' do
-          expect(automatic_rebalance_option).to be_valid
-          expect(automatic_rebalance_option.amount).to eq(100)
+          it 'does not set default amount' do
+            expect(automatic_rebalance_option).not_to be_valid
+            expect(automatic_rebalance_option.errors[:amount]).to include('is not a number')
+          end
+
+          it { expect { automatic_rebalance_option.save! }.to raise_error(ActiveRecord::RecordInvalid) }
+        end
+
+        context 'when amount is not nil' do
+          context 'when amount is negative' do
+            let(:automatic_rebalance_option) { build(:automatic_rebalance_option, :contribution, amount: -10) }
+
+            it 'does not set default amount' do
+              expect(automatic_rebalance_option).not_to be_valid
+              expect(automatic_rebalance_option.errors[:amount]).to include('must be greater than 0')
+            end
+  
+            it { expect { automatic_rebalance_option.save! }.to raise_error(ActiveRecord::RecordInvalid) }
+          end
+
+          context 'when amount is zero' do
+            let(:automatic_rebalance_option) { build(:automatic_rebalance_option, :contribution, amount: 0) }
+
+            it 'does not set default amount' do
+              expect(automatic_rebalance_option).not_to be_valid
+              expect(automatic_rebalance_option.errors[:amount]).to include('must be greater than 0')
+            end
+  
+            it { expect { automatic_rebalance_option.save! }.to raise_error(ActiveRecord::RecordInvalid) }
+          end
+
+          context 'when amount is positive' do
+            let(:automatic_rebalance_option) { create(:automatic_rebalance_option, :contribution, amount: 100) }
+
+            it 'does not set default amount' do
+              expect(automatic_rebalance_option).to be_valid
+              expect(automatic_rebalance_option.amount).to eq(100)
+            end
+          end
         end
       end
     end

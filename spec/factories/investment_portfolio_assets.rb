@@ -7,6 +7,5 @@ FactoryBot.define do
     target_allocation_weight_percentage { rand(0.0..100.0) }
     quantity { rand(0..1000) }
     target_variation_limit_percentage { nil }
-    average_price { nil }
   end
 end
