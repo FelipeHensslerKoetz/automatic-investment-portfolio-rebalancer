@@ -18,7 +18,9 @@ module Global
       private
 
       def reset_all_asset_prices
-        AssetPrice.failed_or_updated.each(&:reset_asset_price!)
+        AssetPrice.failed_or_updated.each do |asset_price| 
+          asset_price.reset_asset_price! if asset_price.partner_resource.present?
+        end
       end
 
       def any_rebalance_order_being_processed?
@@ -37,7 +39,6 @@ module Global
       def br_api_assets_sync
         current_delay_in_seconds = 0
 
-        # TODO -> passar todos para pending
         AssetPrice.pending.where(partner_resource: br_api_partner_resource).find_in_batches(batch_size: 20) do |batch|
           batch.each do |batch_item|
             batch_item.with_lock { schedule_record(batch_item, current_delay_in_seconds) }

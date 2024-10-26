@@ -18,7 +18,7 @@ global_rebalance_orders_process:
   class: Global::RebalanceOrders::ProcessJob
   queue: global_rebalance_orders_process
 
-global_investment_portfolio_rebalance_notification_orders_notification: 
+global_investment_portfolio_rebalance_notification_orders_check: 
   cron: '0,5,10,15,20,25,30,35,40,45,50,55 12-21 * * *'
-  class: Global::InvestmentPortfolioRebalanceNotificationOrders::NotificationJob
-  queue: global_investment_portfolio_rebalance_notification_orders_notification
+  class: Global::InvestmentPortfolioRebalanceNotificationOrders::CheckNotificationOrdersJob
+  queue: global_investment_portfolio_rebalance_notification_orders_check
