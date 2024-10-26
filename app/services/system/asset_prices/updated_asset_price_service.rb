@@ -44,6 +44,8 @@ module System
       end
 
       def updated_asset_price_by_partner_resource_priority(updated_asset_prices)
+        return updated_asset_prices.first if updated_asset_prices.one? # ativos custom
+
         PARTNER_RESOURCE_PRIORITY.each do |partner_resource|
           updated_asset_price = updated_asset_prices.find { |asset_price| asset_price.partner_resource.slug == partner_resource }
 
