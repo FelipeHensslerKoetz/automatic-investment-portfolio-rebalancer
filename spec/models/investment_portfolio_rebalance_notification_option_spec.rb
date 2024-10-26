@@ -30,27 +30,11 @@ RSpec.describe InvestmentPortfolioRebalanceNotificationOption, type: :model do
         end
       end
 
-      context 'when body is not invalid' do
-        it 'is invalid' do
-          webhook_notification_option.body = 'abc'
-          expect(webhook_notification_option).to be_invalid
-          expect(webhook_notification_option.errors[:body]).to include("must be an object or an array")
-        end
-      end
-
       context 'when header is not a hash' do
         it 'is invalid' do
           webhook_notification_option.header = 'invalid'
           expect(webhook_notification_option).to be_invalid
           expect(webhook_notification_option.errors[:header]).to include("must be an object")
-        end
-      end
-
-      context 'when body is not a hash or an array' do
-        it 'is invalid' do
-          webhook_notification_option.body = 'invalid'
-          expect(webhook_notification_option).to be_invalid
-          expect(webhook_notification_option.errors[:body]).to include("must be an object or an array")
         end
       end
 

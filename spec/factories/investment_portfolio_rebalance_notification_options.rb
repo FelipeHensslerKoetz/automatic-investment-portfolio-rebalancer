@@ -7,7 +7,6 @@ FactoryBot.define do
       kind { "webhook" }
       url { "http://example.com" }
       header { { 'Content-Type' => 'application/json' } }
-      body { { 'key' => 'value' } }
     end
 
     trait :email do

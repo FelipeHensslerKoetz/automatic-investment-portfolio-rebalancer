@@ -59,26 +59,42 @@ RSpec.describe Global::CurrencyParityExchangeRates::SyncJob, type: :job do
       end
 
       before do
+        allow(Rails.application.credentials).to receive(:br_api).and_return({ request_delay_in_seconds: 5 })
         allow(HgBrasil::CurrencyParityExchangeRates::SyncJob).to receive(:perform_async).and_return(true)
         allow(BrApi::CurrencyParityExchangeRates::SyncJob).to receive(:perform_in).with(
           0.seconds, br_api_pending_currency_parity_exchange_rate.currency_parity.currency_from.code,
           br_api_pending_currency_parity_exchange_rate.currency_parity.currency_to.code
         ).and_return(true)
+        allow(BrApi::CurrencyParityExchangeRates::SyncJob).to receive(:perform_in).with(
+          5.seconds, br_api_failed_currency_parity_exchange_rate.currency_parity.currency_from.code,
+          br_api_failed_currency_parity_exchange_rate.currency_parity.currency_to.code
+        ).and_return(true)
+        allow(BrApi::CurrencyParityExchangeRates::SyncJob).to receive(:perform_in).with(
+          10.seconds, br_api_updated_currency_parity_exchange_rate.currency_parity.currency_from.code,
+          br_api_updated_currency_parity_exchange_rate.currency_parity.currency_to.code
+        ).and_return(true)
+
         global_sync_job.perform
       end
 
       it 'calls HgBrasil::CurrencyParityExchangeRates::SyncJob.perform_async' do
         expect(HgBrasil::CurrencyParityExchangeRates::SyncJob).to have_received(:perform_async).once
-        expect(hg_brasil_updated_currency_parity_exchange_rate.reload).to be_updated
-        expect(hg_brasil_failed_currency_parity_exchange_rate.reload).to be_failed
+        expect(hg_brasil_updated_currency_parity_exchange_rate.reload).to be_scheduled
+        expect(hg_brasil_failed_currency_parity_exchange_rate.reload).to be_scheduled
         expect(hg_brasil_processing_currency_parity_exchange_rate.reload).to be_processing
         expect(hg_brasil_scheduled_currency_parity_exchange_rate.reload).to be_scheduled
         expect(hg_brasil_pending_currency_parity_exchange_rate.reload).to be_scheduled
 
         expect(BrApi::CurrencyParityExchangeRates::SyncJob).to have_received(:perform_in).with(0.seconds, br_api_pending_currency_parity_exchange_rate.currency_parity.currency_from.code,
                                                                                                br_api_pending_currency_parity_exchange_rate.currency_parity.currency_to.code).once
-        expect(br_api_updated_currency_parity_exchange_rate.reload).to be_updated
-        expect(br_api_failed_currency_parity_exchange_rate.reload).to be_failed
+
+        expect(BrApi::CurrencyParityExchangeRates::SyncJob).to have_received(:perform_in).with(5.seconds, br_api_failed_currency_parity_exchange_rate.currency_parity.currency_from.code,
+                                                                                                br_api_failed_currency_parity_exchange_rate.currency_parity.currency_to.code).once
+        
+        expect(BrApi::CurrencyParityExchangeRates::SyncJob).to have_received(:perform_in).with(10.seconds, br_api_updated_currency_parity_exchange_rate.currency_parity.currency_from.code,
+                                                                                                br_api_updated_currency_parity_exchange_rate.currency_parity.currency_to.code).once
+        expect(br_api_updated_currency_parity_exchange_rate.reload).to be_scheduled
+        expect(br_api_failed_currency_parity_exchange_rate.reload).to be_scheduled
         expect(br_api_processing_currency_parity_exchange_rate.reload).to be_processing
         expect(br_api_scheduled_currency_parity_exchange_rate.reload).to be_scheduled
         expect(br_api_pending_currency_parity_exchange_rate.reload).to be_scheduled

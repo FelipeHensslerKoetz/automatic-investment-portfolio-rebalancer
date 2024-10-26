@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Global::InvestmentPortfolioRebalanceNotificationOrders::WebhookService do
   describe '.call' do
     subject(:webhook_request) { described_class.call(params) }
+    let(:rebalance) { create(:rebalance) }
 
     context 'when http_method is post' do
       context 'when request succeed' do
@@ -13,7 +14,7 @@ RSpec.describe Global::InvestmentPortfolioRebalanceNotificationOrders::WebhookSe
             url: 'https://webhook.site/f9c7614e-dfde-4845-9519-1458c5692570',
             http_method: 'post',
             header: { 'Content-Type': 'application/json' },
-            body: { key: 'value' }.to_json
+            rebalance: rebalance.to_json
           }
         end
 
@@ -37,7 +38,7 @@ RSpec.describe Global::InvestmentPortfolioRebalanceNotificationOrders::WebhookSe
             url: 'https://webhook/site/f9c7614e-dfde-4845-9519-1458c5692570',
             http_method: 'post',
             header: { 'Content-Type': 'application/json' },
-            body: { key: 'value' }.to_json
+            rebalance: rebalance.to_json
           }
         end
 
@@ -64,7 +65,7 @@ RSpec.describe Global::InvestmentPortfolioRebalanceNotificationOrders::WebhookSe
           url: 'a',
           http_method: 'a',
           header: 'a',
-          body: 'a'
+          rebalance: 'a'
         }
       end
 
@@ -74,7 +75,7 @@ RSpec.describe Global::InvestmentPortfolioRebalanceNotificationOrders::WebhookSe
         expect(response).to eq(
           {
             success: false,
-            response: 'Invalid Params: {:url=>"a", :http_method=>"a", :header=>"a", :body=>"a"}'
+            response: 'Invalid Params: {:url=>"a", :http_method=>"a", :header=>"a", :rebalance=>"a"}'
           }
         )
       end

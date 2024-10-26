@@ -18,14 +18,13 @@ RSpec.describe Global::InvestmentPortfolioRebalanceNotificationOrders::Notificat
             {
               url: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.url,
               header: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.header,
-              body: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.body.to_json
+              rebalance: investment_portfolio_rebalance_notification_order.rebalance.to_json
             }
           end
 
           before do
             investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.update!(
               url: 'https://webhook.site/f9c7614e-dfde-4845-9519-1458c5692570',
-              body: { 'key' => 'value' },
               header: { 'Content-Type' => 'application/json' }
             )
 
@@ -56,14 +55,13 @@ RSpec.describe Global::InvestmentPortfolioRebalanceNotificationOrders::Notificat
             {
               url: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.url,
               header: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.header,
-              body: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.body.to_json
+              rebalance: investment_portfolio_rebalance_notification_order.rebalance.to_json
             }
           end
 
           before do
             investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.update!(
               url: 'https://webhook.site/f9c7614e-dfde-4845-9519-1458c5692570',
-              body: { 'key' => 'value' },
               header: { 'Content-Type' => 'application/json' }
             )
 
@@ -96,14 +94,13 @@ RSpec.describe Global::InvestmentPortfolioRebalanceNotificationOrders::Notificat
             {
               url: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.url,
               header: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.header,
-              body: investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.body.to_json
+              rebalance: investment_portfolio_rebalance_notification_order.rebalance.to_json
             }
           end
 
           before do
             investment_portfolio_rebalance_notification_order.investment_portfolio_rebalance_notification_option.update!(
               url: 'https://webhook/site/f9c7614e-dfde-4845-9519-1458c5692570',
-              body: { 'key' => 'value' },
               header: { 'Content-Type' => 'application/json' }
             )
 

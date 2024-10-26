@@ -18,6 +18,7 @@ class CurrencyParityExchangeRate < ApplicationRecord
   scope :processing, -> { where(status: :processing) }
   scope :failed, -> { where(status: :failed) }
   scope :pending, -> { where(status: :pending) }
+  scope :failed_or_updated, -> { where(status: %i[failed updated]) }
 
   # AASM
   aasm column: :status do

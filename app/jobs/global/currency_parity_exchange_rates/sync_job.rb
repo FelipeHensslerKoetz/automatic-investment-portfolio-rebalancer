@@ -10,11 +10,16 @@ module Global
       def perform
         return if any_rebalance_order_being_processed?
 
+        reset_all_currency_parity_exchange_rates
         hg_brasil_currency_parity_exchanges_sync
         br_api_currency_parity_exchange_rates_sync
       end
 
       private
+
+      def reset_all_currency_parity_exchange_rates
+        CurrencyParityExchangeRate.failed_or_updated.each(&:reset_currency_parity_exchange_rate!)
+      end
 
       def any_rebalance_order_being_processed?
         RebalanceOrder.scheduled.any? || RebalanceOrder.processing.any?

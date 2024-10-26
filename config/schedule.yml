@@ -14,6 +14,11 @@ global_assets_sync_retry:
   queue: global_assets_sync_retry
 
 global_rebalance_orders_process:
-  cron: '0 12-21 * * *'
+  cron: '25,30,35,40,45,50,55 12-21 * * *'
   class: Global::RebalanceOrders::ProcessJob
   queue: global_rebalance_orders_process
+
+global_investment_portfolio_rebalance_notification_orders_notification: 
+  cron: '0,5,10,15,20,25,30,35,40,45,50,55 12-21 * * *'
+  class: Global::InvestmentPortfolioRebalanceNotificationOrders::NotificationJob
+  queue: global_investment_portfolio_rebalance_notification_orders_notification

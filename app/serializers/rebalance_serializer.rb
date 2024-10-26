@@ -1,6 +1,6 @@
 
 class RebalanceSerializer < ActiveModel::Serializer
-  attributes :investment_portfolio_projected_total_value, :before_state, :after_state, :buy, :sell
+  attributes :investment_portfolio_projected_total_value, :current_investment_portfolio_state, :projected_investment_portfolio_state_with_rebalance_actions, :buy, :sell
 
   def investment_portfolio_projected_total_value
     object['details']['investment_portfolio_projected_total_value']
@@ -24,8 +24,8 @@ class RebalanceSerializer < ActiveModel::Serializer
     end
   end
 
-  def before_state 
-    object['before_state'].map do |asset|
+  def current_investment_portfolio_state 
+    object['current_investment_portfolio_state'].map do |asset|
       {
         'ticker_symbol': asset['ticker_symbol'],
         'price': asset['price'],
@@ -36,8 +36,8 @@ class RebalanceSerializer < ActiveModel::Serializer
     end
   end
 
-  def after_state
-    object['after_state'].map do |asset|
+  def projected_investment_portfolio_state_with_rebalance_actions
+    object['projected_investment_portfolio_state_with_rebalance_actions'].map do |asset|
       {
         'ticker_symbol': asset['ticker_symbol'],
         'price': asset['price'],

@@ -87,6 +87,12 @@ RSpec.describe AssetPrice, type: :model do
         expect(AssetPrice.pending).to contain_exactly(pending_asset_price)
       end
     end
+
+    describe '.failed_or_updated' do
+      it 'returns failed and updated asset prices' do
+        expect(AssetPrice.failed_or_updated).to contain_exactly(updated_asset_price, failed_asset_price)
+      end
+    end
   end
 
   describe 'aasm' do

@@ -73,6 +73,13 @@ RSpec.describe CurrencyParityExchangeRate, type: :model do
         expect(CurrencyParityExchangeRate.pending).to contain_exactly(pending_currency_parity_exchange_rate)
       end
     end
+
+    describe '.failed_or_updated' do
+      it 'returns failed and updated currency parity exchange rate' do
+        expect(CurrencyParityExchangeRate.failed_or_updated).to contain_exactly(updated_currency_parity_exchange_rate,
+                                                                               failed_currency_parity_exchange_rate)
+      end
+    end
   end
 
   describe 'aasm' do

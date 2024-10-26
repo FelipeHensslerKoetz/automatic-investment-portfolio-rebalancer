@@ -3,7 +3,7 @@
 module Global
   module InvestmentPortfolioRebalanceNotificationOrders
     class WebhookService
-      attr_reader :url, :http_method, :header, :body, :params
+      attr_reader :url, :http_method, :header, :rebalance, :params
 
       def self.call(params)
         new(params).call
@@ -13,7 +13,7 @@ module Global
         @params = params
         @url = params[:url]
         @header = params[:header]
-        @body = params[:body]
+        @rebalance = params[:rebalance]
       end
 
       def call
@@ -25,11 +25,11 @@ module Global
       private
 
       def valid_params?
-        url.is_a?(String) && header.is_a?(Hash) && body.is_a?(String)
+        url.is_a?(String) && header.is_a?(Hash) && rebalance.is_a?(String)
       end
 
       def post
-        response = Faraday.post(url, body, header)
+        response = Faraday.post(url, rebalance, header)
 
         { response: response.body.to_s, success: true }
       rescue Faraday::Error => e

@@ -91,7 +91,7 @@ module Global
         {
           url: investment_portfolio_rebalance_notification_option.url,
           header: investment_portfolio_rebalance_notification_option.header,
-          body: investment_portfolio_rebalance_notification_option.body.to_json
+          rebalance: rebalance.to_json
         }
       end
     end

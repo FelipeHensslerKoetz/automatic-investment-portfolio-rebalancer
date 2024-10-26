@@ -242,17 +242,15 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
       before do
         allow(HgBrasil::Assets::SyncJob).to receive(:perform_in).with(0.seconds, 'MGLU3,VALE3,HAPV3,PETR4,B3SA3').and_return(true)
         allow(HgBrasil::Assets::SyncJob).to receive(:perform_in).with(4.seconds, 'BBDC4,SEQL3,ITSA4,ABEV3,PETZ3').and_return(true)
+        allow(HgBrasil::Assets::SyncJob).to receive(:perform_in).with(8.seconds, 'TASA4').and_return(true)
         allow(BrApi::Assets::SyncJob).to receive(:perform_in).with(0.seconds,
-                                                                   'MGLU3,VALE3,HAPV3,PETR4,B3SA3,BBDC4,SEQL3,ITSA4,ABEV3,PETZ3').and_return(true)
+                                                                   'MGLU3,VALE3,HAPV3,PETR4,B3SA3,BBDC4,SEQL3,ITSA4,ABEV3,PETZ3,TASA4').and_return(true)
         assets_global_sync_job
       end
 
       it 'updates the asset prices' do
-        expect(HgBrasil::Assets::SyncJob).to have_received(:perform_in).twice
+        expect(HgBrasil::Assets::SyncJob).to have_received(:perform_in).exactly(3).times
         expect(BrApi::Assets::SyncJob).to have_received(:perform_in).once
-
-        expect(tasa4_hg_brasil_asset_price.reload).to be_failed
-        expect(tasa4_hg_brasil_asset_price.scheduled_at).to be_nil
         expect(btci11_hg_brasil_asset_price.reload).to be_scheduled
         expect(hglg11_hg_brasil_asset_price.reload).to be_processing
 
@@ -266,7 +264,8 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
           seql3_hg_brasil_asset_price,
           itsa4_hg_brasil_asset_price,
           abev3_hg_brasil_asset_price,
-          petz3_hg_brasil_asset_price
+          petz3_hg_brasil_asset_price,
+          tasa4_hg_brasil_asset_price
         ].each do |asset_price|
           expect(asset_price.reload).to be_scheduled
           expect(asset_price.scheduled_at).to be_a(Time)
@@ -282,7 +281,8 @@ RSpec.describe Global::Assets::SyncJob, type: :job do
           seql3_br_api_asset_price,
           itsa4_br_api_asset_price,
           abev3_br_api_asset_price,
-          petz3_br_api_asset_price
+          petz3_br_api_asset_price,
+          tasa4_br_api_asset_price,
         ].each do |asset_price|
           expect(asset_price.reload).to be_scheduled
           expect(asset_price.scheduled_at).to be_a(Time)

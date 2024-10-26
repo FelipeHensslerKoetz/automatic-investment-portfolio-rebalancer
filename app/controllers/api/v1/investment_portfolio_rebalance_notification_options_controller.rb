@@ -63,17 +63,13 @@ module Api
           :name,
           :url,
           :header,
-          :body,
           :email
         )
       end
 
       def investment_portfolio_rebalance_notification_option_formatted_params
         if investment_portfolio_rebalance_notification_option_params[:header]&.present?
-          parsed_header = JSON.parse(investment_portfolio_rebalance_notification_option_params[:header])
-        end
-        if investment_portfolio_rebalance_notification_option_params[:body]&.present?
-          parsed_body = JSON.parse(investment_portfolio_rebalance_notification_option_params[:body])
+          parsed_header = JSON.parse(investment_portfolio_rebalance_notification_option_params[:header]) # TODO: checar localmente
         end
 
         {
@@ -81,10 +77,8 @@ module Api
           kind: investment_portfolio_rebalance_notification_option_params[:kind],
           name: investment_portfolio_rebalance_notification_option_params[:name],
           url: investment_portfolio_rebalance_notification_option_params[:url],
-          http_method: investment_portfolio_rebalance_notification_option_params[:http_method]&.downcase,
           email: investment_portfolio_rebalance_notification_option_params[:email],
-          header: parsed_header,
-          body: parsed_body
+          header: parsed_header
         }.compact
       end
 
