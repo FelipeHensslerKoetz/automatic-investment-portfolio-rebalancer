@@ -3,7 +3,7 @@
 module System
   module Rebalances
     class CalculatorService
-      attr_reader :rebalance_order_id
+      attr_reader :rebalance_order_id, :execution_start_time
 
       def self.call(rebalance_order_id:)
         new(rebalance_order_id:).call
@@ -11,6 +11,7 @@ module System
 
       def initialize(rebalance_order_id:)
         @rebalance_order_id = rebalance_order_id
+        @execution_start_time = Time.zone.now
       end
 
       def call
@@ -61,7 +62,12 @@ module System
       end
 
       def create_rebalance
-        Rebalance.create!(rebalance_order:, current_investment_portfolio_state:, projected_investment_portfolio_state_with_rebalance_actions:, details:, recommended_actions:)
+        Rebalance.create!(rebalance_order:,
+                          current_investment_portfolio_state:,
+                          projected_investment_portfolio_state_with_rebalance_actions:,
+                          details:,
+                          recommended_actions:, 
+                          execution_time_in_seconds: Time.zone.now - execution_start_time)
       end
 
       def details

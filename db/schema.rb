@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_26_013159) do
+ActiveRecord::Schema.define(version: 2024_11_04_161051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 2024_10_26_013159) do
     t.jsonb "recommended_actions", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "execution_time_in_seconds"
     t.index ["rebalance_order_id"], name: "index_rebalances_on_rebalance_order_id"
   end
 
