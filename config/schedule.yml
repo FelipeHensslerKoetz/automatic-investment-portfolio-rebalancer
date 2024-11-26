@@ -22,3 +22,8 @@ global_investment_portfolio_rebalance_notification_orders_check:
   cron: '0,5,10,15,20,25,30,35,40,45,50,55 12-21 * * *'
   class: Global::InvestmentPortfolioRebalanceNotificationOrders::CheckNotificationOrdersJob
   queue: global_investment_portfolio_rebalance_notification_orders_check
+
+global_rebalance_orders_automatic_creation:
+  cron: '0,5,10,15,20,25,30,35,40,45,50,55 12-21 * * *'
+  class: Global::RebalanceOrders::AutomaticCreationJob
+  queue: global_rebalance_orders_automatic_creation
